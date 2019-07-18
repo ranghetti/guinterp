@@ -1,0 +1,19 @@
+Package: guinterp
+Type: Package
+Title: A Shiny GUI for spatial interpolation
+Version: 0.1.0
+Authors@R: c(person("Luigi", "Ranghetti", 
+                    email = "ranghetti.l@irea.cnr.it", 
+                    role = c("aut", "cre"), 
+                    comment = c(ORCID = "0000-0001-6207-5188")),
+             person("Lorenzo", "Busetto", 
+                    email = "lbusett@gmail.com", 
+                    role = c("aut"),
+                    comment = c(ORCID = "0000-0001-9634-6038")))
+Description: This package provides a Shiny GUI designed to simplify
+ operations needed to interpolate points, i.e. filtering points, 
+ creating the semivariogram and doing the kriging.
+License: GPL-3 + file LICENSE
+Encoding: UTF-8
+URL: https://github.com/ranghetti/guinterp
+BugReports: https://github.com/ranghetti/guinterp/issues
