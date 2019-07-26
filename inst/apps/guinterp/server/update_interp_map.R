@@ -1,0 +1,181 @@
+#   ____________________________________________________________________________
+#   Observers used to update the map during interpolation             ####
+
+# Update the colour palette
+colourPal <- function(colourData, selvariable, na.colour = NA) {
+  if (nrow(colourData) == 0) {
+    colorFactor("RdYlGn", levels = 1)
+  } else {
+  colorBin(
+    "RdYlGn",
+    range(colourData[[selvariable]], na.rm = TRUE),
+    # bins: if 3*95% percentile > max, use a custom scale
+    # (7 linear bins 0-95% percentiles, one from 95% to max)
+    bins = if (3*quantile(colourData[[selvariable]], .95, na.rm = TRUE) >
+               max(colourData[[selvariable]], na.rm = TRUE)) {
+      8
+    } else {
+      c(seq(
+        min(colourData[[selvariable]],na.rm = TRUE),
+        quantile(colourData[[selvariable]], .95, na.rm = TRUE),
+        length.out = 8
+      )[-8], max(colourData[[selvariable]], na.rm = TRUE))
+    },
+    na.color = na.colour,
+    # bins = round(quantile(colourData[[selvariable]], seq(0,1,.1), na.rm=TRUE), 1),
+    pretty = TRUE
+  )
+  }
+}
+
+output$interp_map <- leaflet::renderLeaflet({
+
+  req(rv$inputpts_points, rv$borders_polygon)
+  leaflet::leaflet() %>%
+    addTiles("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+             group = "Ortofoto") %>%
+    addTiles("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_only_labels/{z}/{x}/{y}.png",
+             group = "Ortofoto") %>%
+    # addTiles(group = "Mappa") %>%
+    addTiles("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+             group = "Mappa") %>%
+    leaflet::addPolygons(
+      data         = rv$borders_polygon,
+      color        = "#bfbfbf", fill = NA, weight = 2.5,
+      label        = ~id_geom,
+      labelOptions = labelOptions(
+        textOnly  = TRUE, direction = 'top', #permanent  = TRUE,
+        style      = list("color" = "white", "font-weight" = "bold")
+      )
+    ) %>%
+    leaflet::fitBounds(
+      lng1 = min(rv$inputpts_points$lon),
+      lat1 = min(rv$inputpts_points$lat),
+      lng2 = max(rv$inputpts_points$lon),
+      lat2 = max(rv$inputpts_points$lat)
+    ) %>%
+    leaflet::addLayersControl(
+      baseGroups    = c("Ortofoto", "Mappa"),
+      overlayGroups = c("Punti utilizzati","Raster interpolato"),
+      options       = layersControlOptions(collapsed = TRUE)
+    ) %>%
+    leaflet::showGroup(c("Punti utilizzati")) %>%
+    leaflet::hideGroup(c("Raster interpolato"))
+})
+
+
+# Update the map when filters are changed
+observeEvent(c(rv$change_interp, rv$map_selvariable), { # LEAVE OBSERVEEVENT!
+  # observe non è reattivo verso rv$change_interp, quindi non funziona correttamente.
+  # per rendere questo codice reattivo ad altre variabili, aggiungerle al
+  # vettore di observeevent oppure variare rv$change_interp dove occorre.
+  # samplesize <- 1E3 #nrow(rv$inputpts_points) # TODO use a limit
+  req(rv$inputpts_points, rv$borders_polygon)
+  # Change the colour scale when filters or variable are changed
+  rv$pal <- colourPal(
+    rv$inputpts_points[sid < samplesize & filter == FALSE,],
+    rv$map_selvariable,
+    na.colour = NA
+  )
+
+  leaflet::leafletProxy("interp_map") %>%
+    # leaflet::clearShapes() %>%
+    leaflet::removeShape(paste0("pts_", rv$inputpts_points$sid)) %>%
+    leaflet::removeShape(paste0("brd_buf_", rv$borders_polygon$id_geom))
+  if (nrow(rv$inputpts_points[sid < samplesize & filter==TRUE,]) > 0) {
+    leaflet::addCircles(
+      leaflet::leafletProxy("interp_map"),
+        ~lon, ~lat,
+        data         = rv$inputpts_points[sid < samplesize & filter==TRUE,],
+        layerId      = paste0("pts_",rv$inputpts_points[sid < samplesize & filter == TRUE, ]$sid),
+        radius       = 3, stroke = FALSE, fillOpacity = 0.4, fillColor = "cyan",
+        label        = ~format(selvar, digits = 0,nsmall = 1),
+        group        = "Punti utilizzati",
+        labelOptions = labelOptions(style = list("background-color" = "#FFCCCC"))
+      )
+  }
+  if (nrow(rv$inputpts_points[sid < samplesize & filter==FALSE,]) > 0) {
+    leaflet::addCircles(
+      leaflet::leafletProxy("interp_map"),
+      ~lon, ~lat,
+      data      = rv$inputpts_points[sid < samplesize & filter == FALSE,],
+      layerId   = paste0("pts_", rv$inputpts_points[sid < samplesize & filter == FALSE,]$sid),
+      radius    = 3, stroke = FALSE, fillOpacity = 0.65,
+      fillColor = ~rv$pal(rv$inputpts_points[sid < samplesize & filter == FALSE,][[rv$map_selvariable]]),
+      label     = ~format(selvar, digits = 0, nsmall = 1),
+      group     = "Punti utilizzati",
+      labelOptions = labelOptions(style = list("background-color" = "#CCFFCC"))
+    ) %>%
+      leaflet::addLegend(
+        "bottomleft", pal = rv$pal,
+        values = rv$inputpts_points[sid < samplesize & filter == FALSE,],
+        layerId = "colorLegend",
+        title = switch(
+          rv$map_selvariable,
+          selvar = "Variabile selezionata" # it can be removed
+          # yield     = "Resa (t/ha)",
+          # speed     = "Velocita' (km/h)",
+          # rel_width = "Barra (m)",
+          # area      = "Area (m²)"
+        )
+      )
+  }
+
+  if (input$check_pos & input$filter_buttons == "manual") {
+    leaflet::leafletProxy("interp_map") %>%
+      leaflet::addPolygons(
+        layerId = paste0("brd_buf_", rv$borders_polygon$id_geom),
+        data = st_buffer_m(rv$borders_polygon, -input$pos),
+        color = "#bfbfbf", fill = NA, weight = 2, dashArray = "8,6"
+      )
+  }
+
+  if (!is.null(rv$interp_merged)) {
+    leaflet::leafletProxy("interp_map") %>%
+      # leaflet::removeImage("interp_raster")
+      leaflet::clearImages()
+    if (rv$map_selvariable == "selvar") {
+      leaflet::leafletProxy("interp_map") %>%
+        leaflet::addRasterImage(
+          # layerId = "interp_raster",
+          x      = rv$interp_merged,
+          colors = rv$pal, opacity = 1,
+          group  = "Raster interpolato"
+        )
+    }
+  }
+
+})
+
+# Update the map when raster are generated
+observeEvent(rv$new_interpolation, {
+  req(rv$interp_merged)
+
+  leaflet::leafletProxy("interp_map") %>%
+    leaflet::clearImages() %>%
+    # leaflet::removeImage("interp_raster") %>%
+    leaflet::addRasterImage(
+      # layerId = "interp_raster",
+      x      = rv$interp_merged,
+      colors = rv$pal, opacity = 1,
+      group  = "Raster interpolato"
+    ) %>%
+    leaflet::hideGroup(c("Punti utilizzati")) %>%
+    leaflet::showGroup(c("Raster interpolato"))
+})
+
+# observe({
+#   if(is.null(rv$interp_merged)) {
+#     shinyjs::disable("do_save_yield_interp")
+#   } else {
+#     shinyjs::enable("do_save_yield_interp")
+#   }
+# })
+
+observeEvent(rv$new_inputs, {
+  req(rv$inputpts_points)
+  # workaround to show points
+  shiny::updateRadioButtons(session, 'filter_buttons', selected = "no")
+  delay(500, shiny::updateRadioButtons(session, 'filter_buttons', selected = "auto"))
+})
+
