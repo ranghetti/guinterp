@@ -1,4 +1,4 @@
-#' @title Interpolate yield points of a single field
+#' @title Interpolate points of a single polygon
 #' @description TODO
 #' @param indata_sf points of a single field (with optional "idfield" attribute)
 #' @param field_poly polygon of the field
@@ -83,31 +83,31 @@ interp_inputpts <- function(
   # # cut on borders ("buffer" value plus half of raster resolution, to cut pixels of border)
   # globgrid_ <- as(as(globgrid, "Raster"), "SpatialGrid")
   # field_poly_ <- as(field_poly, "Spatial")
-  # yieldgrid_ <- as(crop(raster(globgrid_), field_poly_), "SpatialPixels")
-  # yieldgrid_ <- yieldgrid_[gBuffer(field_poly_,width=-(border+globgrid_@grid@cellsize[1]/2)),]
+  # fieldgrid_ <- as(crop(raster(globgrid_), field_poly_), "SpatialPixels")
+  # fieldgrid_ <- fieldgrid_[gBuffer(field_poly_,width=-(border+globgrid_@grid@cellsize[1]/2)),]
   # # create buffered grid (for focals)
   # field_poly_buf_ <- gBuffer(field_poly_, width=globgrid_@grid@cellsize[1]*d_buffer)
-  # yieldgrid_buf_ <- as(crop(raster(globgrid_), field_poly_buf_), "SpatialPixels")
-  # yieldgrid_buf_ <- SpatialPixelsDataFrame(yieldgrid_buf_, data = data.frame("band1"=rep(as.numeric(NA),length(yieldgrid_buf_))))
-  # yieldgrid_buf_ <- yieldgrid_buf_[field_poly_buf_,]
+  # fieldgrid_buf_ <- as(crop(raster(globgrid_), field_poly_buf_), "SpatialPixels")
+  # fieldgrid_buf_ <- SpatialPixelsDataFrame(fieldgrid_buf_, data = data.frame("band1"=rep(as.numeric(NA),length(fieldgrid_buf_))))
+  # fieldgrid_buf_ <- fieldgrid_buf_[field_poly_buf_,]
 
   # cut on borders ("buffer" value plus half of raster resolution, to cut pixels of border)
   # and create buffered grid (for focals)
   field_poly_buf <- st_buffer(st_union(field_poly), st_dimensions(globgrid)[[1]]$delta*d_buffer)
-  yieldgrid_buf <- st_crop(globgrid, field_poly_buf)
-  yieldgrid_buf <- yieldgrid_buf[1,]
-  yieldgrid <- st_crop(
-    yieldgrid_buf,
+  fieldgrid_buf <- st_crop(globgrid, field_poly_buf)
+  fieldgrid_buf <- fieldgrid_buf[1,]
+  fieldgrid <- st_crop(
+    fieldgrid_buf,
     st_buffer(field_poly, -(border+st_dimensions(globgrid)[[1]]$delta/2)),
     crop = FALSE
   )
-  # yieldgrid_buf[[1]][!is.na(yieldgrid_buf[[1]])] <- NA
+  # fieldgrid_buf[[1]][!is.na(fieldgrid_buf[[1]])] <- NA
 
 
   # TODO use spatialpixels and exclude areas from buffer polygon
 
   # interpolate
-  interp_raster <- krige_par(selvar ~ 1, indata_sf_sub, yieldgrid, vgm.fit, method=method, n_cores=n_cores, maxdist=maxdist)
+  interp_raster <- krige_par(selvar ~ 1, indata_sf_sub, fieldgrid, vgm.fit, method=method, n_cores=n_cores, maxdist=maxdist)
 
   # # cut on borders (not yet necessary, already done)
   # crop_raster <- st_crop(

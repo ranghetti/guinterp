@@ -1,7 +1,6 @@
-#   app_editdata.R                                                          ####
+#   app.R                                                          ####
 #
-#   Script used to initialize the app used for inserting / visualizing data
-#   related to agricultural practices (crop rotation, treatments and yield)
+#   Script used to initialize theguinterp app
 #
 
 #   ____________________________________________________________________________

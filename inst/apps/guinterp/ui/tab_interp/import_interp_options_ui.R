@@ -10,7 +10,7 @@ shiny::div(
   ),
   shiny::div(
     style="display:inline-block;position:relative;width:calc(100% - 10px - 10px);",
-    shiny::textInput("out_proj", NULL, value="32632")
+    shiny::uiOutput("out_proj_textinput")
   ),
   shiny::div(
     style="display:inline-block;position:relative;margin-left:5px;width:10px;",

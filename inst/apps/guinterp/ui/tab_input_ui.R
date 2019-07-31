@@ -5,37 +5,44 @@ shiny::div(
   shiny::conditionalPanel(
     condition = "!output.interp_onoff",
     shiny::div(
+      style = "margin-top:20px;margin-bottom:50px;",
       shiny::div(
-        shiny::span(
-          shiny::strong("Scegli il vettoriale dei poligoni\u2000"),
-          shiny::actionLink("help_fields_path", shiny::icon("question-circle"))
-        ),
         shiny::div(
-          style = "margin-top:10px;",
-          actionButton(
-            "button_load_borders",
-            label = "\u2000Carica",
-            class = "darkbutton",
-            width = "100%",
-            icon=icon("upload")
+          style = "margin-top:10px;padding-left:15px;",
+          shiny::span(
+            style="display:inline-block",
+            shiny::strong("Vettoriale dei poligoni")
+          ),
+          shiny::span(
+            style="display:inline-block",
+            shiny::actionLink("help_fields_path", shiny::icon("question-circle"))
           )
+        ),
+        actionButton(
+          "button_load_borders",
+          label = "\u2000Carica",
+          class = "darkbutton",
+          icon=icon("upload")
         )
       ),
       shiny::div(
-        shiny::span(
-          shiny::strong("Scegli uno o pi\u00F9 files puntiformi\u2000"),
-          shiny::actionLink("help_rawdata_paths", shiny::icon("question-circle"))
-        ),
         shiny::div(
-          style = "margin-top:10px;",
-          actionButton(
-            "button_load_inputpts",
-            label = "\u2000Carica",
-            class = "darkbutton",
-            width = "100%",
-            icon=icon("upload")
+          style = "margin-top:10px;padding-left:15px;",
+          shiny::span(
+            style="display:inline-block",
+            shiny::strong("Vettoriali dei punti")
+          ),
+          shiny::span(
+            style="display:inline-block",
+            shiny::actionLink("help_rawdata_paths", shiny::icon("question-circle"))
           )
-        )
+        ),
+        shinyjs::disabled(actionButton(
+          "button_load_inputpts",
+          label = "\u2000Carica",
+          class = "darkbutton",
+          icon=icon("upload")
+        ))
       )
     )
   ), # end of input conditionalPanel
@@ -44,25 +51,33 @@ shiny::div(
     condition = "output.interp_onoff",
     shiny::div(
       shiny::div(
-        style = "margin-top:10px;",
+        style = "margin-top:20px;margin-bottom:50px;",
         actionButton(
-          "do_leave_yield_interp",
-          label = "\u2000Esci",
+          "interp_button",
+          label = strong("\u2000Interpola"),
           class = "darkbutton",
-          width = "100%",
-          icon=icon("upload")
+          icon=icon("cogs")
         )
       ),
       shiny::div(
-        style = "margin-top:10px;",
+        style = "margin-top:20px;",
         actionButton(
-          "interp_button",
-          label = "\u2000Interpola",
+          "close_interp_button",
+          label = "\u2000Chiudi",
           class = "darkbutton",
-          width = "100%",
-          icon=icon("upload")
+          icon=icon("window-close")
         )
       )
+    )
+  ),
+
+  shiny::div(
+    style = "margin-top:20px;",
+    actionButton(
+      "close_app_button",
+      label = "\u2000Esci dall'interfaccia",
+      class = "darkbutton",
+      icon=icon("sign-out-alt")
     )
   )
 

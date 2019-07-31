@@ -13,45 +13,46 @@ observeEvent(input$button_load_inputpts, {
 
     div(
       style="display:inline-block;vertical-align:top;margin-bottom:10px;",
-      shiny::strong("Seleziona i files da caricare"),
       shiny::div(
         style = "vertical-align:top;width:100%",
         shiny::div(
-          style = "display:inline-block;vertical-align:top;width:95pt;",
-          "Cartella di input:"
+          style = "display:inline-block;vertical-align:top;width:95pt;padding-top:8px;",
+          shiny::strong("Cartella di input")
         ),
         shiny::div(
-          style = "display:inline-block;vertical-align:top;padding-left:10px;width:calc(100% - 95pt - 10px - 50pt);",
+          style = "display:inline-block;vertical-align:top;padding-left:10px;width:calc(100% - 95pt - 10px - 50pt - 15px - 10pt);",
           shiny::textInput(
-            "inputptsdir_textin", NULL, ""
+            "inputptspath_textin", NULL, ""
+          )
+        ),
+        shiny::div(
+          style = "display:inline-block;vertical-align:top;width:50pt;",
+          shinyFiles::shinyDirButton(
+            "inputptspath", "Cambia",
+            "Seleziona la cartella contenente i files con i punti da interpolare"
+          ),
+          shiny::div(
+            style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
+            shiny::htmlOutput("inputptspath_errormess")
           )
         )
-      ),
-      shiny::div(
-        style = "display:inline-block;vertical-align:top;width:50pt;",
-        shinyFiles::shinyDirButton(
-          "inputptspath", "Cambia",
-          "Seleziona la cartella contenente i poligonali dei punti da interpolare"
-        )
-      ),
-      shiny::div(style = "display:inline-block;vertical-align:top;width:10px", ""),
-      shiny::div(
-        style = "display:inline-block;vertical-align:top;width:100px",
-        shiny::htmlOutput("inputptspath_errormess")
       )
     ),
     shiny::wellPanel(
       shinycssloaders::withSpinner(DT::dataTableOutput("inputptsfiles_tbl"), type = 6)
     ),
 
-    actionButton("load_inputpts", strong("\u2000Carica"), icon=icon("check")),
+    actionButton("load_inputpts", strong("\u2000Carica"), icon=icon("upload")),
 
-    uiOutput("selector_inputvar"),
+    shiny::div(
+      style = "margin-top:15px;",
+      uiOutput("selector_inputvar")
+    ),
     # leafletOutput("view_map_inputpts", height=400, width="100%"),
     easyClose = FALSE,
     footer = tagList(
       shinyjs::disabled(actionButton("save_extent_inputpts", strong("\u2000Ok"), icon=icon("check"))),
-      modalButton("\u2000Cancel", icon = icon("ban"))
+      modalButton("\u2000Annulla", icon = icon("ban"))
     )
   ))
 })
@@ -65,7 +66,7 @@ shiny::observeEvent(input$inputptspath, ignoreNULL = TRUE, ignoreInit = TRUE, {
   } else {
     inputptspath_string <- ""
   }
-  shiny::updateTextInput(session, "inputptsdir_textin", value = inputptspath_string)
+  shiny::updateTextInput(session, "inputptspath_textin", value = inputptspath_string)
 })
 
 
@@ -92,24 +93,32 @@ output$selector_inputvar <- renderUI({
 })
 
 
+# Error messages
+shiny::observeEvent(input$inputptspath_textin, {
+  if (length(input$inputptspath_textin) != 0) {
+    output$inputptspath_errormess <- path_check(input$inputptspath_textin)
+  }
+})
+
+
 # Observer used to automatically filter the shps available in the selected ----
 # folder based on spatial extent, conformity with standards and selections
 # in coltura/varietaand render the files table
 #
 observeEvent(
-  c(input$inputptsdir_textin),
+  c(input$inputptspath_textin),
   ignoreInit = TRUE, ignoreNULL = TRUE, {
 
     output$inputptsfiles_tbl <- DT::renderDT({
 
       vect_tbl  <- data.frame(`Nome File` = "Nessun file vettoriale trovato")
 
-      if (dir.exists(input$inputptsdir_textin)) {
+      if (dir.exists(input$inputptspath_textin)) {
 
         # Get the list of files which intersect pcolt data.
         #  In case it was already retrieved, do not compute it again
         #  TODO link the list of available files to a specific folder name!!!!
-        vect_list <- list.files(input$inputptsdir_textin, "\\.shp$", full.names = TRUE)
+        vect_list <- list.files(input$inputptspath_textin, "\\.shp$", full.names = TRUE)
 
         # TODO check that it contains multipolygons
 
@@ -149,7 +158,7 @@ observeEvent(
 observeEvent(input$load_inputpts, {
 
   # file paths
-  rv$inputpts_path <- file.path(input$inputptsdir_textin,rv$inputptsfiles_tbl[input$inputptsfiles_tbl_rows_selected,])
+  rv$inputpts_path <- file.path(input$inputptspath_textin,rv$inputptsfiles_tbl[input$inputptsfiles_tbl_rows_selected,])
 
   # FIXME multiple paths
 
@@ -172,6 +181,7 @@ observeEvent(input$load_inputpts, {
 
 # confirm inputpts and activate filtering
 observeEvent(input$save_extent_inputpts, {
+
   rv$inputpts_points <- read_inputpts(
     rv$inputpts_points_raw,
     borders = rv$borders_polygon,
@@ -179,6 +189,7 @@ observeEvent(input$save_extent_inputpts, {
   )
   shiny::removeModal()
   updateTabItems(session, "tabs", selected = "tab_interp") # go to interp tab
+  rv$inputpts_points_raw <- rv$inputptsfiles_tbl <- NULL
   rv$interp_onoff <- TRUE # activate interp tab
   rv$new_inputs <- sample(1E6, 1) # dummy variable to activate observers
 

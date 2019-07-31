@@ -116,10 +116,11 @@ output$indata_rangey <- renderUI({
 
 
 # Filters
-observe({
-  req(rv$inputpts_points, rv$borders_polygon)
+# observe({
+#   req(rv$inputpts_points, rv$borders_polygon)
 
-  observeEvent(c(input$check_rangey, input$miny, input$maxy, input$filter_buttons), {
+  observeEvent(c(input$check_rangey, input$miny, input$maxy, input$filter_buttons), ignoreNULL = FALSE, ignoreInit = FALSE, {
+    req(rv$inputpts_points, rv$borders_polygon)
     if (input$filter_buttons == "manual") {
       if (input$check_rangey) {
         shinyjs::enable("miny")
@@ -139,7 +140,8 @@ observe({
     }
   })
 
-  observeEvent(c(input$check_zscorey, input$zscorey, input$filter_buttons), {
+  observeEvent(c(input$check_zscorey, input$zscorey, input$filter_buttons), ignoreNULL = FALSE, ignoreInit = FALSE, {
+    req(rv$inputpts_points, rv$borders_polygon)
     if (input$filter_buttons == "manual") {
       if (input$check_zscorey) {
         shinyjs::enable("zscorey")
@@ -157,7 +159,8 @@ observe({
     }
   })
 
-  observeEvent(c(input$check_rbiasy, input$rbiasy, input$filter_buttons), {
+  observeEvent(c(input$check_rbiasy, input$rbiasy, input$filter_buttons), ignoreNULL = FALSE, ignoreInit = FALSE, {
+    req(rv$inputpts_points, rv$borders_polygon)
     if (input$filter_buttons == "manual") {
       if (input$check_rbiasy) {
         shinyjs::enable("rbiasy")
@@ -176,6 +179,7 @@ observe({
   })
 
   observeEvent(c(input$check_rangeq, input$rangeq, input$filter_buttons), ignoreNULL = FALSE, ignoreInit = FALSE, {
+    req(rv$inputpts_points, rv$borders_polygon)
     if (input$filter_buttons == "manual") {
       if (input$check_rangeq) {
         shinyjs::enable("rangeq")
@@ -193,7 +197,8 @@ observe({
     }
   })
 
-  observeEvent(c(input$check_pos, input$pos, input$filter_buttons), ignoreNULL = FALSE, ignoreInit = FALSE, {
+  observeEvent(c(input$check_pos, input$pos, input$filter_buttons, rv$borders_polygon), ignoreNULL = FALSE, ignoreInit = FALSE, {
+    req(rv$inputpts_points, rv$borders_polygon)
     if (input$filter_buttons == "manual") {
       if (input$check_pos) {
         shinyjs::enable("pos")
@@ -214,9 +219,9 @@ observe({
   # Set initial value
   # (it is done in this way, so that points are filtered
   # also when the app is opened)
-  shiny::updateSelectInput(session, "filter_buttons", selected = "auto")
-
-}) # end of observe on filters
+#   shiny::updateSelectInput(session, "filter_buttons", selected = "auto")
+#
+# }) # end of observe on filters
 
 
 ## Import filters ----

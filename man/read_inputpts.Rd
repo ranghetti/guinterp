@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_inputpts.R
 \name{read_inputpts}
 \alias{read_inputpts}
-\title{Read yield data}
+\title{Read point data}
 \usage{
 read_inputpts(input, borders = NULL, varname = NA,
   .shiny_session = NULL, .shiny_pbar_id = NULL)

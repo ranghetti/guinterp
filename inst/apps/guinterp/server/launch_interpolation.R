@@ -1,5 +1,5 @@
 #   ____________________________________________________________________________
-#   Observers used to update the map during yield interpolation             ####
+#   Observers used to update the map during interpolation             ####
 
 # check if the manual vgm were defined (if required)
 observeEvent(input$interp_button, ignoreInit = TRUE, ignoreNULL = TRUE, {
@@ -26,7 +26,7 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
       ),
       shinyWidgets::progressBar(id = "pb_interp", value = 0, striped = TRUE)
     ),
-    title = "Caricamento dati di resa"
+    title = "Caricamento dati"
   )
 
 
@@ -85,11 +85,10 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
 
   removeModal()
 
-  # shinyWidgets::sendSweetAlert(
-  #   session, title = "Interpolazione completata",
-  #   text = "I dati di resa sono stati correttamente interpolati.",
-  #   type = "success", btn_labels = "Ok"
-  # )
+  shinyWidgets::sendSweetAlert(
+    session, title = "Interpolazione completata",
+    text = "I dati sono stati correttamente interpolati.",
+    type = "success", btn_labels = "Ok"
+  )
 
 })
-

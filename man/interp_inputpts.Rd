@@ -2,7 +2,7 @@
 % Please edit documentation in R/interp_inputpts.R
 \name{interp_inputpts}
 \alias{interp_inputpts}
-\title{Interpolate yield points of a single field}
+\title{Interpolate points of a single polygon}
 \usage{
 interp_inputpts(indata_sf, field_poly, vgm.fit, globgrid,
   method = "krige", n_cores = 1, focal_types = NULL,

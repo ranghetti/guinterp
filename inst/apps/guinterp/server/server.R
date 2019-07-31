@@ -2,7 +2,6 @@
 server_guinterp <- function(input, output, session) {
 
   rv <- reactiveValues()
-  RV_yield <- reactiveValues() # FIXME remove alla fine!
 
   # get server volumes
   volumes <- c("Home"=path.expand("~"), shinyFiles::getVolumes()())
@@ -10,8 +9,8 @@ server_guinterp <- function(input, output, session) {
   # fix map_selvariable to "selvar"
   # to allow visualisation of more variables:
   # 1. add a radioGroupButtons of input$map_selvariable;
-  # 2. replace rv$map_selvariable with input$map_selvariable in all the code
-  rv$map_selvariable <- "selvar"
+  # 2. replace map_selvariable with input$map_selvariable in all the code
+  map_selvariable <- "selvar"
 
   # # open with hiden sidebarmenu
   # shinyjs::addClass(selector = "body", class = "sidebar-collapse")
@@ -49,13 +48,13 @@ server_guinterp <- function(input, output, session) {
     local=TRUE
   )$value
 
-  #### Update yield map ####
+  #### Update map ####
   source(
     system.file("apps/guinterp/server/update_interp_map.R", package="guinterp"),
     local=TRUE
   )$value
 
-  #### Update yield histogram ####
+  #### Update histogram ####
   source(
     system.file("apps/guinterp/server/update_interp_histogram.R", package="guinterp"),
     local=TRUE
@@ -67,28 +66,11 @@ server_guinterp <- function(input, output, session) {
     local=TRUE
   )$value
 
+  #### Reset app ####
+  source(
+    system.file("apps/guinterp/server/close_interp.R", package="guinterp"),
+    local=TRUE
+  )$value
 
 
-
-
-
-
-
-
-
-
-
-  # if Exit is pressend, exit from GUI
-  observeEvent(input$exit_gui, {
-    shinyjs::js$closeWindow()
-    # shinyjs::js$resetApp()
-    stopApp()
-  })
-  observeEvent(input$finish_and_exit, {
-    shinyjs::js$closeWindow()
-    # shinyjs::js$resetApp()
-    stopApp()
-  })
-
-
-} # end of yieldmaps_gui.server
+} # end of server function

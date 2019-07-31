@@ -17,11 +17,8 @@ shiny::div(
         "Manuale"="manual", "Predefinito"="auto",
         "Solo valori estremi"="minimal", "Nessuno"="no"
       ),
-      selected = "no"#, # this is not the default value: see srv_import_yield_interp_filters.R
-      # checkIcon = list(yes = icon("check")),
-      # # status = "default",
-      # direction = "vertical"
-    )#)
+      selected = "no"
+    )
   ),
 
   shiny::conditionalPanel(
@@ -68,7 +65,7 @@ shiny::div(
         style="display:inline-block;vertical-align:middle;width:calc(100% - 50pt - 3px - 2pt);",
         shiny::sliderInput(
           inputId="zscorey",
-          label=NULL,#"Resa, Zscore:",
+          label=NULL,
           min = -300,
           max = 300,
           value = c(-100,100),
@@ -97,7 +94,7 @@ shiny::div(
         style="display:inline-block;vertical-align:middle;width:calc(100% - 50pt - 3px - 2pt);",
         shiny::sliderInput(
           inputId="rbiasy",
-          label=NULL,#"Resa, Rbias:",
+          label=NULL,
           min = -200,
           max = 200,
           value = c(-75,75),
@@ -126,8 +123,8 @@ shiny::div(
         style="display:inline-block;vertical-align:middle;width:calc(100% - 50pt - 3px - 2pt);",
         shiny::sliderInput(
           inputId="rangeq",
-          label=NULL,#"Resa, intervallo dei quantili:",
-          min = 0, #trunc(min(outdata$yield)),
+          label=NULL,
+          min = 0,
           max = 100,
           value = c(2,98),
           post = "%",
@@ -155,8 +152,8 @@ shiny::div(
         style="display:inline-block;vertical-align:middle;width:calc(100% - 50pt - 3px - 2pt);",
         shiny::sliderInput(
           inputId="pos",
-          label=NULL,#"Distanza minima dal bordo dei campi:",
-          min = 0, #trunc(min(outdata$yield)),
+          label=NULL,
+          min = 0,
           max = 50,
           value = 5,
           post = " m",

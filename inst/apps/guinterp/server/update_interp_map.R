@@ -65,7 +65,7 @@ output$interp_map <- leaflet::renderLeaflet({
 
 
 # Update the map when filters are changed
-observeEvent(c(rv$change_interp, rv$map_selvariable), { # LEAVE OBSERVEEVENT!
+observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon), { # LEAVE OBSERVEEVENT!
   # observe non è reattivo verso rv$change_interp, quindi non funziona correttamente.
   # per rendere questo codice reattivo ad altre variabili, aggiungerle al
   # vettore di observeevent oppure variare rv$change_interp dove occorre.
@@ -74,7 +74,7 @@ observeEvent(c(rv$change_interp, rv$map_selvariable), { # LEAVE OBSERVEEVENT!
   # Change the colour scale when filters or variable are changed
   rv$pal <- colourPal(
     rv$inputpts_points[sid < samplesize & filter == FALSE,],
-    rv$map_selvariable,
+    map_selvariable,
     na.colour = NA
   )
 
@@ -101,7 +101,7 @@ observeEvent(c(rv$change_interp, rv$map_selvariable), { # LEAVE OBSERVEEVENT!
       data      = rv$inputpts_points[sid < samplesize & filter == FALSE,],
       layerId   = paste0("pts_", rv$inputpts_points[sid < samplesize & filter == FALSE,]$sid),
       radius    = 3, stroke = FALSE, fillOpacity = 0.65,
-      fillColor = ~rv$pal(rv$inputpts_points[sid < samplesize & filter == FALSE,][[rv$map_selvariable]]),
+      fillColor = ~rv$pal(rv$inputpts_points[sid < samplesize & filter == FALSE,][[map_selvariable]]),
       label     = ~format(selvar, digits = 0, nsmall = 1),
       group     = "Punti utilizzati",
       labelOptions = labelOptions(style = list("background-color" = "#CCFFCC"))
@@ -111,12 +111,8 @@ observeEvent(c(rv$change_interp, rv$map_selvariable), { # LEAVE OBSERVEEVENT!
         values = rv$inputpts_points[sid < samplesize & filter == FALSE,],
         layerId = "colorLegend",
         title = switch(
-          rv$map_selvariable,
-          selvar = "Variabile selezionata" # it can be removed
-          # yield     = "Resa (t/ha)",
-          # speed     = "Velocita' (km/h)",
-          # rel_width = "Barra (m)",
-          # area      = "Area (m²)"
+          map_selvariable,
+          selvar = NULL # it can be removed
         )
       )
   }
@@ -134,7 +130,7 @@ observeEvent(c(rv$change_interp, rv$map_selvariable), { # LEAVE OBSERVEEVENT!
     leaflet::leafletProxy("interp_map") %>%
       # leaflet::removeImage("interp_raster")
       leaflet::clearImages()
-    if (rv$map_selvariable == "selvar") {
+    if (map_selvariable == "selvar") {
       leaflet::leafletProxy("interp_map") %>%
         leaflet::addRasterImage(
           # layerId = "interp_raster",
@@ -164,18 +160,10 @@ observeEvent(rv$new_interpolation, {
     leaflet::showGroup(c("Raster interpolato"))
 })
 
-# observe({
-#   if(is.null(rv$interp_merged)) {
-#     shinyjs::disable("do_save_yield_interp")
-#   } else {
-#     shinyjs::enable("do_save_yield_interp")
-#   }
-# })
-
 observeEvent(rv$new_inputs, {
   req(rv$inputpts_points)
   # workaround to show points
-  shiny::updateRadioButtons(session, 'filter_buttons', selected = "no")
-  delay(500, shiny::updateRadioButtons(session, 'filter_buttons', selected = "auto"))
+  shiny::updateSelectInput(session, 'filter_buttons', selected = "no")
+  delay(500, shiny::updateSelectInput(session, 'filter_buttons', selected = "auto"))
 })
 

@@ -1,4 +1,4 @@
-#' @title Read yield data
+#' @title Read point data
 #' @description TODO
 #' @param input TODO
 #' @param format `character (1)` TODO
@@ -46,13 +46,14 @@ read_inputpts <- function(
   }
 
 
-
   # add border ID to points
   rawdata_sf <- if (!is.null(borders)) {
-    suppressMessages(sf::st_join(rawdata_sf, borders)) %>%
-      dplyr::filter(!is.na(id_geom))
+    suppressMessages(
+      rawdata_sf[,names(rawdata_sf)!="id_geom"] %>%
+        sf::st_join(borders)
+    ) %>% dplyr::filter(!is.na(id_geom))
   } else {
-    dplyr::mutate(rawdata_sf, idfield = 0)
+    dplyr::mutate(rawdata_sf, id_geom = 0)
   } %>%
     dplyr::filter(!is.na(selvar)) # remove points with empty varname
 
@@ -62,30 +63,30 @@ read_inputpts <- function(
   }
 
 
-    # assign UID
-    set.seed(24029) # to grant repetibility
-    outdata <- data.table(rawdata_sf)[,list(
-      uid = seq_len(nrow(rawdata_sf)),
-      sid = sample(nrow(rawdata_sf)), # ID in raw order and sampled order
-      lat = st_coordinates(st_transform(rawdata_sf$geometry,4326))[,"Y"],
-      lon = st_coordinates(st_transform(rawdata_sf$geometry,4326))[,"X"],
-      idfield = id_geom,
-      selvar,
-      f_rangev = FALSE, f_rangey = FALSE, f_zscorey = FALSE, f_rbiasy = FALSE,
-      f_rangeq = FALSE, f_pos = FALSE, filter = FALSE
-    )]
-    # Update progress bar
-    if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
-      shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 70)
-    }
+  # assign UID
+  set.seed(24029) # to grant repetibility
+  outdata <- data.table(rawdata_sf)[,list(
+    uid = seq_len(nrow(rawdata_sf)),
+    sid = sample(nrow(rawdata_sf)), # ID in raw order and sampled order
+    lat = st_coordinates(st_transform(rawdata_sf$geometry,4326))[,"Y"],
+    lon = st_coordinates(st_transform(rawdata_sf$geometry,4326))[,"X"],
+    idfield = as.character(id_geom),
+    selvar,
+    f_rangev = FALSE, f_rangey = FALSE, f_zscorey = FALSE, f_rbiasy = FALSE,
+    f_rangeq = FALSE, f_pos = FALSE, filter = FALSE
+  )]
+  # Update progress bar
+  if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
+    shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 70)
+  }
 
-    # Update progress bar
-    if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
-      shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 100)
-      Sys.sleep(0.5)
-    }
+  # Update progress bar
+  if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
+    shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 100)
+    Sys.sleep(0.5)
+  }
 
-    # end of custom_ibf format
+  # end of custom_ibf format
 
   setkey(outdata,sid)
   return(outdata) #temp

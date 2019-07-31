@@ -11,8 +11,22 @@ observeEvent(list(input$maxptdist_onoff), {
   }
 })
 
+# Default output projection
+output$out_proj_textinput <- renderUI({
+  shiny::req(rv$inputpts_points)
+  textInput(
+    "out_proj", NULL,
+    value = st_crs_utm_from_lonlat(
+      lon = rv$inputpts_points[,mean(lon,na.rm=TRUE)],
+      lat = rv$inputpts_points[,mean(lat,na.rm=TRUE)]
+    )$epsg
+  )
+})
+
+
 # check CRS
 output$outproj_message <- renderUI({
+  req(input$out_proj)
   # if required, take from reference raster
   rv$outproj_validated <- tryCatch(
     st_crs2(input$out_proj),
@@ -26,6 +40,23 @@ output$outproj_message <- renderUI({
     span(style="color:darkgreen", "\u2714")
   }
 })
+
+
+# Change polygon extension if it was set as the bbox of the points
+observeEvent(rv$outproj_validated, {
+  req(rv$outproj_validated)
+  if (input$border_type == "bbox") {
+    rv$borders_polygon <- inputpts_to_sf(rv$inputpts_points, outcrs = rv$outproj_validated, all = TRUE) %>%
+      st_bbox() %>%
+      st_as_sfc() %>%
+      st_buffer_m(input$bbox_buffer) %>%
+      st_bbox() %>% st_as_sfc() %>% sf::st_sf() %>%
+      dplyr::transmute(id_geom = 0) %>%
+      dplyr::group_by(id_geom) %>% dplyr::summarise() %>%
+      sf::st_transform(4326)
+  }
+})
+
 
 # Deactivate output CRS and resolution 1) if some raster exists, or
 # 2) if overwrite is TRUE and all the existing rasters would be overwritten
@@ -79,7 +110,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
         lat = rv$inputpts_points[,mean(lat,na.rm=TRUE)]
       )
     )
-    max_diagonal <- sapply(unique(rv$inputpts_sf$idfield), function(i) {
+    rv$max_diagonal <- sapply(unique(rv$inputpts_sf$idfield), function(i) {
       rv$inputpts_sf[rv$inputpts_sf$idfield==i,] %>%
       st_bbox() %>% as.list() %>%
       with(c((xmax-xmin)^2, (ymax-ymin)^2)) %>%
@@ -117,7 +148,12 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
               style = "display:inline-block;position:relative;width:calc(100% - 30pt - 13px);padding-left:10px;margin-bottom:-5px;",
               numericInput(
                 "sill", label = NULL,
-                value = if (is.null(shiny::isolate(input$sill))) {1} else {shiny::isolate(input$sill)}
+                value = if (is.null(shiny::isolate(input$sill))) {
+                  # default value: data variance
+                  var(rv$inputpts_points$selvar)
+                } else {
+                  shiny::isolate(input$sill)
+                }
               )
             ),
             shiny::div(
@@ -128,7 +164,12 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
               style = "display:inline-block;position:relative;width:calc(100% - 30pt - 13px);padding-left:10px;margin-bottom:-5px;",
               numericInput(
                 "nugget", label = NULL,
-                value = if (is.null(shiny::isolate(input$nugget))) {0} else {shiny::isolate(input$nugget)}
+                value = if (is.null(shiny::isolate(input$nugget))) {
+                  # default value: 1/5 of the sill
+                  var(rv$inputpts_points$selvar)/5
+                } else {
+                  shiny::isolate(input$nugget)
+                }
               )
             ),
             shiny::div(
@@ -139,7 +180,12 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
               style = "display:inline-block;position:relative;width:calc(100% - 30pt - 13px);padding-left:10px;margin-bottom:-5px;",
               numericInput(
                 "range", label = NULL,
-                value = if (is.null(shiny::isolate(input$range))) {50} else {shiny::isolate(input$range)}
+                value = if (is.null(shiny::isolate(input$range))) {
+                  # default value: 1/5 of the cutoff (~ 1/5 of 1/3 of the bbox diagonal)
+                  rv$max_diagonal/3/5
+                } else {
+                  shiny::isolate(input$range)
+                }
               )
             ),
             # numericInput("sill", label = shiny::em("Sill"), value = 1),
@@ -181,9 +227,9 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
                   inputId="vgm_cutoff",
                   label="Massima distanza:",
                   min = 10,
-                  max = ceiling(max_diagonal*2/3),
+                  max = ceiling(rv$max_diagonal*2/3),
                   value = if (is.null(shiny::isolate(input$vgm_cutoff))) {
-                    ceiling(max_diagonal/3)
+                    ceiling(rv$max_diagonal/3)
                   } else {
                     shiny::isolate(input$vgm_cutoff)
                   },
@@ -249,11 +295,16 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
           style="display:inline-block;vertical-align:middle;padding-left:10px;width:calc(100% - 55pt - 3px - 2pt);",
           numericInput(
             "semiauto_range", label = NULL,
-            value = if (is.null(shiny::isolate(input$semiauto_range))) {50} else {shiny::isolate(input$semiauto_range)}
+            value = if (is.null(shiny::isolate(input$semiauto_range))) {
+              NA
+            } else {
+              shiny::isolate(input$semiauto_range)
+            },
+            min = 0
           )
         )
       ),
-      footer = actionButton("save_semiauto", "\u2004Salva", icon = shiny::icon("check"))
+      footer = shinyjs::disabled(actionButton("save_semiauto", "\u2004Salva", icon = shiny::icon("check")))
     )
     shiny::showModal(fit_semiauto_gui)
   }
@@ -261,31 +312,41 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
 })
 
 
-## Server
+#### Server ####
 
-indata_sel <- reactive({
+## Activate semiauto ok button
+observeEvent(input$semiauto_range, {
+  if (is.na(input$semiauto_range)) {
+    shinyjs::disable("save_semiauto")
+  } else {
+    shinyjs::enable("save_semiauto")
+  }
+})
+
+
+## Create (and optimise) manual variogram
+observe({
   shiny::req(rv$inputpts_sf, input$interp_sampling)
-  rv$inputpts_sf[rv$inputpts_sf$sid<=input$interp_sampling,]
+  indata_sel <- rv$inputpts_sf[rv$inputpts_sf$sid<=input$interp_sampling,]
+  rv$v.man <- gstat::vgm(psill=input$sill, model=input$model, range=input$range, nugget=input$nugget)
+  v_formula <- if (length(unique(indata_sel$idfield)) > 1) {selvar ~ idfield} else {selvar ~ 1}
+  rv$v <- gstat::variogram(v_formula, indata_sel, cutoff=input$vgm_cutoff)
+  rv$autofit_vgm <- sample(1E6, 1)
 })
 
-v.man <- reactive({
-  shiny::req(rv$inputpts_sf, input$interp_sampling)
-  gstat::vgm(psill=input$sill, model=input$model, range=input$range, nugget=input$nugget)
+## Optimise manual variogram
+observeEvent(input$autofit_vgm, {
+  rv$autofit_vgm <- sample(1E6, 1)
 })
 
-v <- reactive({
-  shiny::req(rv$inputpts_sf, input$vgm_cutoff)
-  v_formula <- if (length(unique(indata_sel()$idfield)) > 1) {selvar ~ idfield} else {selvar ~ 1}
-  gstat::variogram(v_formula, indata_sel(), cutoff=input$vgm_cutoff)
-})
 
 #output$err_autofit_vgm <- renderUI({" "})
 
-observeEvent(input$autofit_vgm, ignoreInit = TRUE, {
-  shiny::req(rv$inputpts_sf, v(), v.man())
-  # fit_vgm_warn <- tryCatch(v.auto <- fit.variogram(v(), v.man()), warning=function(w){"warning"})
-  v.auto <- suppressWarnings(gstat::fit.variogram(v(), v.man()))
-  if (is(tryCatch(gstat::fit.variogram(v(), v.man()),warning=function(w){"warning"}), "variogramModel")) {
+observeEvent(rv$autofit_vgm, {
+  shiny::req(rv$inputpts_sf, rv$v, rv$v.man)
+  # fit_vgm_warn <- tryCatch(v.auto <- fit.variogram(rv$v, rv$v.man), warning=function(w){"warning"})
+  v.auto <- suppressWarnings(gstat::fit.variogram(rv$v, rv$v.man))
+  if (is(tryCatch(gstat::fit.variogram(rv$v, rv$v.man),warning=function(w){"warning"}), "variogramModel")) {
     output$err_autofit_vgm_1 <- renderUI({shiny::span(style="color:darkgreen;",shiny::icon("check"))})
     output$err_autofit_vgm_2 <- renderUI({""})
   } else {
@@ -317,8 +378,8 @@ output$vgm_sill <- renderUI({
 
 # Histogram of selvar
 output$v_plot <- renderPlot({
-  shiny::req(v(), v.man())
-  plot(v(),v.man())
+  shiny::req(rv$v, rv$v.man)
+  plot(rv$v,rv$v.man)
 })
 
 observeEvent(list(input$semiauto_autorange, input$fit_vgm_button, rv$fit_vgm_launchgui), {
@@ -331,8 +392,8 @@ observeEvent(list(input$semiauto_autorange, input$fit_vgm_button, rv$fit_vgm_lau
 })
 
 observeEvent(input$save_vgm, ignoreInit = TRUE, {
-  shiny::req(rv$inputpts_sf, v(), v.man())
-  rv$vgm.fit <- v.man()
+  shiny::req(rv$inputpts_sf, rv$v, rv$v.man)
+  rv$vgm.fit <- rv$v.man
   attr(rv$vgm.fit,"cutoff") <- input$vgm_cutoff
   attr(rv$vgm.fit,"n_points") <- input$interop_sampling
   if (any(grepl("^autoopen",rv$fit_vgm_launchgui))) {

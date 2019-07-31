@@ -4,12 +4,14 @@
 \alias{inputpts_to_sf}
 \title{Make sf from filtered data}
 \usage{
-inputpts_to_sf(indata, outcrs = 3857)
+inputpts_to_sf(indata, outcrs = 3857, all = FALSE)
 }
 \arguments{
 \item{indata}{TODO}
 
 \item{outcrs}{`CRS` output CRS}
+
+\item{all}{logical (TRUE for all points, FALSE for only filtered ones)}
 }
 \description{
 TODO

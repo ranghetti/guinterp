@@ -10,9 +10,10 @@ st_crs_utm_from_lonlat <- function(lon, lat = 45) {
 
 # give the UTM zone of an sf object
 st_crs_utm <- function(x) {
-  centre <- st_union(x) %>% st_centroid() %>%  # compute centroid
-    st_transform(4326)                         # convert to lonlat
-  out_crs <- st_crs_utm_from_lonlat(
+  centre <- suppressWarnings(
+    st_union(x) %>% st_centroid()  # compute centroid
+  ) %>% st_transform(4326)         # convert to lonlat
+  st_crs_utm_from_lonlat(
     st_coordinates(centre)[,"X"],
     st_coordinates(centre)[,"Y"]
   )

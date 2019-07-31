@@ -36,6 +36,9 @@ krige_par <- function(
     stop("Argument 'model' is mandatory with method=\"krige\".")
   }
 
+  # convert newdata to points
+  newdata_pt <- suppressWarnings(st_as_sf(newdata, "sf") %>% st_centroid())
+
   # set default n_cores value
   if (is.na(n_cores)) {
     n_cores <- if (nrow(locations) < 1000) {
@@ -58,13 +61,12 @@ krige_par <- function(
   }
 
   krig_fun <- function(ind) {
-    if (floor(ind / 500) - (ind/500) == 0) print(ind)
-    in_pt <- suppressWarnings(st_as_sf(newdata[ind, ]) %>% st_centroid())
-
+    # if (floor(ind / 500) - (ind/500) == 0) print(ind)
+    in_pt <- newdata_pt[ind,]
     which_neigh <- SearchTrees::rectLookup(
       qtree,
-      xlim = c(st_coordinates(in_pt)[1] - maxdist/2, st_coordinates(in_pt)[1] + maxdist/2),
-      ylim = c(st_coordinates(in_pt)[2] - maxdist/2, st_coordinates(in_pt)[2] + maxdist/2)
+      xlim = c(st_coordinates(in_pt)[,1] - maxdist/2, st_coordinates(in_pt)[,1] + maxdist/2),
+      ylim = c(st_coordinates(in_pt)[,2] - maxdist/2, st_coordinates(in_pt)[,2] + maxdist/2)
     )
     if (length(which_neigh) <= 50) {
       which_neigh <- SearchTrees::knnLookup(
@@ -103,9 +105,13 @@ krige_par <- function(
     if (method == "krige") {
       nmax  <- 200
       qtree <- SearchTrees::createTree(st_coordinates(locations))
-      indxs    <- seq_along(newdata)
-      out_krig <- lapply(indxs, FUN = function(x) krig_fun(x))
-      out_krig <- do.call("rbind", out_krig)
+      out_krig_list <- lapply(seq_len(nrow(newdata_pt)), FUN = function(x) krig_fun(x))
+      # out_krig <- lapply(seq_len(dim(newdata)["x"]), function(x) {
+      #   lapply(seq_len(dim(newdata)["y"]), function(y) {
+      #     krig_fun(x,y)
+      #   })
+      # })
+      out_krig <- do.call("rbind", out_krig_list)
       st_rasterize(out_krig["var1.pred"], template = newdata)
       # krige(as.formula(formula), locations, newdata, model, nmax=nmax, maxdist=maxdist)
     } else if (method == "idw") {
@@ -171,8 +177,7 @@ krige_par <- function(
           qtree <- SearchTrees::createTree(st_coordinates(loc_small))
           nmax  <- 200
           newdata_krig <- newdata[,sel_row,,]
-          indxs     <- seq_along(newdata_krig)
-          out_krig  <- lapply(indxs, FUN = function(N) krig_fun(N))
+          out_krig  <- lapply(seq_len(prod(dim(newdata_krig))), FUN = function(N) krig_fun(N))
           out_krig  <- do.call("rbind", out_krig)
           out_krig
           # return(out_krig)

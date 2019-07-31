@@ -1,5 +1,5 @@
 #   ______________________________________________________________________
-#   Script used to build the GUI of the tab used to edit/view yield data
+#   Script used to build the GUI of the tab used to edit/view data
 #   data within the app app_editdat
 #
 # shinyjs::extendShinyjs(text = jscode, functions = c("closeWindow")),

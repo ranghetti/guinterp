@@ -46,7 +46,7 @@ ui_guinterp <- shinydashboard::dashboardPage(
 
       # shinydashboard::menuItem("Selezione input", tabName = "tab_input", icon = icon("folder-open")),
 
-      shinydashboard::menuItem("Interpolazione", tabName = "tab_interp", icon = icon("folder-open")),
+      hidden(shinydashboard::menuItem("Interpolazione", tabName = "tab_interp", icon = icon("folder-open"))),
 
       ### Bar with inputs and commands
       source(

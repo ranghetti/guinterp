@@ -131,39 +131,32 @@ guinterp_process <- function(
     }
     rm(vgm_)
     vgm_man <- vgm(
-      psill = 1,
-      nugget = 0,
+      psill = var(inputpts_sf$selvar),
+      nugget = var(inputpts_sf$selvar)/5,
       model = if (!is.null(attr(vgm, "model"))) {attr(vgm, "model")} else {"Exp"},
-      range = if (!is.null(attr(vgm, "range"))) {attr(vgm, "range")} else {50}
+      range = if (!is.null(attr(vgm, "range"))) {attr(vgm, "range")} else {
+        with(as.list(st_bbox(inputpts_sf)), sqrt((xmax-xmin)^2+(ymax-ymin)^2))/3/5
+      }
     )
-    for (f in unique(inputpts_sf$idfield)) {
-      # # MODE 1: Manual variogram:
-      # # 1) range: 50m
-      # # 2) sill: variance of data
-      # # 3) nugget: 1/2 sill
-      # sel_variance <- var(inputpts_sf@data[inputpts_sf$idfield==f,"yield"], na.rm=TRUE)
-      # vgm[[f]] <- vgm(psill=sel_variance/2, model="Exp", range=50, nugget=sel_variance/2)
-      # MODE 2 (disabled for now): Automatic variogram
+    for (sel_field in unique(inputpts_sf$idfield)) {
 
       if (interp_method == "krige") {
         v <- variogram(
           selvar ~ 1,
-          inputpts_sf[inputpts_sf$idfield == f,],
-          cutoff = inputpts_sf[inputpts_sf$idfield==f,] %>%
+          inputpts_sf[inputpts_sf$idfield == sel_field,],
+          cutoff = inputpts_sf[inputpts_sf$idfield == sel_field,] %>%
             st_bbox() %>% as.list() %>%
             with(c((xmax-xmin)^2, (ymax-ymin)^2)) %>%
             sum() %>% sqrt()/3 %>% ceiling()
         )
 
-        vgm[[f]] <- fit.variogram(v, vgm_man,
-                                  fit.sills = TRUE,
-                                  fit.ranges = TRUE)
+        vgm[[sel_field]] <- fit.variogram(v, vgm_man, fit.sills = TRUE, fit.ranges = TRUE)
         # fix range if kept
         if (!is.null(attr(vgm, "range"))) {
-          vgm[[f]][2, "range"] <- attr(vgm, "range")
+          vgm[[sel_field]][2, "range"] <- attr(vgm, "range")
         }
       } else {
-        vgm[[f]] <- vgm_man # not used in IDW
+        vgm[[sel_field]] <- vgm_man # not used in IDW
       }
     }
   } else {

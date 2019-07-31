@@ -11,7 +11,7 @@
 
 st_buffer_m <- function(x, dist) {
   # from sp to sf (TODO improve checks)
-  if (!is(x, "sf")) {
+  if (all(!is(x, "sf"), !is(x, "sfc"))) {
     x <- st_as_sf(x)
   }
   projected <- if (st_is_longlat(x)) {
