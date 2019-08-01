@@ -252,12 +252,11 @@ observeEvent(input$downloadFilters, {
       as.character(export_param_path$datapath)
     )
 
-    bf_message_confirm("Esportazione completata")
-    # shinyWidgets::sendSweetAlert(
-    #   session, title = NULL,
-    #   text = "Esportazione completata",
-    #   type = "success", btn_labels = "Ok"
-    # )
+    shinyWidgets::sendSweetAlert(
+      session, title = NULL,
+      text = "Esportazione completata",
+      type = "success", btn_labels = "Ok"
+    )
   }
 })
 
@@ -298,12 +297,11 @@ observeEvent(rv$importFilters, {
     updateCheckboxInput(session, "check_pos", value=FALSE)
   }
 
-  bf_message_confirm("Importazione completata")
-  # shinyWidgets::sendSweetAlert(
-  #   session, title = NULL,
-  #   text = "Importazione completata",
-  #   type = "success", btn_labels = "Ok"
-  # )
+  shinyWidgets::sendSweetAlert(
+    session, title = NULL,
+    text = "Esportazione completata",
+    type = "success", btn_labels = "Ok"
+  )
 })
 
 # # Load default values from json at startup
@@ -371,10 +369,9 @@ observeEvent(input$setdefaultFilters, {
     )
   )
 
-  bf_message_confirm("I filtri attuali sono stati correttamente impostati come predefiniti.")
-  # shinyWidgets::sendSweetAlert(
-  #   session, title = NULL,
-  #   text = "I filtri attuali sono stati correttamente impostati come predefiniti.",
-  #   type = "success", btn_labels = "Ok"
-  # )
+  shinyWidgets::sendSweetAlert(
+    session, title = NULL,
+    text = "I filtri attuali sono stati correttamente impostati come predefiniti.",
+    type = "success", btn_labels = "Ok"
+  )
 })

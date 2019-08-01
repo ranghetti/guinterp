@@ -4,7 +4,7 @@
 #' @details DETAILS
 #' @rdname guinterp
 #' @export
-#' @author Lorenzo Busetto, phD (2017) <lbusett@gmail.com>
+#' @author Luigi Ranghetti, phD (2019) <ranghetti.l@irea.cnr.it>
 #' @importFrom shiny shinyOptions runApp
 guinterp <- function()  {
 

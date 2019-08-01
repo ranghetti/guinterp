@@ -26,7 +26,6 @@ ui_guinterp <- shinydashboard::dashboardPage(
       id = "tabs",
 
       # Tags
-      shinyalert::useShinyalert(),
       shinyjs::useShinyjs(),
       shinyjs::extendShinyjs(
         text = "shinyjs.closeWindow = function() { window.close(); }",

@@ -2,8 +2,7 @@
 #' @description TODO
 #' @param poly TODO
 #' @param width TODO
-#' @importFrom rgeos gBuffer gCentroid
-#' @importFrom sp CRS is.projected spTransform
+#' @importFrom sf st_as_sf st_buffer st_crs st_transform st_is_longlat
 #' @export
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
 #' @note Modified from https://gis.stackexchange.com/questions/121489/1km-circles-around-lat-long-points-in-many-places-in-world

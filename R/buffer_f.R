@@ -10,19 +10,16 @@
 #' @param buffer the minimum distance between output points
 #' @param reps the number of repetitions for the points selection
 #' @importFrom methods is
-#' @importFrom sp coordinates
+#' @importFrom sf st_coordinates
 #' @author David R. Roberts (2015)
-#' @export
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
+#' @export
 #' @note Taken from https://davidrroberts.wordpress.com/2015/09/25/spatial-buffering-of-points-in-r-while-retaining-maximum-sample-size/
 
 buffer_f <- function(foo, buffer, reps){
 
   # ranghetti addition
-  if (is(foo, "SpatialPoints")) {
-    foo$x <- coordinates(foo)[,1]
-    foo$y <- coordinates(foo)[,2]
-  } else if (is(foo, "sf")) {
+  if (is(foo, "sf")) {
     foo$x <- st_coordinates(foo)[,1]
     foo$y <- st_coordinates(foo)[,2]
   }

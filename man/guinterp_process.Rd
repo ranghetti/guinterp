@@ -64,5 +64,5 @@ This function calls other functions of the library to perform
 License: GPL 3.0
 }
 \author{
-Luigi Ranghetti, phD (2018) \email{ranghetti.l@irea.cnr.it}
+Luigi Ranghetti, phD (2019) \email{ranghetti.l@irea.cnr.it}
 }

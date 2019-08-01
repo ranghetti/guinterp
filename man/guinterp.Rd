@@ -16,5 +16,5 @@ FUNCTION_DESCRIPTION
 DETAILS
 }
 \author{
-Lorenzo Busetto, phD (2017) <lbusett@gmail.com>
+Luigi Ranghetti, phD (2019) <ranghetti.l@irea.cnr.it>
 }

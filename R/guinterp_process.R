@@ -32,14 +32,13 @@
 #' @importFrom doParallel registerDoParallel
 #' @importFrom parallel detectCores makeCluster stopCluster
 #' @importFrom foreach foreach "%do%" "%dopar%"
-#' @importFrom raster crop values writeRaster
-#' @importFrom rgdal readGDAL
-#' @importFrom rgeos gBuffer gIntersection
-#' @importFrom sp spTransform
-#' @importFrom sf st_join st_as_sf st_area st_buffer
+#' @importFrom raster writeRaster
+#' @importFrom sf st_join st_as_sf st_area st_buffer st_crs st_transform
+#'  st_union st_bbox st_intersection st_polygon st_sfc
 #' @importFrom dplyr mutate filter group_by summarise
+#' @importFrom stars read_stars
 #' @export
-#' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
+#' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 
 
