@@ -14,8 +14,8 @@ shiny::div(
             shiny::strong("Vettoriale dei poligoni")
           ),
           shiny::span(
-            style="display:inline-block",
-            shiny::actionLink("help_fields_path", shiny::icon("question-circle"))
+            style="display:inline-block"#,
+            # shiny::actionLink("help_fields_path", shiny::icon("question-circle"))
           )
         ),
         actionButton(
@@ -33,8 +33,8 @@ shiny::div(
             shiny::strong("Vettoriali dei punti")
           ),
           shiny::span(
-            style="display:inline-block",
-            shiny::actionLink("help_rawdata_paths", shiny::icon("question-circle"))
+            style="display:inline-block"#,
+            # shiny::actionLink("help_rawdata_paths", shiny::icon("question-circle"))
           )
         ),
         shinyjs::disabled(actionButton(

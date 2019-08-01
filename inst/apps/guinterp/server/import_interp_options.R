@@ -153,7 +153,8 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
                   var(rv$inputpts_points$selvar)
                 } else {
                   shiny::isolate(input$sill)
-                }
+                },
+                min = 0
               )
             ),
             shiny::div(
@@ -169,7 +170,8 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
                   var(rv$inputpts_points$selvar)/5
                 } else {
                   shiny::isolate(input$nugget)
-                }
+                },
+                min = 0
               )
             ),
             shiny::div(
@@ -185,7 +187,8 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
                   rv$max_diagonal/3/5
                 } else {
                   shiny::isolate(input$range)
-                }
+                },
+                min = 0
               )
             ),
             # numericInput("sill", label = shiny::em("Sill"), value = 1),

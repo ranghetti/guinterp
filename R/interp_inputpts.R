@@ -103,9 +103,6 @@ interp_inputpts <- function(
   )
   # fieldgrid_buf[[1]][!is.na(fieldgrid_buf[[1]])] <- NA
 
-
-  # TODO use spatialpixels and exclude areas from buffer polygon
-
   # interpolate
   interp_raster <- krige_par(selvar ~ 1, indata_sf_sub, fieldgrid, vgm.fit, method=method, n_cores=n_cores, maxdist=maxdist)
 

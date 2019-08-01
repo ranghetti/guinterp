@@ -239,7 +239,11 @@ guinterp_process <- function(
   glob_grid <- if (!is.na(grid_path)) {
     read_stars(grid_path)
   } else {
-    make_interp_grid(inputpts_sf, outres = interp_res, border = 15)
+    make_interp_grid(
+      inputpts_sf,
+      outres = interp_res,
+      border = interp_res*15
+    )
   }
 
   rasters_list <- foreach(f = unique(inputpts_sf$idfield), i = seq_along(unique(inputpts_sf$idfield))) %do% {
