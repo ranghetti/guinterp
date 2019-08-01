@@ -3,7 +3,6 @@
 #' @param message PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples
 #' @rdname bf_error
 #' @export
 #' @author Lorenzo Busetto, 2018
@@ -24,7 +23,6 @@ bf_error <- function(message) {
 #' @param message PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples
 #' @rdname bf_message
 #' @export
 #' @author Lorenzo Busetto, 2018
@@ -48,7 +46,6 @@ bf_message <- function(message) {
 #' @param message PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples
 #' @rdname bf_message_confirm
 #' @export
 #' @author Lorenzo Busetto, 2018

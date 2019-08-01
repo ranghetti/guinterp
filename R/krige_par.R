@@ -31,13 +31,31 @@ krige_par <- function(
   maxdist = Inf
 ) {
 
+  # formula to krige a single pixel
+  krig_fun <- function(in_pt, formula, out_locations, qtree) {
+    # if (floor(ind / 500) - (ind/500) == 0) print(ind)
+    which_neigh <- SearchTrees::rectLookup(
+      qtree,
+      xlim = c(st_coordinates(in_pt)[,1] - maxdist/2, st_coordinates(in_pt)[,1] + maxdist/2),
+      ylim = c(st_coordinates(in_pt)[,2] - maxdist/2, st_coordinates(in_pt)[,2] + maxdist/2)
+    )
+    if (length(which_neigh) <= 50) {
+      which_neigh <- SearchTrees::knnLookup(
+        qtree, newdat = st_coordinates(in_pt),
+        k = 50)[1,]
+    }
+    suppressMessages(gstat::krige(
+      stats::as.formula(formula),
+      locations[which_neigh,],
+      in_pt,
+      debug.level = 0
+    ))
+  }
+
   # check that modl is defined f method is krige
   if (method=="krige" & anyNA(model)) {
     stop("Argument 'model' is mandatory with method=\"krige\".")
   }
-
-  # convert newdata to points
-  newdata_pt <- suppressWarnings(st_as_sf(newdata, "sf") %>% st_centroid())
 
   # set default n_cores value
   if (is.na(n_cores)) {
@@ -58,27 +76,6 @@ krige_par <- function(
   if (sum(duplicated(st_coordinates(locations)))>0) {
     warning("Some overlapping points are present; only the first one will be considered.")
     locations <- locations[!duplicated(st_coordinates(locations)),]
-  }
-
-  krig_fun <- function(ind) {
-    # if (floor(ind / 500) - (ind/500) == 0) print(ind)
-    in_pt <- newdata_pt[ind,]
-    which_neigh <- SearchTrees::rectLookup(
-      qtree,
-      xlim = c(st_coordinates(in_pt)[,1] - maxdist/2, st_coordinates(in_pt)[,1] + maxdist/2),
-      ylim = c(st_coordinates(in_pt)[,2] - maxdist/2, st_coordinates(in_pt)[,2] + maxdist/2)
-    )
-    if (length(which_neigh) <= 50) {
-      which_neigh <- SearchTrees::knnLookup(
-        qtree, newdat = st_coordinates(in_pt),
-        k = 50)[1,]
-    }
-    suppressMessages(gstat::krige(
-      stats::as.formula(formula),
-      locations[which_neigh,],
-      in_pt,
-      debug.level = 0)
-    )
   }
 
   # workaround not to get error with st_rasterize
@@ -105,7 +102,10 @@ krige_par <- function(
     if (method == "krige") {
       nmax  <- 200
       qtree <- SearchTrees::createTree(st_coordinates(locations))
-      out_krig_list <- lapply(seq_len(nrow(newdata_pt)), FUN = function(x) krig_fun(x))
+      newdata_pt <- suppressWarnings(st_as_sf(newdata) %>% st_centroid())
+      out_krig_list <- lapply(seq_len(nrow(newdata_pt)), FUN = function(x) {
+        krig_fun(newdata_pt[x,], formula, locations[which_neigh,], qtree)
+      })
       # out_krig <- lapply(seq_len(dim(newdata)["x"]), function(x) {
       #   lapply(seq_len(dim(newdata)["y"]), function(y) {
       #     krig_fun(x,y)
@@ -131,7 +131,10 @@ krige_par <- function(
     # newdata[["na"]][!is.na(newdata[["na"]])] <- NA
     # newdata <- newdata["na"]
 
-    parts <- split(x = 1:nrow(newdata), f = rep_len(1:n_cores,nrow(newdata)))
+    parts <- split(
+      x = seq_len(nrow(newdata)),
+      f = sort(rep_len(seq_len(n_cores),nrow(newdata)))
+    )
     loc_small <- locations[,"selvar"]
 
     cl <- parallel::makeCluster(
@@ -145,45 +148,27 @@ krige_par <- function(
     #   envir = environment()
     # )
     # cl <- makeCluster(4)
-    parallel::clusterEvalQ(cl = cl, expr = c(library(sf), library(stars), library(sp), library(gstat), library(SearchTrees)))
+    parallel::clusterEvalQ(cl = cl, expr = c(library(sf), library(stars), library(gstat), library(SearchTrees)))
     parallelX <- parallel::parLapply(
       cl = cl,
       X = seq_len(n_cores),
-      fun = function(x) {
+    # parallelX <- lapply(
+    #   seq_len(n_cores),
+      function(x) {
         sel_row = parts[[x]]
         if (method=="krige") {
-          krig_fun <- function(ind) {
-            if (floor(ind / 500) - (ind/500) == 0) print(ind)
-            in_pt <- suppressWarnings(st_as_sf(newdata_krig[ind, ]) %>% st_centroid())
-
-            which_neigh <- SearchTrees::rectLookup(
-              qtree,
-              xlim = c(st_coordinates(in_pt)[1] - maxdist/2, st_coordinates(in_pt)[1] + maxdist/2),
-              ylim = c(st_coordinates(in_pt)[2] - maxdist/2, st_coordinates(in_pt)[2] + maxdist/2)
-            )
-
-            if (length(which_neigh) <= 50) {
-              which_neigh <- SearchTrees::knnLookup(
-                qtree, newdat = st_coordinates(in_pt),
-                k = 50)[1,]
-            }
-            suppressMessages(gstat::krige(
-              as.formula(formula),
-              locations[which_neigh,],
-              in_pt,
-              debug.level = 0
-            ))
-          }
           qtree <- SearchTrees::createTree(st_coordinates(loc_small))
-          nmax  <- 200
-          newdata_krig <- newdata[,sel_row,,]
-          out_krig  <- lapply(seq_len(prod(dim(newdata_krig))), FUN = function(N) krig_fun(N))
+          nmax <- 200
+          newdata_pt <- suppressWarnings(st_as_sf(newdata[,sel_row,]) %>% st_centroid())
+          out_krig  <- lapply(seq_len(nrow(newdata_pt)), FUN = function(x) {
+            krig_fun(newdata_pt[x,], formula, locations[which_neigh,], qtree)
+          })
           out_krig  <- do.call("rbind", out_krig)
           out_krig
           # return(out_krig)
           # krige(as.formula(formula), locations, newdata[parts[[x]],], model, nmax=nmax, maxdist=maxdist)
         } else if (method=="idw") {
-          gstat::idw(as.formula(formula), loc_small, newdata[,sel_row,,], nmax=nmax, maxdist=maxdist)
+          gstat::idw(as.formula(formula), loc_small, newdata[,sel_row,], nmax=nmax, maxdist=maxdist)
         } else {
           stop(paste0("The method \"",method,"\" is not recognised."))
         }

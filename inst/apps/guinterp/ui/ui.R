@@ -1,5 +1,5 @@
 ui_guinterp <- shinydashboard::dashboardPage(
-  skin = "green",
+  skin = "red",
   shinydashboard::dashboardHeader(
     title = "GUInterp",
     tags$li(class ="dropdown", tags$h3(
@@ -7,14 +7,14 @@ ui_guinterp <- shinydashboard::dashboardPage(
       "Interpolatore dati puntiformi"
     )),
     tags$li(class ="dropdown", tags$a(
-      href="http://www.irea.cnr.it",
-      tags$img(src="irea_logo.png"),
+      href="https://github.com/ranghetti/guinterp",
+      tags$img(src="github_logo.png"),
       style="margin:0;padding-top:2px;padding-bottom:2px;padding-left:10px;padding-right:10px;",
       target="_blank"
     )),
     tags$li(class ="dropdown", tags$a(
-      href="https://www.ibfservizi.it",
-      tags$img(src="GitHub-Mark/Vector/GitHub-Mark.eps"),
+      href="http://www.irea.cnr.it",
+      tags$img(src="irea_logo.png"),
       style="margin:0;padding-top:2px;padding-bottom:2px;padding-left:10px;padding-right:10px;",
       target="_blank"
     ))

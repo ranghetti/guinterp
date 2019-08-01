@@ -18,18 +18,14 @@ observeEvent(input$button_load_borders, {
       condition = "input.border_type == 'files'",
       div(
         div(
-          style="display:inline-block;vertical-align:top;margin-bottom:10px;",
-          shiny::div(
-            style = "vertical-align:top;width:100%",
+          style="vertical-align:top;",
             shiny::div(
-              style = "display:inline-block;vertical-align:top;width:95pt;padding-top:8px;",
+              style = "display:inline-block;vertical-align:top;width:85pt;padding-top:8px;",
               shiny::strong("Cartella di input")
             ),
             shiny::div(
-              style = "display:inline-block;vertical-align:top;padding-left:10px;width:calc(100% - 95pt - 10px - 50pt - 15px - 10pt);",
-              shiny::textInput(
-                "borderpath_textin", NULL, ""
-              )
+              style = "display:inline-block;vertical-align:top;width:calc(100% - 85pt - 50pt - 15px - 10pt - 10px);",
+              shiny::textInput("borderpath_textin", NULL, "", width = "100%")
             ),
             shiny::div(
               style = "display:inline-block;vertical-align:top;width:50pt;",
@@ -42,10 +38,12 @@ observeEvent(input$button_load_borders, {
               style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
               shiny::htmlOutput("borderpath_errormess")
             )
-          )
         ),
-        shiny::wellPanel(
-          shinycssloaders::withSpinner(DT::dataTableOutput("borderfiles_tbl"), type = 6)
+        div(
+          style = "vertical-align:top;margin-bottom:10px;",
+          shiny::wellPanel(
+            shinycssloaders::withSpinner(DT::dataTableOutput("borderfiles_tbl"), type = 6)
+          )
         ),
 
         actionButton("load_extent_borders", strong("\u2000Carica"), icon=icon("upload")),
@@ -128,9 +126,7 @@ output$selector_uid <- renderUI({
 
 # Error messages
 shiny::observe({
-  # if (length(input$borderpath_textin) != 0) {
-    output$borderpath_errormess <- path_check(input$borderpath_textin)
-  # }
+  output$borderpath_errormess <- path_check(input$borderpath_textin)
 })
 
 
@@ -151,7 +147,11 @@ observeEvent(
         # Get the list of files which intersect pcolt data.
         #  In case it was already retrieved, do not compute it again
         #  TODO link the list of available files to a specific folder name!!!!
-        vect_list <- list.files(input$borderpath_textin, "\\.shp$", full.names = TRUE)
+        vect_list_all <- list.files(input$borderpath_textin, full.names = TRUE)
+        vect_ext <- gsub("^.+\\.([^\\.]+)$","\\1",vect_list_all)
+        vect_list <- vect_list_all[
+          vect_ext %in% c("shp","gpkg","geojson","kml","gml","sqlite","tab")
+        ]
 
         # TODO check that it contains multipolygons
 
@@ -168,8 +168,11 @@ observeEvent(
               searching = FALSE,
               paging = ifelse(nrow(vect_tbl) > 5, TRUE, FALSE),
               lengthMenu = c(5, 15, 35), pageLength = 5),
-            escape = FALSE, selection = 'multiple', rownames = FALSE,
-            style = "bootstrap",
+            escape = FALSE,
+            selection = "single", # TODO manage "multiple"
+            rownames = FALSE,
+            class = "compact",
+            style = "default",
             autoHideNavigation = TRUE
           )
           rv$borderfiles_tbl <- vect_tbl
@@ -200,13 +203,21 @@ observeEvent(input$load_extent_borders, {
   rv$borders_polygon_raw <- tryCatch(
     {
       x <- sf::st_read(rv$borders_path, quiet=TRUE) %>%
-        st_transform(4326)
+        st_transform(4326) %>%
+        st_cast("POLYGON")
       names(sf::st_geometry(x)) <- NULL
       attr(x, "valid") <- TRUE
       attr(x, "new") <- TRUE
       x
     },
-    error = function(e) {x <- sf::st_polygon(); attr(x, "valid") <- FALSE; x}
+    error = function(e) {
+      shinyWidgets::sendSweetAlert(
+        session, title = "File non valido",
+        text = paste("Il file", basename(rv$borders_path), "non è un vettoriale poligonale valido."),
+        type = "error", btn_labels = "Ok"
+      )
+      x <- sf::st_polygon(); attr(x, "valid") <- FALSE; x
+    }
   )
 
 })

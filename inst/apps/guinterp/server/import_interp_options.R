@@ -416,3 +416,10 @@ observeEvent(input$save_semiauto, ignoreInit = TRUE, {
 })
 
 
+## Path checks
+
+# Error messages
+shiny::observeEvent(input$path_out_textin, {
+  output$path_out_errormess <- path_check(input$path_out_textin)
+})
+

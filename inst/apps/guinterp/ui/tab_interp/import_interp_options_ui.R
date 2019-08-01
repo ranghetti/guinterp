@@ -117,8 +117,12 @@ shiny::div(
         )
       ),
       shiny::div(
-        style="display:inline-block;vertical-align:top;width:calc(100% - 70pt - 3px);",
-        shiny::textInput("path_out_textin", NULL, "")
+        style="display:inline-block;vertical-align:top;width:calc(100% - 70pt - 6px - 10pt - 15px);",
+        shiny::textInput("path_out_textin", NULL, "", placeholder = "usa una cartella temporanea")
+      ),
+      shiny::div(
+        style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
+        shiny::htmlOutput("path_out_errormess")
       )
     )
   ),

@@ -15,7 +15,7 @@ shiny::div(
           # Histograms ---
           shinydashboard::box(
             width = NULL,
-            status = "info",
+            status = "danger",
             solidHeader = TRUE,
             title = "Istogramma",
             collapsible = TRUE,
@@ -24,7 +24,7 @@ shiny::div(
           # Main map ---
           shinydashboard::box(
             width = NULL,
-            status = "info",
+            status = "danger",
             solidHeader = TRUE,
             collapsible = TRUE,
             title = "Mappa",
@@ -45,14 +45,14 @@ shiny::div(
             title = "Filtra dati",
             solidHeader = TRUE,
             collapsible = TRUE,
-            status = "primary",
+            status = "danger",
             source("ui/tab_interp/import_interp_filters_ui.R", local = TRUE)$value
           ),
           shinydashboard::box(
             width = NULL,
             title = "Opzioni di interpolazione",
             solidHeader = TRUE,
-            status = "primary",
+            status = "danger",
             source("ui/tab_interp/import_interp_options_ui.R", local = TRUE)$value
           )
         )
