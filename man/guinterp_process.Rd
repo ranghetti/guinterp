@@ -53,8 +53,6 @@ single field rasters.}
 \item{.shiny_session}{TODO}
 
 \item{.shiny_pbar_id}{TODO}
-
-\item{samplesize}{maximum size of the sample of the original data to work with (default: 100000; if NA: all the points)}
 }
 \description{
 This function calls other functions of the library to perform

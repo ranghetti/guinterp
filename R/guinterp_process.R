@@ -20,7 +20,6 @@
 #'  If FALSE, the interpolation is forced to run with a single core.
 #' @param vgm named list of variograms (names must correspond to values of field `id_fieldname`).
 #'  If NA (default), they are automatically computed.
-#' @param samplesize maximum size of the sample of the original data to work with (default: 100000; if NA: all the points)
 #' @param merge logical: if TRUE (default), merge raster of single fields and
 #'  return the pèath of the merged raster; if FALSE, return the paths of the
 #'  single field rasters.
