@@ -1,0 +1,25 @@
+language: R
+sudo: required
+dist: bionic
+cache: packages
+
+apt_packages:
+  - libgdal-dev
+  - libproj-dev
+
+before_install:
+  - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libgdal-dev libproj-dev
+
+env:
+  global:
+    - R_LIBS="http://cran.rstudio.com"
+    - R_BUILD_ARGS="--no-build-vignettes --no-manual"
+    - R_CHECK_ARGS="--no-build-vignettes --no-manual --as-cran"
+    - R_CHECK_TIMINGS_="0"
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
