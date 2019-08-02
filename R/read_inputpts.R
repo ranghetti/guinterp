@@ -1,9 +1,8 @@
 #' @title Read point data
 #' @description TODO
 #' @param input TODO
-#' @param format `character (1)` TODO
 #' @param borders TODO
-#' @param year TODO
+#' @param varname TODO
 #' @param .shiny_session TODO
 #' @param .shiny_pbar_id TODO
 #' @import data.table

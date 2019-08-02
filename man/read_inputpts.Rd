@@ -12,13 +12,11 @@ read_inputpts(input, borders = NULL, varname = NA,
 
 \item{borders}{TODO}
 
+\item{varname}{TODO}
+
 \item{.shiny_session}{TODO}
 
 \item{.shiny_pbar_id}{TODO}
-
-\item{format}{`character (1)` TODO}
-
-\item{year}{TODO}
 }
 \description{
 TODO
