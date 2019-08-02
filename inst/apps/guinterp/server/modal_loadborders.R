@@ -39,6 +39,23 @@ observeEvent(input$button_load_borders, {
               shiny::htmlOutput("borderpath_errormess")
             )
         ),
+        fluidRow(
+          column(
+            width = 8,
+            div()
+          ),
+          column(
+            width = 4,
+            div(
+              style="margin-top:-10px;",
+              checkboxInput(
+                "borders_showall",
+                "Mostra tutti i file",
+                value = FALSE
+              )
+            )
+          )
+        ),
         div(
           style = "vertical-align:top;margin-bottom:10px;",
           shiny::wellPanel(
@@ -149,9 +166,11 @@ observeEvent(
         #  TODO link the list of available files to a specific folder name!!!!
         vect_list_all <- list.files(input$borderpath_textin, full.names = TRUE)
         vect_ext <- gsub("^.+\\.([^\\.]+)$","\\1",vect_list_all)
-        vect_list <- vect_list_all[
-          vect_ext %in% c("shp","gpkg","geojson","kml","gml","sqlite","tab")
-        ]
+        vect_list <-  if (!input$borders_showall) {
+          vect_list_all[
+            vect_ext %in% c("shp","gpkg","geojson","kml","gml","sqlite","tab")
+            ]
+        } else {vect_list_all}
 
         # TODO check that it contains multipolygons
 

@@ -33,24 +33,40 @@ observeEvent(input$button_load_inputpts, {
         shiny::htmlOutput("inputptspath_errormess")
       )
     ),
-    div(
-      shiny::div(
-        style = "display:inline-block;vertical-align:top;width:85pt;",
-        shiny::strong("Tipo di file")
+    fluidRow(
+      column(
+        width = 8,
+        div(
+          div(
+            style = "display:inline-block;padding-right:10pt;",
+            shiny::strong("Tipo di file")
+          ),
+          div(
+            style = "display:inline-block;padding-right:20pt;",
+            radioButtons(
+              "inputptsfiletype",
+              NULL, #"Tipo di file",
+              list("Vettoriale" = "vect", "File di testo" = "txt"), #"Tutti i files" = "all"),
+              selected = "vect",
+              inline = TRUE
+            )
+          )
+        )
       ),
-      div(
-        style="display:inline-block;vertical-align:top;",
-        radioButtons(
-          "inputptsfiletype",
-          NULL, #"Tipo di file",
-          list("Vettoriale" = "vect", "File di testo" = "txt"), #"Tutti i files" = "all"),
-          selected = "vect",
-          inline = TRUE
+      column(
+        width = 4,
+        div(
+          style="margin-top:-10px;",
+          checkboxInput(
+            "inputpts_showall",
+            "Mostra tutti i file",
+            value = FALSE
+          )
         )
       )
     ),
     div(
-      style = "vertical-align:top;margin-bottom:10px;",
+      style = "margin-bottom:10px;",
       shiny::wellPanel(
         shinycssloaders::withSpinner(DT::dataTableOutput("inputptsfiles_tbl"), type = 6)
       )
@@ -166,11 +182,13 @@ observeEvent(
         #  TODO link the list of available files to a specific folder name!!!!
         vect_list_all <- list.files(input$inputptspath_textin, full.names = TRUE)
         vect_ext <- gsub("^.+\\.([^\\.]+)$","\\1",vect_list_all)
-        vect_list <- switch(
-          input$inputptsfiletype,
-          "vect" = vect_list_all[vect_ext %in% c("shp","gpkg","geojson","kml","gml","sqlite","tab")],
-          "txt" = vect_list_all[vect_ext %in% c("txt", "csv")]
-        )
+        vect_list <- if (!input$inputpts_showall) {
+          switch(
+            input$inputptsfiletype,
+            "vect" = vect_list_all[vect_ext %in% c("shp","gpkg","geojson","kml","gml","sqlite","tab")],
+            "txt" = vect_list_all[vect_ext %in% c("txt", "csv")]
+          )
+        } else {vect_list_all}
 
         # TODO check that it contains multipolygons
 
