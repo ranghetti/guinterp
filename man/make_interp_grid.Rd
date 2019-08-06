@@ -14,6 +14,8 @@ make_interp_grid(indata_sf, outres = 5, outcrs = st_crs(indata_sf),
 
 \item{outcrs}{`crs` output crs}
 
+\item{offset}{`numeric (2)` offset from (0,0) in outcrs projection}
+
 \item{border}{`numeric (1)` TODO extent of border (in crs units)}
 }
 \description{

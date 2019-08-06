@@ -3,6 +3,7 @@
 #' @param indata_sf TODO all input points
 #' @param outres `numeric (1)` TODO spatial resolution of output raster (in crs unit)
 #' @param outcrs `crs` output crs
+#' @param offset `numeric (2)` offset from (0,0) in outcrs projection
 #' @param border `numeric (1)` TODO extent of border (in crs units)
 #' @importFrom sf st_crs st_transform
 #' @importFrom stars st_as_stars st_set_dimensions
