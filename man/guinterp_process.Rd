@@ -6,10 +6,10 @@
 \usage{
 guinterp_process(inputpts, inlayer, filtered = TRUE,
   id_fieldname = "idfield", interp_dir = tempdir(),
-  interp_method = "krige", interp_res = 5, out_crs = NA,
-  grid_offset = c(0, 0), samplesize = 10000, buffer_radius = 15,
-  parallel = TRUE, vgm = NA, merge = TRUE, overwrite = TRUE,
-  .shiny_session = NULL, .shiny_pbar_id = NULL)
+  out_path = tempfile(), interp_method = "krige", interp_res = 5,
+  out_crs = NA, grid_offset = c(0, 0), samplesize = 10000,
+  buffer_radius = 15, parallel = TRUE, vgm = NA, merge = TRUE,
+  overwrite = TRUE, .shiny_session = NULL, .shiny_pbar_id = NULL)
 }
 \arguments{
 \item{inputpts}{TODO}
@@ -21,7 +21,9 @@ no additional filter is applied; if FALSE, a standard automatic filter is applie
 
 \item{id_fieldname}{optional: name of the `inlayer` field containing unique ID of fields (default: "idfield")}
 
-\item{interp_dir}{directory where rasters are stores (default: temporary directory)}
+\item{interp_dir}{directory where rasters of single polygons are stores (default: temporary directory)}
+
+\item{out_path}{path of the output merged raster (default: temporary directory)}
 
 \item{interp_method}{interpolation method ("krige" or "idw")}
 

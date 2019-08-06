@@ -52,7 +52,6 @@ observeEvent(rv$outproj_validated, {
 })
 
 
-
 ## Define output grid basing on manual definition of res. and CR, or on the ref raster
 observeEvent(c(input$outgrid_type, input$interp_res, rv$outproj_validated, input$path_refraster_textin), {
   if (input$outgrid_type == "custom") {
@@ -70,38 +69,36 @@ observeEvent(c(input$outgrid_type, input$interp_res, rv$outproj_validated, input
 })
 
 
-
-
-# Deactivate output CRS and resolution 1) if some raster exists, or
-# 2) if overwrite is TRUE and all the existing rasters would be overwritten
-observeEvent(c(rv$on_interp, rv$new_interpolation, input$interp_overwrite), {
-  shiny::req(rv$inputpts_points, rv$borders_polygon)
-  ex_raster_list <- list.files(rv$interp_dir, "\\.tif$", full.names = TRUE)
-  ex_idfield <- gsub("^.+\\_([a-zA-Z0-9]+)\\.tif$","\\1",ex_raster_list) # id_geom of existing raster
-  req_idfield <- unique(rv$inputpts_points$idfield) # id_geom of points to be interpolated
-  if (length(ex_raster_list) > 0 & (input$interp_overwrite == FALSE | any(!ex_idfield %in% req_idfield))) {
-    ex_meta <- read_stars(ex_raster_list[1], proxy = TRUE)
-    ex_res <- st_dimensions(ex_meta)[[1]]$delta # assuming res. x is equal to res.y
-    ex_crs <- with(
-      st_crs(ex_meta),
-      if (is.na(epsg)) {proj4string} else {epsg}
-    )
-    # grid_offset: offset from (0,0) in the raster CRS (used to coregistrate grids)
-    rv$grid_offset <- st_bbox(ex_meta)[c("xmin","ymin")] %% ex_res
-    shiny::updateTextInput(session, "out_proj", value = ex_crs)
-    shiny::updateNumericInput(session, "interp_res", value = ex_res)
-    shinyjs::disable("out_proj")
-    shinyjs::disable("interp_res")
-    shinyjs::show("help_opts_disabled")
-  } else {
-    shinyjs::enable("out_proj")
-    shinyjs::enable("interp_res")
-    shinyjs::hide("help_opts_disabled")
-  }
-})
+# # Deactivate output CRS and resolution 1) if some raster exists, or
+# # 2) if overwrite is TRUE and all the existing rasters would be overwritten
+# observeEvent(c(rv$on_interp, rv$new_interpolation, input$interp_overwrite), {
+#   shiny::req(rv$inputpts_points, rv$borders_polygon)
+#   ex_raster_list <- list.files(rv$interp_dir, "\\.tif$", full.names = TRUE)
+#   ex_idfield <- gsub("^.+\\_([a-zA-Z0-9]+)\\.tif$","\\1",ex_raster_list) # id_geom of existing raster
+#   req_idfield <- unique(rv$inputpts_points$idfield) # id_geom of points to be interpolated
+#   if (length(ex_raster_list) > 0 & (input$interp_overwrite == FALSE | any(!ex_idfield %in% req_idfield))) {
+#     ex_meta <- read_stars(ex_raster_list[1], proxy = TRUE)
+#     ex_res <- st_dimensions(ex_meta)[[1]]$delta # assuming res. x is equal to res.y
+#     ex_crs <- with(
+#       st_crs(ex_meta),
+#       if (is.na(epsg)) {proj4string} else {epsg}
+#     )
+#     # grid_offset: offset from (0,0) in the raster CRS (used to coregistrate grids)
+#     rv$grid_offset <- st_bbox(ex_meta)[c("xmin","ymin")] %% ex_res
+#     shiny::updateTextInput(session, "out_proj", value = ex_crs)
+#     shiny::updateNumericInput(session, "interp_res", value = ex_res)
+#     shinyjs::disable("out_proj")
+#     shinyjs::disable("interp_res")
+#     shinyjs::show("help_opts_disabled")
+#   } else {
+#     shinyjs::enable("out_proj")
+#     shinyjs::enable("interp_res")
+#     shinyjs::hide("help_opts_disabled")
+#   }
+# })
 
 ## Reference raster ####
-shinyFiles::shinyFileChoose(input, "path_refraster_sel", roots = volumes)
+shinyFiles::shinyFileChoose(input, "path_refraster_sel", roots = volumes, session = session)
 # if paths change after using the shinyDirButton, update the values and the textInput
 observeEvent(input$path_refraster_sel, {
   path_refraster_string <- shinyFiles::parseFilePaths(volumes, input$path_refraster_sel)$datapath

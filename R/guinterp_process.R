@@ -6,7 +6,8 @@
 #' @param filtered logical: is `inputpts` already filtered? If TRUE (default),
 #'  no additional filter is applied; if FALSE, a standard automatic filter is applied.
 #' @param id_fieldname optional: name of the `inlayer` field containing unique ID of fields (default: "idfield")
-#' @param interp_dir directory where rasters are stores (default: temporary directory)
+#' @param interp_dir directory where rasters of single polygons are stores (default: temporary directory)
+#' @param out_path path of the output merged raster (default: temporary directory)
 #' @param interp_method interpolation method ("krige" or "idw")
 #' @param interp_res output raster resolution (numeric, in metres)
 #' @param out_crs optional: CRS of output raster (default: CRS of inputpts)
@@ -47,6 +48,7 @@ guinterp_process <- function(
   filtered = TRUE,
   id_fieldname="idfield",
   interp_dir = tempdir(),
+  out_path = tempfile(),
   interp_method = "krige",
   interp_res = 5,
   out_crs = NA,
@@ -300,16 +302,15 @@ guinterp_process <- function(
     } else {
       rasters_filtered[[1]]
     }
-    outname <- strftime(Sys.time(), "interp_%Y%m%d%H%M%S.tif")
     writeRaster(
       merged,
-      file.path(dirname(interp_dir),outname),
+      out_path,
       options=c("COMPRESS=DEFLATE"),
       NAflag = -32768,
       overwrite = TRUE
     )
 
-    file.path(dirname(interp_dir),outname)
+    out_path
 
   } else {
 

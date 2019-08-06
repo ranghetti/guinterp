@@ -24,12 +24,6 @@ server_guinterp <- function(input, output, session) {
   shinyjs::hide(selector = "#tabs li a[data-value=tab_filter]")
 
 
-  #### Load/save filters param file ####
-  source(
-    system.file("apps/guinterp/server/filters_loadsave.R", package="guinterp"),
-    local=TRUE
-  )$value
-
   #### Filter selectors ####
   source(
     system.file("apps/guinterp/server/interp_filters.R", package="guinterp"),

@@ -4,10 +4,7 @@ shiny::div(
 
   shiny::radioButtons(
     "outgrid_type",
-    span(
-      "Griglia di output:\u2000",
-      shiny::actionLink("help_opts_disabled", shiny::span(style="color:orange;", shiny::icon("info-circle")))
-    ),
+    "Griglia di output:",
     c(
       "Definisci risoluzione e proiezione" = "custom",
       "Scegli da un raster esistente" = "ref"
