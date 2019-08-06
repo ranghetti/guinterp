@@ -1,9 +1,3 @@
-
-
-
-# TODO è una copia di loadinputptss, sistemare!
-
-
 # Open modal dialog to load the point file of inputpts
 
 observeEvent(input$button_load_inputpts, {
@@ -121,37 +115,62 @@ observeEvent(rv$inputpts_points_raw, ignoreInit = FALSE, ignoreNULL = FALSE, {
 
 
 # Variable selector
+observeEvent(rv$inputpts_points_raw, {
+  rv$inputpts_names <- names(rv$inputpts_points_raw)[names(rv$inputpts_points_raw)!="geometry"]
+  if (input$inputptsfiletype == "txt") {
+    rv$def_xvar <- rv$inputpts_names[c(
+      grep("^x$", tolower(rv$inputpts_names)),         # search first var. x (or X)
+      grep("^longitude$", tolower(rv$inputpts_names)), # then var. longitude
+      grep("^lo?ng?$", tolower(rv$inputpts_names)),    # then var. lon, long, lng
+      grep("^lo?ng?", tolower(rv$inputpts_names)),     # then, starting with lon[g]/lng
+      grep("^x", tolower(rv$inputpts_names)),          # then, starting with x
+      1                                                # first name
+    )[1]]
+    rv$def_yvar <- rv$inputpts_names[c(
+      grep("^y$", tolower(rv$inputpts_names)),        # search first var. y (or Y)
+      grep("^latitude$", tolower(rv$inputpts_names)), # then var. latitude
+      grep("^lat$", tolower(rv$inputpts_names)),      # then var. lat
+      grep("^lat", tolower(rv$inputpts_names)),       # then, starting with lat
+      grep("^y", tolower(rv$inputpts_names)),         # then, starting with y
+      min(length(rv$inputpts_names),2)                # second name (if exists)
+    )[1]]
+    rv$def_inputvar <- c(
+      rv$inputpts_names[!rv$inputpts_names %in% c(rv$def_xvar, rv$def_yvar)],
+      rv$inputpts_names
+    )[1]
+  } else {
+    rv$def_xvar <- rv$def_yvar <- NULL
+    rv$def_inputvar <- rv$inputpts_names[1]
+  }
+})
 output$selector_inputvar <- renderUI({
   req(rv$inputpts_points_raw)
-  inputpts_names <- names(rv$inputpts_points_raw)[names(rv$inputpts_points_raw)!="geometry"]
   selectInput(
     "select_inputvar",
     label = "Variabile da interpolare",
-    choices = inputpts_names,
-    selected = inputpts_names[1]
+    choices = rv$inputpts_names,
+    selected = rv$def_inputvar
   )
 })
 output$selector_xvar <- renderUI({
   req(rv$inputpts_points_raw)
   if (input$inputptsfiletype == "txt") {
-    inputpts_names <- names(rv$inputpts_points_raw)
     selectInput(
       "select_xvar",
       label = "Coordinate X",
-      choices = inputpts_names,
-      selected = inputpts_names[1]
+      choices = rv$inputpts_names,
+      selected = rv$def_xvar
     )
   }
 })
 output$selector_yvar <- renderUI({
   req(rv$inputpts_points_raw)
   if (input$inputptsfiletype == "txt") {
-    inputpts_names <- names(rv$inputpts_points_raw)
     selectInput(
       "select_yvar",
       label = "Coordinate Y",
-      choices = inputpts_names,
-      selected = inputpts_names[1]
+      choices = rv$inputpts_names,
+      selected = rv$def_yvar
     )
   }
 })

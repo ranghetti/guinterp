@@ -35,15 +35,16 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
 
   rv$out_raster_paths <- guinterp_process(
     rv$inputpts_points, rv$borders_polygon,
-    grid_path = NA, filtered = TRUE,
-    id_fieldname="id_geom", # TODO add GUI input for it
+    filtered = TRUE,
+    id_fieldname="id_geom",
     interp_dir = rv$interp_dir,
     # samplesize = if (input$interp_method=="krige") {1E4} else {Inf},
     samplesize = Inf,
     parallel = (input$turbo == "high"),
     interp_method = input$interp_method,
-    interp_res = input$interp_res,
-    out_crs = rv$outproj_validated,
+    interp_res = rv$interp_res,
+    out_crs = rv$outproj,
+    grid_offset = rv$grid_offset,
     buffer_radius = if (input$maxptdist_onoff) {input$maxptdist} else {Inf},
     vgm = switch(
       input$auto_vgm,

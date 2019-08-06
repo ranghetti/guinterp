@@ -4,17 +4,17 @@
 \alias{make_interp_grid}
 \title{Create global output grid}
 \usage{
-make_interp_grid(indata_sf, outres = 5, border = 15,
-  outcrs = st_crs(indata_sf))
+make_interp_grid(indata_sf, outres = 5, outcrs = st_crs(indata_sf),
+  offset = c(0, 0), border = 15)
 }
 \arguments{
 \item{indata_sf}{TODO all input points}
 
 \item{outres}{`numeric (1)` TODO spatial resolution of output raster (in crs unit)}
 
-\item{border}{`numeric (1)` TODO extent of border (in crs units)}
-
 \item{outcrs}{`crs` output crs}
+
+\item{border}{`numeric (1)` TODO extent of border (in crs units)}
 }
 \description{
 TODO
