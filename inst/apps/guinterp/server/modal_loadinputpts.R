@@ -2,7 +2,7 @@
 
 observeEvent(input$button_load_inputpts, {
   showModal(modalDialog(
-    title = "Seleziona il poligonale dei punti da interpolare",
+    title = "Seleziona i file dei punti da interpolare",
     size = "m",
 
     div(

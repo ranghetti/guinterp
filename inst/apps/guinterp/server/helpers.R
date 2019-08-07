@@ -1,6 +1,55 @@
+shiny::observeEvent(input$help_load_borders, {
+  shiny::showModal(shiny::modalDialog(
+    title = "Seleziona i poligonali dei bordi",
+    size = "m",
+    shiny::p(
+      "\u00e8 possibile caricare un file vettoriale contenente i poligoni entro",
+      "cui i punti andranno interpolati:",
+      "in questo caso, si pu\u00f8 scegliere di considerare",
+      "ogni record del poligonale come un poligono separato (opzione predefinita)",
+      "in modo che i punti entro poligoni diversi vengano interpolati separatamente,",
+      "oppure si pu\u00f8 selezionare la variabile del file contenente gli",
+      "identificativi dei poligoni o scegliere di fondere tutte le geometrie",
+      "in un unico poligono."
+    ),
+    shiny::p(
+      "In assenza di un vettoriale dei poligoni, un singolo bordo pu\u00f8",
+      "essere automaticamente generato usando il",
+      "bounding box dei punti caricati."
+    ),
+    shiny::p(
+      "In entrambi i casi, i bordi potranno essere ulteriormente raffinati dopo",
+      "il caricamento, impostando una distanza massima dai punti",
+      "nella definizione del formato di output."
+    ),
+    easyClose = TRUE,
+    footer = NULL
+  ))
+})
+
+
+shiny::observeEvent(input$help_load_inputpts, {
+  shiny::showModal(shiny::modalDialog(
+    title = "Seleziona i file dei punti da interpolare",
+    size = "s",
+    shiny::p(
+      "I punti che devono essere interpolati possono essere caricati sia","
+      in formato vettoriale che tabellare.",
+      "Nel primo caso \u00e8 necessario specificare la variabile",
+      "contenente i valori numerici da interpolare",
+      "mentre nel secondo, olter a questa, vanno indicate anche le due variabili",
+      "contenenti le coordinate geografiche."
+    ),
+    easyClose = TRUE,
+    footer = NULL
+  ))
+})
+
+
 shiny::observeEvent(input$help_out_proj, {
   shiny::showModal(shiny::modalDialog(
     title = "Sistema di riferimento",
+    size = "s",
     shiny::p(shiny::HTML(
       "Specificare il sistema di riferimento dei raster in output,",
       "indicando la stringa PROJ4 del CRS, <i>oppure</i>",
@@ -16,6 +65,7 @@ shiny::observeEvent(input$help_out_proj, {
 shiny::observeEvent(input$help_turbo, {
   shiny::showModal(shiny::modalDialog(
     title = "Efficienza di calcolo",
+    size = "s",
     shiny::p(shiny::HTML(
       "La velocit\u00E0 dell'interpolazione spaziale pu\u00F2 essere notevolmente",
       "incrementata impostando questa opzione su \"Uso server/workstation\";",
@@ -36,6 +86,7 @@ shiny::observeEvent(input$help_turbo, {
 shiny::observeEvent(input$help_maxptdist, {
   shiny::showModal(shiny::modalDialog(
     title = "Distanza massima dai punti",
+    size = "s",
     shiny::p(shiny::HTML(
       "\u00E8 possibile indicare una distanza massima dai punti di resa",
       "oltre la quale non effettuare interpolazioni: per farlo,",
@@ -56,6 +107,7 @@ shiny::observeEvent(input$help_maxptdist, {
 shiny::observeEvent(input$help_interp_method, {
   shiny::showModal(shiny::modalDialog(
     title = "Metodo di interpolazione",
+    size = "m",
     shiny::p(shiny::HTML(
       "<ul><li><strong>Kriging ordinario</strong>:",
       "\u00E8 il metodo predefinito di interpolazione,",
@@ -77,6 +129,7 @@ shiny::observeEvent(input$help_interp_method, {
 shiny::observeEvent(input$help_auto_vgm, {
   shiny::showModal(shiny::modalDialog(
     title = "Definizione del variogramma",
+    size = "m",
     shiny::p(shiny::HTML(
       "<ul><li><strong>Automatica</strong>:",
       "il kriging viene effettuato andando a modellare automaticamente",
@@ -112,6 +165,7 @@ shiny::observeEvent(input$help_auto_vgm, {
 shiny::observeEvent(input$help_filter_buttons, {
   shiny::showModal(shiny::modalDialog(
     title = "Filtraggio dei punti",
+    size = "m",
     shiny::p(shiny::HTML(
       "Il filtraggio permette di eliminare i punti che non si vuole utilizzare",
       "nel corso dell'interpolazione."
