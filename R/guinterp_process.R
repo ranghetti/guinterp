@@ -201,7 +201,7 @@ guinterp_process <- function(
       f = unique(inputpts_sf$idfield),
       i = seq_along(unique(inputpts_sf$idfield)),
       .combine = c,
-      .packages = c("rgeos","sp","bfsapps")
+      .packages = c("shinyWidgets","sf","guinterp")
     ) %DO_bypol% {
       out_name <- paste0("polygon_",f,".tif")
       if ((overwrite == TRUE | !file.exists(file.path(interp_dir,out_name))) & sum(inputpts_sf$idfield==f)>0) {
