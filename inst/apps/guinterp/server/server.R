@@ -78,5 +78,11 @@ server_guinterp <- function(input, output, session) {
     local=TRUE
   )$value
 
+  #### Help dialogs ####
+  source(
+    system.file("apps/guinterp/server/helpers.R", package="guinterp"),
+    local=TRUE
+  )$value
+
 
 } # end of server function
