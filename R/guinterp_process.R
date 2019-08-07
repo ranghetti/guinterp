@@ -3,14 +3,15 @@
 #'  interpolation over different fields.
 #' @param inputpts TODO
 #' @param inlayer SpatialPolygonsDataFrame of fields (see also `id_fieldname`)
-#' @param grid_path optional: TODO
 #' @param filtered logical: is `inputpts` already filtered? If TRUE (default),
 #'  no additional filter is applied; if FALSE, a standard automatic filter is applied.
 #' @param id_fieldname optional: name of the `inlayer` field containing unique ID of fields (default: "idfield")
-#' @param interp_dir directory where rasters are stores (default: temporary directory)
+#' @param interp_dir directory where rasters of single polygons are stores (default: temporary directory)
+#' @param out_path path of the output merged raster (default: temporary directory)
 #' @param interp_method interpolation method ("krige" or "idw")
 #' @param interp_res output raster resolution (numeric, in metres)
 #' @param out_crs optional: CRS of output raster (default: CRS of inputpts)
+#' @param grid_offset optional: grid offset from point (0,0) in out_crs (2-length numeric)
 #' @param samplesize maximum size of the sample of the original data to work with (default: 10000; if NA: all the points)
 #' @param buffer_radius numeric: buffer (default: 15) to be applied internally to field borders.
 #' @param parallel (optional) Logical or integer: if TRUE (default), interpolation
@@ -20,7 +21,6 @@
 #'  If FALSE, the interpolation is forced to run with a single core.
 #' @param vgm named list of variograms (names must correspond to values of field `id_fieldname`).
 #'  If NA (default), they are automatically computed.
-#' @param samplesize maximum size of the sample of the original data to work with (default: 100000; if NA: all the points)
 #' @param merge logical: if TRUE (default), merge raster of single fields and
 #'  return the pèath of the merged raster; if FALSE, return the paths of the
 #'  single field rasters.
@@ -45,13 +45,14 @@
 guinterp_process <- function(
   inputpts,
   inlayer,
-  grid_path = NA,
   filtered = TRUE,
   id_fieldname="idfield",
   interp_dir = tempdir(),
+  out_path = tempfile(),
   interp_method = "krige",
   interp_res = 5,
   out_crs = NA,
+  grid_offset = c(0,0),
   samplesize = 1E4,
   buffer_radius = 15,
   parallel = TRUE,
@@ -236,15 +237,13 @@ guinterp_process <- function(
   }
 
   ## Interpola
-  glob_grid <- if (!is.na(grid_path)) {
-    read_stars(grid_path)
-  } else {
-    make_interp_grid(
-      inputpts_sf,
-      outres = interp_res,
-      border = interp_res*15
-    )
-  }
+  glob_grid <- make_interp_grid(
+    inputpts_sf,
+    outres = interp_res,
+    outcrs = out_crs,
+    offset = grid_offset,
+    border = interp_res*15
+  )
 
   rasters_list <- foreach(f = unique(inputpts_sf$idfield), i = seq_along(unique(inputpts_sf$idfield))) %do% {
     field_name <- f
@@ -303,16 +302,15 @@ guinterp_process <- function(
     } else {
       rasters_filtered[[1]]
     }
-    outname <- strftime(Sys.time(), "interp_%Y%m%d%H%M%S.tif")
     writeRaster(
       merged,
-      file.path(dirname(interp_dir),outname),
+      out_path,
       options=c("COMPRESS=DEFLATE"),
       NAflag = -32768,
       overwrite = TRUE
     )
 
-    file.path(dirname(interp_dir),outname)
+    out_path
 
   } else {
 

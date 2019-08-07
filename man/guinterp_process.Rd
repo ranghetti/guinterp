@@ -4,32 +4,34 @@
 \alias{guinterp_process}
 \title{Process a group of fields}
 \usage{
-guinterp_process(inputpts, inlayer, grid_path = NA, filtered = TRUE,
+guinterp_process(inputpts, inlayer, filtered = TRUE,
   id_fieldname = "idfield", interp_dir = tempdir(),
-  interp_method = "krige", interp_res = 5, out_crs = NA,
-  samplesize = 10000, buffer_radius = 15, parallel = TRUE,
-  vgm = NA, merge = TRUE, overwrite = TRUE, .shiny_session = NULL,
-  .shiny_pbar_id = NULL)
+  out_path = tempfile(), interp_method = "krige", interp_res = 5,
+  out_crs = NA, grid_offset = c(0, 0), samplesize = 10000,
+  buffer_radius = 15, parallel = TRUE, vgm = NA, merge = TRUE,
+  overwrite = TRUE, .shiny_session = NULL, .shiny_pbar_id = NULL)
 }
 \arguments{
 \item{inputpts}{TODO}
 
 \item{inlayer}{SpatialPolygonsDataFrame of fields (see also `id_fieldname`)}
 
-\item{grid_path}{optional: TODO}
-
 \item{filtered}{logical: is `inputpts` already filtered? If TRUE (default),
 no additional filter is applied; if FALSE, a standard automatic filter is applied.}
 
 \item{id_fieldname}{optional: name of the `inlayer` field containing unique ID of fields (default: "idfield")}
 
-\item{interp_dir}{directory where rasters are stores (default: temporary directory)}
+\item{interp_dir}{directory where rasters of single polygons are stores (default: temporary directory)}
+
+\item{out_path}{path of the output merged raster (default: temporary directory)}
 
 \item{interp_method}{interpolation method ("krige" or "idw")}
 
 \item{interp_res}{output raster resolution (numeric, in metres)}
 
 \item{out_crs}{optional: CRS of output raster (default: CRS of inputpts)}
+
+\item{grid_offset}{optional: grid offset from point (0,0) in out_crs (2-length numeric)}
 
 \item{samplesize}{maximum size of the sample of the original data to work with (default: 10000; if NA: all the points)}
 
@@ -53,8 +55,6 @@ single field rasters.}
 \item{.shiny_session}{TODO}
 
 \item{.shiny_pbar_id}{TODO}
-
-\item{samplesize}{maximum size of the sample of the original data to work with (default: 100000; if NA: all the points)}
 }
 \description{
 This function calls other functions of the library to perform

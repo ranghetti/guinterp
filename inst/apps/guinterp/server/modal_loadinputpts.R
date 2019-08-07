@@ -1,14 +1,8 @@
-
-
-
-# TODO è una copia di loadinputptss, sistemare!
-
-
 # Open modal dialog to load the point file of inputpts
 
 observeEvent(input$button_load_inputpts, {
   showModal(modalDialog(
-    title = "Seleziona il poligonale dei punti da interpolare",
+    title = "Seleziona i file dei punti da interpolare",
     size = "m",
 
     div(
@@ -33,24 +27,40 @@ observeEvent(input$button_load_inputpts, {
         shiny::htmlOutput("inputptspath_errormess")
       )
     ),
-    div(
-      shiny::div(
-        style = "display:inline-block;vertical-align:top;width:85pt;",
-        shiny::strong("Tipo di file")
+    fluidRow(
+      column(
+        width = 8,
+        div(
+          div(
+            style = "display:inline-block;padding-right:10pt;",
+            shiny::strong("Tipo di file")
+          ),
+          div(
+            style = "display:inline-block;padding-right:20pt;",
+            radioButtons(
+              "inputptsfiletype",
+              NULL, #"Tipo di file",
+              list("Vettoriale" = "vect", "File di testo" = "txt"), #"Tutti i files" = "all"),
+              selected = "vect",
+              inline = TRUE
+            )
+          )
+        )
       ),
-      div(
-        style="display:inline-block;vertical-align:top;",
-        radioButtons(
-          "inputptsfiletype",
-          NULL, #"Tipo di file",
-          list("Vettoriale" = "vect", "File di testo" = "txt"), #"Tutti i files" = "all"),
-          selected = "vect",
-          inline = TRUE
+      column(
+        width = 4,
+        div(
+          style="margin-top:-10px;",
+          checkboxInput(
+            "inputpts_showall",
+            "Mostra tutti i file",
+            value = FALSE
+          )
         )
       )
     ),
     div(
-      style = "vertical-align:top;margin-bottom:10px;",
+      style = "margin-bottom:10px;",
       shiny::wellPanel(
         shinycssloaders::withSpinner(DT::dataTableOutput("inputptsfiles_tbl"), type = 6)
       )
@@ -105,37 +115,62 @@ observeEvent(rv$inputpts_points_raw, ignoreInit = FALSE, ignoreNULL = FALSE, {
 
 
 # Variable selector
+observeEvent(rv$inputpts_points_raw, {
+  rv$inputpts_names <- names(rv$inputpts_points_raw)[names(rv$inputpts_points_raw)!="geometry"]
+  if (input$inputptsfiletype == "txt") {
+    rv$def_xvar <- rv$inputpts_names[c(
+      grep("^x$", tolower(rv$inputpts_names)),         # search first var. x (or X)
+      grep("^longitude$", tolower(rv$inputpts_names)), # then var. longitude
+      grep("^lo?ng?$", tolower(rv$inputpts_names)),    # then var. lon, long, lng
+      grep("^lo?ng?", tolower(rv$inputpts_names)),     # then, starting with lon[g]/lng
+      grep("^x", tolower(rv$inputpts_names)),          # then, starting with x
+      1                                                # first name
+    )[1]]
+    rv$def_yvar <- rv$inputpts_names[c(
+      grep("^y$", tolower(rv$inputpts_names)),        # search first var. y (or Y)
+      grep("^latitude$", tolower(rv$inputpts_names)), # then var. latitude
+      grep("^lat$", tolower(rv$inputpts_names)),      # then var. lat
+      grep("^lat", tolower(rv$inputpts_names)),       # then, starting with lat
+      grep("^y", tolower(rv$inputpts_names)),         # then, starting with y
+      min(length(rv$inputpts_names),2)                # second name (if exists)
+    )[1]]
+    rv$def_inputvar <- c(
+      rv$inputpts_names[!rv$inputpts_names %in% c(rv$def_xvar, rv$def_yvar)],
+      rv$inputpts_names
+    )[1]
+  } else {
+    rv$def_xvar <- rv$def_yvar <- NULL
+    rv$def_inputvar <- rv$inputpts_names[1]
+  }
+})
 output$selector_inputvar <- renderUI({
   req(rv$inputpts_points_raw)
-  inputpts_names <- names(rv$inputpts_points_raw)[names(rv$inputpts_points_raw)!="geometry"]
   selectInput(
     "select_inputvar",
     label = "Variabile da interpolare",
-    choices = inputpts_names,
-    selected = inputpts_names[1]
+    choices = rv$inputpts_names,
+    selected = rv$def_inputvar
   )
 })
 output$selector_xvar <- renderUI({
   req(rv$inputpts_points_raw)
   if (input$inputptsfiletype == "txt") {
-    inputpts_names <- names(rv$inputpts_points_raw)
     selectInput(
       "select_xvar",
       label = "Coordinate X",
-      choices = inputpts_names,
-      selected = inputpts_names[1]
+      choices = rv$inputpts_names,
+      selected = rv$def_xvar
     )
   }
 })
 output$selector_yvar <- renderUI({
   req(rv$inputpts_points_raw)
   if (input$inputptsfiletype == "txt") {
-    inputpts_names <- names(rv$inputpts_points_raw)
     selectInput(
       "select_yvar",
       label = "Coordinate Y",
-      choices = inputpts_names,
-      selected = inputpts_names[1]
+      choices = rv$inputpts_names,
+      selected = rv$def_yvar
     )
   }
 })
@@ -166,11 +201,13 @@ observeEvent(
         #  TODO link the list of available files to a specific folder name!!!!
         vect_list_all <- list.files(input$inputptspath_textin, full.names = TRUE)
         vect_ext <- gsub("^.+\\.([^\\.]+)$","\\1",vect_list_all)
-        vect_list <- switch(
-          input$inputptsfiletype,
-          "vect" = vect_list_all[vect_ext %in% c("shp","gpkg","geojson","kml","gml","sqlite","tab")],
-          "txt" = vect_list_all[vect_ext %in% c("txt", "csv")]
-        )
+        vect_list <- if (!input$inputpts_showall) {
+          switch(
+            input$inputptsfiletype,
+            "vect" = vect_list_all[vect_ext %in% c("shp","gpkg","geojson","kml","gml","sqlite","tab")],
+            "txt" = vect_list_all[vect_ext %in% c("txt", "csv")]
+          )
+        } else {vect_list_all}
 
         # TODO check that it contains multipolygons
 

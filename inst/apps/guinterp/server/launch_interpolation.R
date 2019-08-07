@@ -35,15 +35,17 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
 
   rv$out_raster_paths <- guinterp_process(
     rv$inputpts_points, rv$borders_polygon,
-    grid_path = NA, filtered = TRUE,
-    id_fieldname="id_geom", # TODO add GUI input for it
+    filtered = TRUE,
+    id_fieldname="id_geom",
     interp_dir = rv$interp_dir,
+    out_path = rv$outraster_path,
     # samplesize = if (input$interp_method=="krige") {1E4} else {Inf},
     samplesize = Inf,
     parallel = (input$turbo == "high"),
     interp_method = input$interp_method,
-    interp_res = input$interp_res,
-    out_crs = rv$outproj_validated,
+    interp_res = rv$interp_res,
+    out_crs = rv$outproj,
+    grid_offset = rv$grid_offset,
     buffer_radius = if (input$maxptdist_onoff) {input$maxptdist} else {Inf},
     vgm = switch(
       input$auto_vgm,
@@ -51,8 +53,8 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
       semiauto = rv$vgm.semiauto,
       manual = rv$vgm.fit
     ),
-    merge = FALSE,
-    overwrite = input$interp_overwrite,
+    merge = TRUE,
+    overwrite = TRUE, # this after simplifying the GUI
     .shiny_session = session,
     .shiny_pbar_id = "pb_interp"
   )
@@ -87,7 +89,20 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
 
   shinyWidgets::sendSweetAlert(
     session, title = "Interpolazione completata",
-    text = "I dati sono stati correttamente interpolati.",
+    text = shiny::div(
+      shiny::p("I dati sono stati correttamente interpolati."),
+      if (input$outraster_savesingles) {
+        tags$p(
+          "I raster dei singoli poligoni",
+          "sono stati salvati nella cartella", tags$br(),
+          tags$span(style="font-family:monospace;",rv$interp_dir)
+        )
+      },
+      shiny::p(
+          "Il raster finale \u00E8 stato salvato qui:", shiny::br(),
+          shiny::span(style="font-family:monospace;",rv$outraster_path)
+        )
+    ),
     type = "success", btn_labels = "Ok"
   )
 

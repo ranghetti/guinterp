@@ -7,9 +7,9 @@
 st_buffer_m(x, dist)
 }
 \arguments{
-\item{poly}{TODO}
+\item{x}{TODO}
 
-\item{width}{TODO}
+\item{dist}{TODO}
 }
 \description{
 TODO

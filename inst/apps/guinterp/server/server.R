@@ -24,21 +24,27 @@ server_guinterp <- function(input, output, session) {
   shinyjs::hide(selector = "#tabs li a[data-value=tab_filter]")
 
 
-  #### File selectors ####
-  source(
-    system.file("apps/guinterp/server/import_data_loadsave.R", package="guinterp"),
-    local=TRUE
-  )$value
-
   #### Filter selectors ####
   source(
-    system.file("apps/guinterp/server/import_interp_filters.R", package="guinterp"),
+    system.file("apps/guinterp/server/interp_filters.R", package="guinterp"),
     local=TRUE
   )$value
 
-  #### Options selectors ####
+  #### Interpolation options selectors ####
   source(
-    system.file("apps/guinterp/server/import_interp_options.R", package="guinterp"),
+    system.file("apps/guinterp/server/interp_options.R", package="guinterp"),
+    local=TRUE
+  )$value
+
+  #### Oputput format options ####
+  source(
+    system.file("apps/guinterp/server/interp_outformat.R", package="guinterp"),
+    local=TRUE
+  )$value
+
+  #### Processing options selectors ####
+  source(
+    system.file("apps/guinterp/server/interp_proc.R", package="guinterp"),
     local=TRUE
   )$value
 
@@ -69,6 +75,12 @@ server_guinterp <- function(input, output, session) {
   #### Reset app ####
   source(
     system.file("apps/guinterp/server/close_interp.R", package="guinterp"),
+    local=TRUE
+  )$value
+
+  #### Help dialogs ####
+  source(
+    system.file("apps/guinterp/server/helpers.R", package="guinterp"),
     local=TRUE
   )$value
 

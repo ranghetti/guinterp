@@ -40,7 +40,7 @@ observeEvent(c(input$filter_buttons), {
           metric = filter_name,
           value = def_filters[[filter_name]],
           inlayer = rv$borders_polygon,
-          id_fieldname="id_geom", # TODO add GUI input for it
+          id_fieldname="id_geom",
           byfield = TRUE,
           samplesize = NA,
           par1 = NA
@@ -60,7 +60,7 @@ observeEvent(c(input$filter_buttons), {
         filter_pts(
           "rangeq", c(.02,.98), # filter points < 2° and > 98° percentiles
           inlayer = rv$borders_polygon,
-          id_fieldname="id_geom", # TODO add GUI input for it
+          id_fieldname="id_geom",
           byfield = TRUE, samplesize = NA
         )
     }, error = function(e) {
@@ -128,7 +128,7 @@ output$indata_rangey <- renderUI({
         rv$inputpts_points <- filter_pts(
           rv$inputpts_points, "rangey", c(input$miny,input$maxy),
           inlayer = rv$borders_polygon,
-          id_fieldname="id_geom", # TODO add GUI input for it
+          id_fieldname="id_geom",
           byfield = TRUE, samplesize = NA
         )
       } else {
@@ -148,7 +148,7 @@ output$indata_rangey <- renderUI({
         rv$inputpts_points <- filter_pts(
           rv$inputpts_points, "zscorey", input$zscorey/100,
           inlayer = rv$borders_polygon,
-          id_fieldname="id_geom", # TODO add GUI input for it
+          id_fieldname="id_geom",
           byfield = TRUE, samplesize = NA
         )
       } else {
@@ -167,7 +167,7 @@ output$indata_rangey <- renderUI({
         rv$inputpts_points <- filter_pts(
           rv$inputpts_points, "rbiasy", input$rbiasy/100,
           inlayer = rv$borders_polygon,
-          id_fieldname="id_geom", # TODO add GUI input for it
+          id_fieldname="id_geom",
           byfield = TRUE, samplesize = NA
         )
       } else {
@@ -186,7 +186,7 @@ output$indata_rangey <- renderUI({
         rv$inputpts_points <- filter_pts(
           rv$inputpts_points, "rangeq", input$rangeq/100,
           inlayer = rv$borders_polygon,
-          id_fieldname="id_geom", # TODO add GUI input for it
+          id_fieldname="id_geom",
           byfield = TRUE, samplesize = NA
         )
       } else {
@@ -205,7 +205,7 @@ output$indata_rangey <- renderUI({
         rv$inputpts_points <- filter_pts(
           rv$inputpts_points, "pos", input$pos,
           inlayer = rv$borders_polygon,
-          id_fieldname="id_geom", # TODO add GUI input for it
+          id_fieldname="id_geom",
           byfield = TRUE, samplesize = NA
         )
       } else {

@@ -14,8 +14,8 @@ shiny::div(
             shiny::strong("Vettoriale dei poligoni")
           ),
           shiny::span(
-            style="display:inline-block"#,
-            # shiny::actionLink("help_fields_path", shiny::icon("question-circle"))
+            style="display:inline-block",
+            shiny::actionLink("help_load_borders", icon("question-circle"))
           )
         ),
         actionButton(
@@ -30,11 +30,11 @@ shiny::div(
           style = "margin-top:10px;padding-left:15px;",
           shiny::span(
             style="display:inline-block",
-            shiny::strong("Vettoriali dei punti")
+            shiny::strong("Punti da interpolare")
           ),
           shiny::span(
-            style="display:inline-block"#,
-            # shiny::actionLink("help_rawdata_paths", shiny::icon("question-circle"))
+            style="display:inline-block",
+            shiny::actionLink("help_load_inputpts", icon("question-circle"))
           )
         ),
         shinyjs::disabled(actionButton(

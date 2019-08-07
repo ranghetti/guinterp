@@ -46,14 +46,31 @@ shiny::div(
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",
-            source("ui/tab_interp/import_interp_filters_ui.R", local = TRUE)$value
+            source("ui/tab_interp/interp_filters_ui.R", local = TRUE)$value
+          ),
+          shinydashboard::box(
+            width = NULL,
+            title = "Formato di output",
+            solidHeader = TRUE,
+            collapsible = TRUE,
+            status = "danger",
+            source("ui/tab_interp/interp_outformat_ui.R", local = TRUE)$value
           ),
           shinydashboard::box(
             width = NULL,
             title = "Opzioni di interpolazione",
             solidHeader = TRUE,
+            collapsible = TRUE,
             status = "danger",
-            source("ui/tab_interp/import_interp_options_ui.R", local = TRUE)$value
+            source("ui/tab_interp/interp_options_ui.R", local = TRUE)$value
+          ),
+          shinydashboard::box(
+            width = NULL,
+            title = "Opzioni di processamento",
+            solidHeader = TRUE,
+            collapsible = TRUE,
+            status = "danger",
+            source("ui/tab_interp/interp_proc_ui.R", local = TRUE)$value
           )
         )
       )

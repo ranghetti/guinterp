@@ -1,7 +1,7 @@
 #' @title Buffer latlon polygons in metres
 #' @description TODO
-#' @param poly TODO
-#' @param width TODO
+#' @param x TODO
+#' @param dist TODO
 #' @importFrom sf st_as_sf st_buffer st_crs st_transform st_is_longlat
 #' @export
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
