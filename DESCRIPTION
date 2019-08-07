@@ -18,6 +18,7 @@ Imports:
  data.table,
  doParallel,
  dplyr,
+ DT,
  foreach,
  ggplot2,
  gstat,
