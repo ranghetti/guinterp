@@ -249,7 +249,7 @@ guinterp_process <- function(
     field_name <- f
     out_name <- paste0("polygon_",f,".tif")
     if (overwrite == TRUE | !file.exists(file.path(interp_dir,out_name))) {
-      print(paste(Sys.time(), field_name))
+      message(paste(Sys.time(), field_name))
 
       vgm_sel <- if (is(vgm, "variogramModel")) {vgm} else {vgm[[f]]}
       interp_inputpts(

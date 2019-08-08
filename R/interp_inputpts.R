@@ -130,7 +130,7 @@ interp_inputpts <- function(
     NA_value = -32768,
     options = "COMPRESS=DEFLATE"
   )
-  print(file.path(outdir,outname))
+  message(file.path(outdir,outname))
 
   # extend interp grid, using average value as NA
   raster_crop_pred <- interp_raster["var1.pred",]
