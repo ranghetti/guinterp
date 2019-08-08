@@ -197,4 +197,23 @@ shiny::observeEvent(input$help_filter_buttons, {
 })
 
 
-
+shiny::observeEvent(input$help_focal, {
+  shiny::showModal(shiny::modalDialog(
+    title = "Livellazione dei raster",
+    size = "s",
+    shiny::p(shiny::HTML(
+      "Applicare una perequazione (<em>smoothing</em>) ai raster interpolati",
+      "\u00e8 un'operazione utile per livellare eventuali irregolarit\u00e0",
+      "(soprattutto se l'interpolazione \u00e8 stata effettuata con IDW,",
+      "oppure se il <em>range</em> del variogramma ha un valore simile",
+      "alla risoluzione del raster)."
+    )),
+    shiny::p(
+      "Se questa opzione è attiva (scelta predefinita), ai raster interpolati",
+      "viene applicata una perequazione con media mobile utilizzando un filtro",
+      "gaussiano con raggio parti alla risoluzione del raster."
+    ),
+    easyClose = TRUE,
+    footer = NULL
+  ))
+})

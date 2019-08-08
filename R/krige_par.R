@@ -46,7 +46,7 @@ krige_par <- function(
     }
     suppressMessages(gstat::krige(
       stats::as.formula(formula),
-      locations[which_neigh,],
+      out_locations[which_neigh,],
       in_pt,
       debug.level = 0
     ))
@@ -83,6 +83,15 @@ krige_par <- function(
     newdata <- newdata %>% as("Raster") %>% st_as_stars()
   }
 
+  # fix different crs
+  if (all(
+    !is.na(st_crs(newdata)$epsg) & !is.na(st_crs(locations)$epsg),
+    st_crs(newdata)$epsg == st_crs(locations)$epsg,
+    st_crs(newdata)$proj4string != st_crs(locations)$proj4string
+  )) {
+    st_crs(newdata) <- st_crs(locations)
+  }
+
   # krig_fun <- function(ind, newdata_krig) {
   #   if (floor(ind / 500) - (ind/500) == 0) print(ind)
   #   in_pt <- as(newdata_krig[ind, ], "SpatialPoints")
@@ -104,7 +113,7 @@ krige_par <- function(
       qtree <- SearchTrees::createTree(st_coordinates(locations))
       newdata_pt <- suppressWarnings(st_as_sf(newdata) %>% st_centroid())
       out_krig_list <- lapply(seq_len(nrow(newdata_pt)), FUN = function(x) {
-        krig_fun(newdata_pt[x,], formula, locations[which_neigh,], qtree)
+        krig_fun(newdata_pt[x,], formula, locations, qtree)
       })
       # out_krig <- lapply(seq_len(dim(newdata)["x"]), function(x) {
       #   lapply(seq_len(dim(newdata)["y"]), function(y) {

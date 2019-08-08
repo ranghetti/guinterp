@@ -6,10 +6,11 @@
 \usage{
 guinterp_process(inputpts, inlayer, filtered = TRUE,
   id_fieldname = "idfield", interp_dir = tempdir(),
-  out_path = tempfile(), interp_method = "krige", interp_res = 5,
-  out_crs = NA, grid_offset = c(0, 0), samplesize = 10000,
-  buffer_radius = 15, parallel = TRUE, vgm = NA, merge = TRUE,
-  overwrite = TRUE, .shiny_session = NULL, .shiny_pbar_id = NULL)
+  out_path = tempfile(), interp_method = "krige", smooth = TRUE,
+  interp_res = 5, out_crs = NA, grid_offset = c(0, 0),
+  samplesize = 10000, buffer_radius = 15, parallel = TRUE,
+  vgm = NA, merge = TRUE, overwrite = TRUE, .shiny_session = NULL,
+  .shiny_pbar_id = NULL)
 }
 \arguments{
 \item{inputpts}{TODO}

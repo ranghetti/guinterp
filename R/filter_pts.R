@@ -107,13 +107,13 @@ filter_pts <- function(
 
   } else if (metric == "pos") {
     inlayer_buffer <- st_buffer_m(inlayer, -value)
-    outdata_sp <- st_as_sf(
+    outdata_sf <- st_as_sf(
       outdata[sid <= samplesize,list(sid,lon,lat,idfield)],
       coords = c("lon","lat"),
       crs = 4326
     )
-    if (st_crs(inlayer_buffer) != st_crs(outdata_sp)) {
-      outdata_sp <- st_transform(outdata_sp, st_crs(inlayer_buffer))
+    if (st_crs(inlayer_buffer) != st_crs(outdata_sf)) {
+      outdata_sf <- st_transform(outdata_sf, st_crs(inlayer_buffer))
     }
 
     if (byfield) {
@@ -122,9 +122,9 @@ filter_pts <- function(
         sel_inlayer <- inlayer_buffer[inlayer_buffer[[id_fieldname]] == sel_field,]
         if (nrow(sel_inlayer) > 0) {
           outdata_pos <- !colSums(suppressMessages(
-            st_contains(sel_inlayer, outdata_sp, sparse = FALSE)
+            st_contains(sel_inlayer, outdata_sf, sparse = FALSE)
           ))
-          outdata_pos_allpts <- outdata_pos[match(outdata$sid,outdata_sp$sid)]
+          outdata_pos_allpts <- outdata_pos[match(outdata$sid,outdata_sf$sid)]
           outdata[
             sid <= samplesize & idfield == sel_field &
               outdata_pos_allpts & !is.na(outdata_pos_allpts),
@@ -141,9 +141,9 @@ filter_pts <- function(
       }
     } else {
       outdata_pos <- !colSums(suppressMessages(
-        st_contains(inlayer_buffer, outdata_sp, sparse = FALSE)
+        st_contains(inlayer_buffer, outdata_sf, sparse = FALSE)
       ))
-      outdata_pos_allpts <- outdata_pos[match(outdata$sid,outdata_sp$sid)]
+      outdata_pos_allpts <- outdata_pos[match(outdata$sid,outdata_sf$sid)]
       outdata[
         sid <= samplesize &
           outdata_pos_allpts & !is.na(outdata_pos_allpts),

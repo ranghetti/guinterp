@@ -64,9 +64,17 @@ shiny::div(
       shiny::div(
         style = "display:inline-block;position:relative;vertical-align:top;margin-top:40px;margin-left:-20px;",
         actionButton("fit_vgm_button", "Impostazioni")
-        # bfsapps::bf_button("fit_vgm_button", type = "settings", action = "settings")
       )
     )
+  ),
+
+  shiny::checkboxInput(
+    "focal_onoff",
+    shiny::span(
+      "Livella i raster interpolati\u2000",
+      actionLink("help_focal", icon("question-circle"))
+    ),
+    value = TRUE
   )
 
 )
