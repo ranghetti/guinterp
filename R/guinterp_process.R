@@ -50,6 +50,7 @@ guinterp_process <- function(
   interp_dir = tempdir(),
   out_path = tempfile(),
   interp_method = "krige",
+  smooth = TRUE,
   interp_res = 5,
   out_crs = NA,
   grid_offset = c(0,0),
@@ -261,8 +262,8 @@ guinterp_process <- function(
         # focal_types = rep("Gauss",2),
         # focal_d = list(5,9),
         method = interp_method,
-        focal_types = "Gauss",
-        focal_d = 5,
+        focal_types = if (smooth) "Gauss" else NULL,
+        focal_d = if (smooth) interp_res else NULL, # focal_d = 5,
         outname = out_name,
         outdir = interp_dir,
         n_cores = n_cores,
@@ -272,13 +273,22 @@ guinterp_process <- function(
       )
 
       # move the proper file
-      file.rename(
-        file.path(interp_dir, "focal_Gauss5x5", out_name),
-        file.path(interp_dir, out_name)
-      )
-      file.remove(file.path(interp_dir, "focal_Gauss5x5"))
-      file.remove(file.path(interp_dir, "interp", out_name))
-      file.remove(file.path(interp_dir, "interp"))
+      if (smooth) {
+        file.rename(
+          file.path(interp_dir, paste0("focal_Gauss",interp_res,"x",interp_res), out_name),
+          file.path(interp_dir, out_name)
+        )
+        file.remove(file.path(interp_dir, paste0("focal_Gauss",interp_res,"x",interp_res)))
+        file.remove(file.path(interp_dir, "interp", out_name))
+        file.remove(file.path(interp_dir, "interp"))
+      } else {
+        file.rename(
+          file.path(interp_dir, "interp", out_name),
+          file.path(interp_dir, out_name)
+        )
+        file.remove(file.path(interp_dir, "interp"))
+      }
+
     }
     # Update progress bar
     if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
