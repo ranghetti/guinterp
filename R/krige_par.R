@@ -83,14 +83,14 @@ krige_par <- function(
     newdata <- newdata %>% as("Raster") %>% st_as_stars()
   }
 
-  # # fix different crs
-  # if (all(
-  #   !is.na(st_crs(newdata)$epsg) & !is.na(st_crs(locations)$epsg),
-  #   st_crs(newdata)$epsg == st_crs(locations)$epsg,
-  #   st_crs(newdata)$proj4string != st_crs(locations)$proj4string
-  # )) {
-  #   st_crs(newdata) <- st_crs(locations)
-  # }
+  # fix different crs
+  if (all(
+    !is.na(st_crs(newdata)$epsg) & !is.na(st_crs(locations)$epsg),
+    st_crs(newdata)$epsg == st_crs(locations)$epsg,
+    st_crs(newdata)$proj4string != st_crs(locations)$proj4string
+  )) {
+    st_crs(newdata) <- st_crs(locations)
+  }
 
   # krig_fun <- function(ind, newdata_krig) {
   #   if (floor(ind / 500) - (ind/500) == 0) print(ind)
