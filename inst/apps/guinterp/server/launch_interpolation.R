@@ -43,6 +43,7 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
     samplesize = Inf,
     parallel = (input$turbo == "high"),
     interp_method = input$interp_method,
+    smooth = input$focal_onoff,
     interp_res = rv$interp_res,
     out_crs = rv$outproj,
     grid_offset = rv$grid_offset,
