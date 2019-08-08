@@ -146,6 +146,7 @@ interp_inputpts <- function(
       w=focalWeight(raster_crop_pred_r, sel_focal_d, sel_focal_type),
       na.rm=TRUE
     ) %>% st_as_stars()
+    st_crs(sel_focal_raster_pred) <- st_crs(raster_crop_pred)
 
     # cut on borders ("buffer" value plus half of raster resolution, to cut pixels of border)
     crop_focal_raster_pred <- st_crop(
