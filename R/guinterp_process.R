@@ -21,6 +21,8 @@
 #'  If FALSE, the interpolation is forced to run with a single core.
 #' @param vgm named list of variograms (names must correspond to values of field `id_fieldname`).
 #'  If NA (default), they are automatically computed.
+#' @param v_nmax TODO.
+#' @param v_maxdist TODO.
 #' @param merge logical: if TRUE (default), merge raster of single fields and
 #'  return the pèath of the merged raster; if FALSE, return the paths of the
 #'  single field rasters.
@@ -58,6 +60,8 @@ guinterp_process <- function(
   buffer_radius = 15,
   parallel = TRUE,
   vgm = NA,
+  v_nmax = Inf,
+  v_maxdist = Inf,
   merge = TRUE,
   overwrite = TRUE,
   .shiny_session = NULL,
@@ -268,8 +272,8 @@ guinterp_process <- function(
         outdir = interp_dir,
         n_cores = n_cores,
         samplesize = samplesize,
-        nmax = 500 ,
-        maxdist = vgm_sel[2,"range"]
+        nmax = v_nmax,
+        maxdist = if (!is.na(v_maxdist)) {v_maxdist} else {vgm_sel[2,"range"]*1.5}
       )
 
       # move the proper file

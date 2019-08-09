@@ -54,6 +54,8 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
       semiauto = rv$vgm.semiauto,
       manual = rv$vgm.fit
     ),
+    v_nmax = if (!input$v_nmax_onoff) {input$v_nmax} else {500},
+    v_maxdist = if (!input$v_nmax_onoff) {input$v_maxdist} else {NA},
     merge = TRUE,
     overwrite = TRUE, # this after simplifying the GUI
     .shiny_session = session,

@@ -217,3 +217,38 @@ shiny::observeEvent(input$help_focal, {
     footer = NULL
   ))
 })
+
+
+shiny::observeEvent(input$help_v_options, {
+  shiny::showModal(shiny::modalDialog(
+    title = "Opzioni avanzate di interpolazione",
+    size = "m",
+    shiny::p(shiny::HTML(
+      "<em>Nota:</em> queste impostazioni hanno effetto sulla velocità",
+      "di processamento dell'interpolazione;",
+      "valori scorretti potrebbero inficiare la validità dell'output.",
+      "Assicurarsi di modificarli solo se si è consapevoli di quello",
+      "che si sta facendo."
+    )),
+    shiny::p(shiny::HTML(
+      "<ul><li><strong>Distanza massima punti-pixel</strong>:",
+      "corrisponde all'argomento \"maxdist\" delle funzioni",
+      "<tt><a href='https://www.rdocumentation.org/packages/gstat/versions/2.0-2/topics/krige'",
+      "target='_blank'>krige</a>()</tt> e",
+      "<tt><a href='https://www.rdocumentation.org/packages/gstat/versions/2.0-2/topics/idw'",
+      "target='_blank'>idw</a>()</tt>;",
+      "il valore determinato automaticamente corrisponde al 150% del",
+      "<em>range</em> del semivariogramma.</li>",
+      "<li><strong>Numero di punti per pixel</strong>:",
+      "corrisponde all'argomento \"nmax\" delle funzioni",
+      "<tt><a href='https://www.rdocumentation.org/packages/gstat/versions/2.0-2/topics/krige'",
+      "target='_blank'>krige</a>()</tt> e",
+      "<tt><a href='https://www.rdocumentation.org/packages/gstat/versions/2.0-2/topics/idw'",
+      "target='_blank'>idw</a>()</tt>;",
+      "il valore determinato automaticamente è 500 (oppure il numero",
+      "totale di punti nel caso questio sia minore di 500).</li></ul>"
+    )),
+    easyClose = TRUE,
+    footer = NULL
+  ))
+})

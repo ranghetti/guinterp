@@ -80,17 +80,6 @@ interp_inputpts <- function(
     d_buffer <- 3
   }
 
-  # # cut on borders ("buffer" value plus half of raster resolution, to cut pixels of border)
-  # globgrid_ <- as(as(globgrid, "Raster"), "SpatialGrid")
-  # field_poly_ <- as(field_poly, "Spatial")
-  # fieldgrid_ <- as(crop(raster(globgrid_), field_poly_), "SpatialPixels")
-  # fieldgrid_ <- fieldgrid_[gBuffer(field_poly_,width=-(border+globgrid_@grid@cellsize[1]/2)),]
-  # # create buffered grid (for focals)
-  # field_poly_buf_ <- gBuffer(field_poly_, width=globgrid_@grid@cellsize[1]*d_buffer)
-  # fieldgrid_buf_ <- as(crop(raster(globgrid_), field_poly_buf_), "SpatialPixels")
-  # fieldgrid_buf_ <- SpatialPixelsDataFrame(fieldgrid_buf_, data = data.frame("band1"=rep(as.numeric(NA),length(fieldgrid_buf_))))
-  # fieldgrid_buf_ <- fieldgrid_buf_[field_poly_buf_,]
-
   # cut on borders ("buffer" value plus half of raster resolution, to cut pixels of border)
   # and create buffered grid (for focals)
   field_poly_buf <- st_buffer(st_union(field_poly), st_dimensions(globgrid)[[1]]$delta*d_buffer)
@@ -101,17 +90,9 @@ interp_inputpts <- function(
     st_buffer(field_poly, -(border+st_dimensions(globgrid)[[1]]$delta/2)),
     crop = FALSE
   )
-  # fieldgrid_buf[[1]][!is.na(fieldgrid_buf[[1]])] <- NA
 
   # interpolate
-  interp_raster <- krige_par(selvar ~ 1, indata_sf_sub, fieldgrid, vgm.fit, method=method, n_cores=n_cores, maxdist=maxdist)
-
-  # # cut on borders (not yet necessary, already done)
-  # crop_raster <- st_crop(
-  #   interp_raster,
-  #   st_buffer(field_poly, -(border+st_dimensions(globgrid)[[1]]$delta/2)),
-  #   crop = FALSE
-  # )
+  interp_raster <- krige_par(selvar ~ 1, indata_sf_sub, fieldgrid, vgm.fit, method=method, n_cores=n_cores, nmax=nmax, maxdist=maxdist)
 
   # export raster
   if (is.na(outname)) {

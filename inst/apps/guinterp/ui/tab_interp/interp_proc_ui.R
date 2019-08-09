@@ -71,7 +71,60 @@ shiny::div(
         )
       )
     )
-  )#,
+  ),
+
+  shiny::checkboxInput(
+    "v_options_onoff",
+    shiny::span(
+      shiny::strong("Opzioni avanzate\u2000"),
+      actionLink("help_v_options", icon("question-circle")),
+      "\u00a0"
+    ),
+    value = FALSE
+  ),
+  shiny::conditionalPanel(
+    condition = "input.v_options_onoff",
+    shiny::fluidRow(
+      shiny::column(
+        width = 6,
+        shiny::div("Distanza massima punti-pixel"),
+        shiny::div(
+          style="display:inline-block;vertical-align:middle;height:60px;padding-bottom:10px;",
+          ""
+        ),
+        shiny::div(
+          style="display:inline-block;vertical-align:middle;width:60pt;",
+          shinyWidgets::switchInput(
+            "v_maxdist_onoff", value = TRUE,
+            size = "small", onLabel = "Auto", offLabel = "Man"
+          )
+        ),
+        shiny::div(
+          style="display:inline-block;vertical-align:middle;width:calc(100% - 60pt - 3px - 2pt);",
+          shiny::uiOutput("v_maxdist_ui")
+        )
+      ),
+      shiny::column(
+        width = 6,
+        shiny::div("Numero di punti per pixel"),
+        shiny::div(
+          style="display:inline-block;vertical-align:middle;height:60px;padding-bottom:10px;",
+          ""
+        ),
+        shiny::div(
+          style="display:inline-block;vertical-align:middle;width:60pt;",
+          shinyWidgets::switchInput(
+            "v_nmax_onoff", value = TRUE,
+            size = "small", onLabel = "Auto", offLabel = "Man"
+          )
+        ),
+        shiny::div(
+          style="display:inline-block;vertical-align:middle;width:calc(100% - 60pt - 3px - 2pt);",
+          shiny::uiOutput("v_nmax_ui")
+        )
+      )
+    )
+  )
 
   # shiny::radioButtons(
   #   'interp_overwrite',
