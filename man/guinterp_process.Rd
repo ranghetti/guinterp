@@ -28,6 +28,8 @@ no additional filter is applied; if FALSE, a standard automatic filter is applie
 
 \item{interp_method}{interpolation method ("krige" or "idw")}
 
+\item{smooth}{logical: should rasters be smoothed after interpolation?}
+
 \item{interp_res}{output raster resolution (numeric, in metres)}
 
 \item{out_crs}{optional: CRS of output raster (default: CRS of inputpts)}

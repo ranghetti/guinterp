@@ -9,6 +9,7 @@
 #' @param interp_dir directory where rasters of single polygons are stores (default: temporary directory)
 #' @param out_path path of the output merged raster (default: temporary directory)
 #' @param interp_method interpolation method ("krige" or "idw")
+#' @param smooth logical: should rasters be smoothed after interpolation?
 #' @param interp_res output raster resolution (numeric, in metres)
 #' @param out_crs optional: CRS of output raster (default: CRS of inputpts)
 #' @param grid_offset optional: grid offset from point (0,0) in out_crs (2-length numeric)
