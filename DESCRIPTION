@@ -28,7 +28,6 @@ Imports:
  methods,
  parallel,
  raster,
- SearchTrees,
  sf,
  shiny,
  shinycssloaders,
