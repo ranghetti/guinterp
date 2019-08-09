@@ -4,7 +4,7 @@ shiny::div(
 
   shiny::radioButtons(
     "outgrid_type",
-    "Griglia di output:",
+    "Griglia di output",
     c(
       "Definisci risoluzione e proiezione" = "custom",
       "Scegli da un raster esistente" = "ref"
@@ -18,7 +18,7 @@ shiny::div(
         width = 5,
         shiny::numericInput(
           'interp_res',
-          "Risoluzione (m):",
+          "Risoluzione (m)",
           value = 5, min = 0.01, max = 100, step = 1
         )
       ),
