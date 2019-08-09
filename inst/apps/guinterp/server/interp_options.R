@@ -36,7 +36,7 @@ observe({
   rv$v.man <- gstat::vgm(psill=input$sill, model=input$model, range=input$range, nugget=input$nugget)
   v_formula <- if (length(unique(indata_sel$idfield)) > 1) {selvar ~ idfield} else {selvar ~ 1}
   rv$v <- gstat::variogram(v_formula, indata_sel, cutoff=input$vgm_cutoff)
-  rv$autofit_vgm <- sample(1E6, 1)
+  # rv$autofit_vgm <- sample(1E6, 1)
 })
 
 # Histogram of selvar
