@@ -60,6 +60,12 @@ server_guinterp <- function(input, output, session) {
     local=TRUE
   )$value
 
+  #### Modal dialog for variogram ####
+  source(
+    system.file("apps/guinterp/server/modal_variogram.R", package="guinterp"),
+    local=TRUE
+  )$value
+
   #### Update histogram ####
   source(
     system.file("apps/guinterp/server/update_interp_histogram.R", package="guinterp"),

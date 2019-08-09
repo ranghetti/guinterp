@@ -39,6 +39,12 @@ observe({
   rv$autofit_vgm <- sample(1E6, 1)
 })
 
+# Histogram of selvar
+output$v_plot <- renderPlot({
+  shiny::req(rv$v, rv$v.man)
+  plot(rv$v,rv$v.man)
+})
+
 ## Optimise manual variogram
 observeEvent(input$autofit_vgm, {
   rv$autofit_vgm <- sample(1E6, 1)
