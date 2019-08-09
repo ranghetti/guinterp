@@ -49,7 +49,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:30pt;",
-              shiny::em("Sill")
+              shiny::em("pSill")
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:calc(100% - 30pt - 13px);padding-left:10px;margin-bottom:-5px;",
@@ -165,6 +165,9 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
 
     )
     shiny::showModal(fit_vgm_gui)
+    shinyjs::delay(500, {
+      rv$autofit_vgm <- sample(1E6, 1)
+    })
   }
 
   ## ModalDialog for semiautomatic interpolation options
