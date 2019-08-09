@@ -9,7 +9,7 @@ shiny::div(
       # shinyWidgets::radioGroupButtons(
       inputId = "filter_buttons",
       label = span(
-        shiny::strong("Filtraggio dei punti:\u2000"),
+        shiny::strong("Filtraggio dei punti\u2000"),
         actionLink("help_filter_buttons", icon("question-circle")),
         "\u00a0"
       ),
@@ -27,7 +27,7 @@ shiny::div(
 
       shiny::div(
         style="vertical-align:center;",
-        shiny::strong("Valori consentiti:\u2000")
+        shiny::strong("Valori consentiti\u2000")
       ),
       shiny::div(
         style="display:inline-block;vertical-align:middle;height:80px;padding-bottom:10px;",
@@ -48,7 +48,7 @@ shiny::div(
 
       shiny::div(
         style="vertical-align:center;",
-        shiny::strong("Zscore:\u2000")
+        shiny::strong("Zscore\u2000")
       ),
       shiny::div(
         style="display:inline-block;vertical-align:middle;height:80px;padding-bottom:10px;",
@@ -77,7 +77,7 @@ shiny::div(
 
       shiny::div(
         style="vertical-align:center;",
-        shiny::strong("Rbias:\u2000")
+        shiny::strong("Rbias\u2000")
       ),
       shiny::div(
         style="display:inline-block;vertical-align:middle;height:80px;padding-bottom:10px;",
@@ -106,7 +106,7 @@ shiny::div(
 
       shiny::div(
         style="vertical-align:center;",
-        shiny::strong("Intervallo dei quantili:\u2000")
+        shiny::strong("Intervallo dei quantili\u2000")
       ),
       shiny::div(
         style="display:inline-block;vertical-align:middle;height:80px;padding-bottom:10px;",
@@ -135,7 +135,7 @@ shiny::div(
 
       shiny::div(
         style="vertical-align:center;",
-        shiny::strong("Distanza minima dal bordo dei poligoni:\u2000")
+        shiny::strong("Distanza minima dal bordo dei poligoni\u2000")
       ),
       shiny::div(
         style="display:inline-block;vertical-align:middle;height:80px;padding-bottom:10px;",

@@ -21,8 +21,8 @@ observeEvent(input$auto_vgm, {
 })
 
 ## Activate semiauto ok button
-observeEvent(input$semiauto_range, {
-  if (is.na(input$semiauto_range)) {
+observeEvent(c(input$semiauto_range, input$semiauto_autorange), {
+  if (is.na(input$semiauto_range) & !input$semiauto_autorange) {
     shinyjs::disable("save_semiauto")
   } else {
     shinyjs::enable("save_semiauto")
@@ -37,6 +37,12 @@ observe({
   v_formula <- if (length(unique(indata_sel$idfield)) > 1) {selvar ~ idfield} else {selvar ~ 1}
   rv$v <- gstat::variogram(v_formula, indata_sel, cutoff=input$vgm_cutoff)
   rv$autofit_vgm <- sample(1E6, 1)
+})
+
+# Histogram of selvar
+output$v_plot <- renderPlot({
+  shiny::req(rv$v, rv$v.man)
+  plot(rv$v,rv$v.man)
 })
 
 ## Optimise manual variogram
@@ -66,24 +72,12 @@ observeEvent(rv$autofit_vgm, {
   updateNumericInput(session, "range", value=signif(v.auto[2,3],3))
 })
 
-output$vgm_sill <- renderUI({
-  shiny::req(rv$inputpts_sf)
-  sliderInput(
-    inputId="interp_sampling",
-    label="Number of points to use:",
-    min = 0,
-    max = ceiling(nrow(rv$inputpts_sf)),
-    value = min(1E4,ceiling(nrow(rv$inputpts_sf))),
-    step = 1
-  )
-})
-
 observeEvent(list(input$semiauto_autorange, input$fit_vgm_button, rv$fit_vgm_launchgui), {
-  shiny::req(input$semiauto_range)
-  if (input$semiauto_autorange == FALSE) {
-    shinyjs::enable("semiauto_range")
-  } else {
+  shiny::req(!is.null(input$semiauto_autorange))
+  if (input$semiauto_autorange) {
     shinyjs::disable("semiauto_range")
+  } else {
+    shinyjs::enable("semiauto_range")
   }
 })
 

@@ -49,7 +49,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:30pt;",
-              shiny::em("Sill:")
+              shiny::em("Sill")
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:calc(100% - 30pt - 13px);padding-left:10px;margin-bottom:-5px;",
@@ -66,7 +66,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:30pt;",
-              shiny::em("Nugget:")
+              shiny::em("Nugget")
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:calc(100% - 30pt - 13px);padding-left:10px;margin-bottom:-5px;",
@@ -83,7 +83,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:30pt;",
-              shiny::em("Range:")
+              shiny::em("Range")
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:calc(100% - 30pt - 13px);padding-left:10px;margin-bottom:-5px;",
@@ -120,7 +120,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
                 width=6,
                 sliderInput(
                   inputId="interp_sampling",
-                  label="Punti da utilizzare:",
+                  label="Punti da utilizzare",
                   min = 0,
                   max = ceiling(nrow(rv$inputpts_sf)),
                   value = if (is.null(shiny::isolate(input$interp_sampling))) {
@@ -135,7 +135,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
                 width=6,
                 sliderInput(
                   inputId="vgm_cutoff",
-                  label="Massima distanza:",
+                  label="Massima distanza",
                   min = 10,
                   max = ceiling(rv$max_diagonal*2/3),
                   value = if (is.null(shiny::isolate(input$vgm_cutoff))) {
@@ -197,8 +197,8 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
           style="display:inline-block;vertical-align:middle;width:55pt;",
           shinyWidgets::switchInput(
             "semiauto_autorange",
-            value = if (is.null(shiny::isolate(input$semiauto_autorange))) {FALSE} else {shiny::isolate(input$semiauto_autorange)},
-            size = "small", onLabel = "Auto", offLabel = "Set"
+            value = if (is.null(shiny::isolate(input$semiauto_autorange))) {TRUE} else {shiny::isolate(input$semiauto_autorange)},
+            size = "small", onLabel = "Auto", offLabel = "Man"
           )
         ),
         shiny::div(

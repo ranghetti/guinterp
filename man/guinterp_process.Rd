@@ -9,8 +9,8 @@ guinterp_process(inputpts, inlayer, filtered = TRUE,
   out_path = tempfile(), interp_method = "krige", smooth = TRUE,
   interp_res = 5, out_crs = NA, grid_offset = c(0, 0),
   samplesize = 10000, buffer_radius = 15, parallel = TRUE,
-  vgm = NA, merge = TRUE, overwrite = TRUE, .shiny_session = NULL,
-  .shiny_pbar_id = NULL)
+  vgm = NA, v_nmax = Inf, v_maxdist = Inf, merge = TRUE,
+  overwrite = TRUE, .shiny_session = NULL, .shiny_pbar_id = NULL)
 }
 \arguments{
 \item{inputpts}{TODO}
@@ -27,6 +27,8 @@ no additional filter is applied; if FALSE, a standard automatic filter is applie
 \item{out_path}{path of the output merged raster (default: temporary directory)}
 
 \item{interp_method}{interpolation method ("krige" or "idw")}
+
+\item{smooth}{logical: should rasters be smoothed after interpolation?}
 
 \item{interp_res}{output raster resolution (numeric, in metres)}
 
@@ -46,6 +48,10 @@ If FALSE, the interpolation is forced to run with a single core.}
 
 \item{vgm}{named list of variograms (names must correspond to values of field `id_fieldname`).
 If NA (default), they are automatically computed.}
+
+\item{v_nmax}{TODO.}
+
+\item{v_maxdist}{TODO.}
 
 \item{merge}{logical: if TRUE (default), merge raster of single fields and
 return the pèath of the merged raster; if FALSE, return the paths of the

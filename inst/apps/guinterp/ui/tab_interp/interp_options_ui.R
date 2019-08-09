@@ -5,7 +5,7 @@ shiny::div(
   shiny::div(
     style="vertical-align:center;",
     shiny::span(
-      shiny::strong("Distanza massima dai punti:\u2000"),
+      shiny::strong("Distanza massima dai punti\u2000"),
       actionLink("help_maxptdist", icon("question-circle")),
       "\u00a0"
     )
