@@ -61,12 +61,21 @@ observeEvent(c(input$outgrid_type, input$interp_res, rv$outproj_validated, input
     rv$grid_offset <- c("xmin" = 0, "ymin" = 0)
   } else if (input$outgrid_type == "ref") {
     req(input$path_refraster_textin)
-    outgrid_raster <- read_stars(input$path_refraster_textin, proxy = TRUE, quiet = TRUE)
-    rv$interp_res <- st_dimensions(outgrid_raster)[[1]]$delta # assuming same resolution in x and y
-    rv$outproj <- st_crs(outgrid_raster)$proj4string
-    rv$grid_offset <- st_bbox(outgrid_raster)[c("xmin","ymin")] %% rv$interp_res
+    # Error messages
+    path_refraster_errormess <- raster_check(input$path_refraster_textin)
+    output$path_refraster_errormess <- path_refraster_errormess
+    rv$path_refraster_isvalid <- attr(path_refraster_errormess, "isvalid")
+    req(rv$path_refraster_isvalid)
+    outgrid_raster <- stars::read_stars(input$path_refraster_textin, proxy = TRUE, quiet = TRUE)
+    rv$interp_res <- stars::st_dimensions(outgrid_raster)[[1]]$delta # assuming same resolution in x and y
+    rv$outproj <- sf::st_crs(outgrid_raster)$proj4string
+    rv$grid_offset <- sf::st_bbox(outgrid_raster)[c("xmin","ymin")] %% rv$interp_res
   }
 })
+output$path_refraster_isvalid <- shiny::renderText({
+  attr(path_refraster_errormess, "isvalid")
+})
+shiny::outputOptions(output, "path_refraster_isvalid", suspendWhenHidden = FALSE)
 
 
 # # Deactivate output CRS and resolution 1) if some raster exists, or
@@ -103,10 +112,5 @@ shinyFiles::shinyFileChoose(input, "path_refraster_sel", roots = volumes, sessio
 observeEvent(input$path_refraster_sel, {
   path_refraster_string <- shinyFiles::parseFilePaths(volumes, input$path_refraster_sel)$datapath
   updateTextInput(session, "path_refraster_textin", value = path_refraster_string)
-})
-
-# Error messages
-shiny::observe({
-  output$path_refraster_errormess <- raster_check(input$path_refraster_textin)
 })
 
