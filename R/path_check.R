@@ -49,17 +49,21 @@ raster_check <- function(path) {
       error = function(e) e
     )
     if (is(selraster, "stars")) {
-      return(shiny::renderUI(shiny::span(
+      out <- shiny::renderUI(shiny::span(
         style = "color:darkgreen",
         "\u2714"
-      )))
+      ))
+      attr(out, "isvalid") <- TRUE
     } else {
-      return(shiny::renderUI(shiny::span(
+      out <- shiny::renderUI(shiny::span(
         style = "color:red",
         "\u2718"
-      )))
+      ))
+      attr(out, "isvalid") <- FALSE
     }
   } else {
-    return(shiny::renderText(""))
+    out <-shiny::renderText("")
+    attr(out, "isvalid") <- NA
   }
+  return(out)
 }
