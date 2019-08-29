@@ -266,7 +266,8 @@ observeEvent(input$load_inputpts, {
       {
         x <- sf::st_read(rv$inputpts_path, quiet=TRUE) %>%
           sf::st_transform(4326) %>%
-          st_cast("POINT")
+          st_cast("POINT") %>%
+          st_zm()
         x <- x[, which(unlist(lapply(x, is.numeric)))]
         req(ncol(x) > 1)
         names(sf::st_geometry(x)) <- NULL

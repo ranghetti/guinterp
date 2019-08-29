@@ -223,7 +223,8 @@ observeEvent(input$load_extent_borders, {
     {
       x <- sf::st_read(rv$borders_path, quiet=TRUE) %>%
         st_transform(4326) %>%
-        st_cast("POLYGON")
+        st_cast("POLYGON") %>%
+        st_zm()
       names(sf::st_geometry(x)) <- NULL
       attr(x, "valid") <- TRUE
       attr(x, "new") <- TRUE
