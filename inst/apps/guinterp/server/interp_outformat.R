@@ -73,7 +73,7 @@ observeEvent(c(input$outgrid_type, input$interp_res, rv$outproj_validated, input
   }
 })
 output$path_refraster_isvalid <- shiny::renderText({
-  attr(path_refraster_errormess, "isvalid")
+  attr(rv$path_refraster_isvalid, "isvalid")
 })
 shiny::outputOptions(output, "path_refraster_isvalid", suspendWhenHidden = FALSE)
 
