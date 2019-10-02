@@ -34,8 +34,8 @@ make_interp_grid <- function(
   if (length(offset) > 2) {stop("'offset' must be of length 2.")}
 
   # create global grid
-  out_bbox <- (floor(st_bbox(indata_sf)/outres)+c(0,0,1,1))*outres + offset
-  indata_bb <- out_bbox + border*c(-1,-1,1,1)
+  indata_bb <- (floor((st_bbox(indata_sf) - offset) / outres) + c(0,0,1,1)) *
+    outres + offset + border*c(-1,-1,1,1)
   dx <- seq(indata_bb[1], indata_bb[3], outres)
   dy <- seq(indata_bb[4], indata_bb[2], -outres)
   indata_grd <- st_as_stars(matrix(0, length(dx), length(dy))) %>%
