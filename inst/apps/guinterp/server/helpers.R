@@ -199,7 +199,7 @@ shiny::observeEvent(input$help_filter_buttons, {
 
 shiny::observeEvent(input$help_focal, {
   shiny::showModal(shiny::modalDialog(
-    title = "Livellazione dei raster",
+    title = "Livellamento dei raster",
     size = "s",
     shiny::p(shiny::HTML(
       "Applicare una perequazione (<em>smoothing</em>) ai raster interpolati",
