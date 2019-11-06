@@ -273,13 +273,13 @@ observeEvent(rv$importFilters, {
     updateCheckboxInput(session, "check_rangey", value=FALSE)
   }
   if (!is.null(imported_filters[["zscorey"]])) {
-    updateSliderInput(session, "zscorey", value=imported_filters[["zscorey"]])
+    updateSliderInput(session, "zscorey", value=imported_filters[["zscorey"]]*100)
     updateCheckboxInput(session, "check_zscorey", value=TRUE)
   } else {
     updateCheckboxInput(session, "check_zscorey", value=FALSE)
   }
   if (!is.null(imported_filters[["rbiasy"]])) {
-    updateSliderInput(session, "rbiasy", value=imported_filters[["rbiasy"]])
+    updateSliderInput(session, "rbiasy", value=imported_filters[["rbiasy"]]*100)
     updateCheckboxInput(session, "check_rbiasy", value=TRUE)
   } else {
     updateCheckboxInput(session, "check_rbiasy", value=FALSE)
@@ -328,13 +328,13 @@ observeEvent(rv$interp_onoff, {
     updateCheckboxInput(session, "check_rangey", value=FALSE)
   }
   if (!is.null(def_filters[["zscorey"]])) {
-    updateSliderInput(session, "zscorey", value=def_filters[["zscorey"]])
+    updateSliderInput(session, "zscorey", value=def_filters[["zscorey"]]*100)
     updateCheckboxInput(session, "check_zscorey", value=TRUE)
   } else {
     updateCheckboxInput(session, "check_zscorey", value=FALSE)
   }
   if (!is.null(def_filters[["rbiasy"]])) {
-    updateSliderInput(session, "rbiasy", value=def_filters[["rbiasy"]])
+    updateSliderInput(session, "rbiasy", value=def_filters[["rbiasy"]]*100)
     updateCheckboxInput(session, "check_rbiasy", value=TRUE)
   } else {
     updateCheckboxInput(session, "check_rbiasy", value=FALSE)
