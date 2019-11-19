@@ -35,6 +35,9 @@ _filter_buttons_auto,Default,Predefinito
 _filter_buttons_minimal,Only extremes,Solo valori estremi
 _filter_buttons_no,None,Nessuno
 _filters_title,Allowed values,Valori consentiti
+_filtered_ptsdata,Filtering points...,Filtraggio dei punti in corso...
+_filtered_ptsdata_error,Error filtering files:,Errore nel filtraggio dei files:
+_filtered_ptsdata_restore,Restoring all points...,Ripristino di tutti i punti in corso...
 _miny,minimum,minimo
 _maxy,maximum,massimo
 _zscorey,Zscore,Zscore

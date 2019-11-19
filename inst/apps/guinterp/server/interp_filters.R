@@ -48,13 +48,13 @@ observeEvent(c(input$filter_buttons), {
       }
       rv$inputpts_points
     }, error = function(e) {
-      paste("Errore nel filtraggio dei files:", e$message)
+      paste(i18n$t("_filtered_ptsdata_error"), e$message)
     })
     shiny::removeModal()
 
   } else if (input$filter_buttons=="minimal") {
     # Minimal filter
-    show_modal_message(shiny::p("Filtraggio dei punti in corso..."))
+    show_modal_message(shiny::p(i18n$t("_filtered_ptsdata")))
     filtered_ptsdata <- tryCatch({
       rv$inputpts_points <- filter_pts_reset(rv$inputpts_points) %>%
         filter_pts(
@@ -64,13 +64,13 @@ observeEvent(c(input$filter_buttons), {
           byfield = TRUE, samplesize = NA
         )
     }, error = function(e) {
-      paste("Errore nel filtraggio dei files:", e$message)
+      paste(i18n$t("_filtered_ptsdata_error"), e$message)
     })
     shiny::removeModal()
 
   } else if (input$filter_buttons=="no") {
     # No filter
-    show_modal_message(shiny::p("Ripristino di tutti i punti in corso..."))
+    show_modal_message(shiny::p(i18n$t("_filtered_ptsdata_restore")))
     filtered_ptsdata <- tryCatch({
       rv$inputpts_points <- filter_pts_reset(rv$inputpts_points)
     })
