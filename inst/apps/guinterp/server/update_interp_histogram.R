@@ -10,8 +10,8 @@ observeEvent(rv$change_interp, {
     rv$hist_ylim   <- c(0,max(hist(plot = FALSE, rv$inputpts_points[sid<=samplesize & selvar>=rv$hist_range[1] & selvar<=rv$hist_range[2],]$selvar, breaks=50)$counts))
 
     p <- ggplot2::ggplot(rv$inputpts_points, ggplot2::aes(x=selvar)) +
-      ggplot2::geom_histogram(data=rv$inputpts_points[sid<=samplesize&filter==FALSE,], colour="white", fill="darkgreen", breaks=rv$hist_breaks) +
-      ggplot2::geom_histogram(data=rv$inputpts_points[sid<=samplesize&filter==TRUE,], colour="white", fill="red", breaks=rv$hist_breaks) +
+      ggplot2::geom_histogram(data=rv$inputpts_points[sid<=samplesize,], colour="white", aes(fill=filter), breaks=rv$hist_breaks) +
+      ggplot2::scale_fill_manual(values = c("FALSE"="darkgreen", "TRUE"="red")) +
       ggplot2::ylim(rv$hist_ylim) +
       ggplot2::xlab(i18n$t("_hist_xlab")) + ggplot2::ylab(i18n$t("_hist_ylab"))
     if (!is.null(input$miny) & !is.null(input$maxy) & input$check_rangey & input$filter_buttons == "manual") {

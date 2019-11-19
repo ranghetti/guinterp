@@ -243,8 +243,8 @@ observeEvent(input$downloadFilters, {
   if (nrow(export_param_path)>0) {
     filter_list <- list()
     if (input$check_rangey) {filter_list$rangey <- c(input$miny, input$maxy)}
-    if (input$check_zscorey) {filter_list$zscorey <- input$zscorey}
-    if (input$check_rbiasy) {filter_list$rbiasy <- input$rbiasy}
+    if (input$check_zscorey) {filter_list$zscorey <- input$zscorey/100}
+    if (input$check_rbiasy) {filter_list$rbiasy <- input$rbiasy/100}
     if (input$check_rangeq) {filter_list$rangeq <- input$rangeq/100}
     if (input$check_pos) {filter_list$pos <- input$pos}
     write(
@@ -273,13 +273,13 @@ observeEvent(rv$importFilters, {
     updateCheckboxInput(session, "check_rangey", value=FALSE)
   }
   if (!is.null(imported_filters[["zscorey"]])) {
-    updateSliderInput(session, "zscorey", value=imported_filters[["zscorey"]])
+    updateSliderInput(session, "zscorey", value=imported_filters[["zscorey"]]*100)
     updateCheckboxInput(session, "check_zscorey", value=TRUE)
   } else {
     updateCheckboxInput(session, "check_zscorey", value=FALSE)
   }
   if (!is.null(imported_filters[["rbiasy"]])) {
-    updateSliderInput(session, "rbiasy", value=imported_filters[["rbiasy"]])
+    updateSliderInput(session, "rbiasy", value=imported_filters[["rbiasy"]]*100)
     updateCheckboxInput(session, "check_rbiasy", value=TRUE)
   } else {
     updateCheckboxInput(session, "check_rbiasy", value=FALSE)
@@ -328,13 +328,13 @@ observeEvent(rv$interp_onoff, {
     updateCheckboxInput(session, "check_rangey", value=FALSE)
   }
   if (!is.null(def_filters[["zscorey"]])) {
-    updateSliderInput(session, "zscorey", value=def_filters[["zscorey"]])
+    updateSliderInput(session, "zscorey", value=def_filters[["zscorey"]]*100)
     updateCheckboxInput(session, "check_zscorey", value=TRUE)
   } else {
     updateCheckboxInput(session, "check_zscorey", value=FALSE)
   }
   if (!is.null(def_filters[["rbiasy"]])) {
-    updateSliderInput(session, "rbiasy", value=def_filters[["rbiasy"]])
+    updateSliderInput(session, "rbiasy", value=def_filters[["rbiasy"]]*100)
     updateCheckboxInput(session, "check_rbiasy", value=TRUE)
   } else {
     updateCheckboxInput(session, "check_rbiasy", value=FALSE)
@@ -357,8 +357,8 @@ observeEvent(rv$interp_onoff, {
 observeEvent(input$setdefaultFilters, {
   filterdef_list <- list()
   if (input$check_rangey) {filterdef_list$rangey <- c(input$miny, input$maxy)}
-  if (input$check_zscorey) {filterdef_list$zscorey <- input$zscorey}
-  if (input$check_rbiasy) {filterdef_list$rbiasy <- input$rbiasy}
+  if (input$check_zscorey) {filterdef_list$zscorey <- input$zscorey/100}
+  if (input$check_rbiasy) {filterdef_list$rbiasy <- input$rbiasy/100}
   if (input$check_rangeq) {filterdef_list$rangeq <- input$rangeq/100}
   if (input$check_pos) {filterdef_list$pos <- input$pos}
   write(
