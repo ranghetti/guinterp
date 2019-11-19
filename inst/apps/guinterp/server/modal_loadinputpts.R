@@ -2,14 +2,14 @@
 
 observeEvent(input$button_load_inputpts, {
   showModal(modalDialog(
-    title = "Seleziona i file dei punti da interpolare",
+    title = i18n$t("_modal_loadinputpts_title"),
     size = "m",
 
     div(
       style="vertical-align:top;",
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:85pt;padding-top:8px;",
-        shiny::strong("Cartella di input")
+        shiny::strong(i18n$t("_inputptspath_label"))
       ),
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:calc(100% - 85pt - 50pt - 15px - 10pt - 10px);",
@@ -18,8 +18,8 @@ observeEvent(input$button_load_inputpts, {
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:50pt;",
         shinyFiles::shinyDirButton(
-          "inputptspath", "Cambia",
-          "Seleziona la cartella contenente i files con i punti da interpolare"
+          "inputptspath", i18n$t("_inputptspath_button"),
+          i18n$t("_inputptspath_sfb")
         )
       ),
       shiny::div(
@@ -33,14 +33,18 @@ observeEvent(input$button_load_inputpts, {
         div(
           div(
             style = "display:inline-block;padding-right:10pt;",
-            shiny::strong("Tipo di file")
+            shiny::strong(i18n$t("_Filetype"))
           ),
           div(
             style = "display:inline-block;padding-right:20pt;",
             radioButtons(
               "inputptsfiletype",
-              NULL, #"Tipo di file",
-              list("Vettoriale" = "vect", "File di testo" = "txt"), #"Tutti i files" = "all"),
+              NULL, #"_Filetype",
+              choiceNames = c(
+                i18n$t("_inputptsfiletype_vect"),
+                i18n$t("_inputptsfiletype_txt")
+              ),
+              choiceValues = c("vect", "txt"),
               selected = "vect",
               inline = TRUE
             )
@@ -53,7 +57,7 @@ observeEvent(input$button_load_inputpts, {
           style="margin-top:-10px;",
           checkboxInput(
             "inputpts_showall",
-            "Mostra tutti i file",
+            i18n$t("_inputpts_showall"),
             value = FALSE
           )
         )
@@ -66,7 +70,7 @@ observeEvent(input$button_load_inputpts, {
       )
     ),
 
-    actionButton("load_inputpts", strong("\u2000Carica"), icon=icon("upload")),
+    actionButton("load_inputpts", strong(paste0("\u2000",i18n$t("_Load"))), icon=icon("upload")),
 
     fluidRow(
       column(
@@ -85,8 +89,12 @@ observeEvent(input$button_load_inputpts, {
     # leafletOutput("view_map_inputpts", height=400, width="100%"),
     easyClose = FALSE,
     footer = tagList(
-      shinyjs::disabled(actionButton("save_extent_inputpts", strong("\u2000Ok"), icon=icon("check"))),
-      modalButton("\u2000Annulla", icon = icon("ban"))
+      shinyjs::disabled(actionButton(
+        "save_extent_inputpts",
+        strong(paste0("\u2000",i18n$t("_Ok"))),
+        icon = icon("check")
+      )),
+      modalButton(paste0("\u2000",i18n$t("_Cancel")), icon = icon("ban"))
     )
   ))
 })
@@ -147,7 +155,7 @@ output$selector_inputvar <- renderUI({
   req(rv$inputpts_points_raw)
   selectInput(
     "select_inputvar",
-    label = "Variabile da interpolare",
+    label = i18n$t("_select_inputvar"),
     choices = rv$inputpts_names,
     selected = rv$def_inputvar
   )
@@ -157,7 +165,7 @@ output$selector_xvar <- renderUI({
   if (input$inputptsfiletype == "txt") {
     selectInput(
       "select_xvar",
-      label = "Coordinate X",
+      label = i18n$t("_select_xvar"),
       choices = rv$inputpts_names,
       selected = rv$def_xvar
     )
@@ -168,7 +176,7 @@ output$selector_yvar <- renderUI({
   if (input$inputptsfiletype == "txt") {
     selectInput(
       "select_yvar",
-      label = "Coordinate Y",
+      label = i18n$t("_select_yvar"),
       choices = rv$inputpts_names,
       selected = rv$def_yvar
     )
@@ -183,8 +191,6 @@ shiny::observeEvent(input$inputptspath_textin, {
 
 
 # Observer used to automatically filter the shps available in the selected ----
-# folder based on spatial extent, conformity with standards and selections
-# in coltura/varietaand render the files table
 #
 observeEvent(
   c(input$inputptspath_textin),
@@ -192,7 +198,8 @@ observeEvent(
 
     output$inputptsfiles_tbl <- DT::renderDT({
 
-      vect_tbl  <- data.frame(`Nome File` = "Nessun file vettoriale trovato")
+      vect_tbl  <- data.frame(i18n$t("_tbl_empty"), stringsAsFactors = FALSE)
+      names(vect_tbl) <- i18n$t("_Filename")
 
       if (dir.exists(input$inputptspath_textin)) {
 
@@ -213,10 +220,8 @@ observeEvent(
 
         if (length(vect_list > 0)) {
 
-          vect_tbl <- data.frame(
-            `Nome File` = basename(vect_list),
-            stringsAsFactors = FALSE
-          )
+          vect_tbl  <- data.frame(basename(vect_list), stringsAsFactors = FALSE)
+          names(vect_tbl) <- i18n$t("_Filename")
 
           dt_tbl <- DT::datatable(
             vect_tbl,
@@ -277,11 +282,10 @@ observeEvent(input$load_inputpts, {
       },
       error = function(e) {
         shinyWidgets::sendSweetAlert(
-          session, title = "File non valido",
-          text = paste(
-            "Il file", basename(rv$inputpts_path),
-            "non è un vettoriale puntiforme valido,",
-            "oppure non contiene campi numerici."
+          session, title = i18n$t("_invalid_file"),
+          text = gsub(
+            "\\%f", basename(rv$inputpts_path),
+            i18n$t("_inputpts_sp_invalid_message")
           ),
           type = "error", btn_labels = "Ok"
         )
@@ -300,12 +304,10 @@ observeEvent(input$load_inputpts, {
       },
       error = function(e) {
         shinyWidgets::sendSweetAlert(
-          session, title = "File non valido",
-          text = paste(
-            "Il file",
-            basename(rv$inputpts_path),
-            "non è un tabellare riconosciuto,",
-            "oppure non contiene campi numerici."
+          session, title = i18n$t("_invalid_file"),
+          text = gsub(
+            "\\%f", basename(rv$inputpts_path),
+            i18n$t("_inputpts_table_invalid_message")
           ),
           type = "error", btn_labels = "Ok"
         )

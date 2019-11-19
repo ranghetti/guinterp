@@ -17,7 +17,7 @@ shiny::div(
             width = NULL,
             status = "danger",
             solidHeader = TRUE,
-            title = "Istogramma",
+            title = i18n$t("_hist_title"),
             collapsible = TRUE,
             plotOutput("hist", height = "270px")
           ),
@@ -27,9 +27,9 @@ shiny::div(
             status = "danger",
             solidHeader = TRUE,
             collapsible = TRUE,
-            title = "Mappa",
+            title = i18n$t("_interp_map_title"),
             leaflet::leafletOutput("interp_map", height = 650),
-            shiny::div(tags$i("I punti filtrati sono mostrati in azzurro."))
+            shiny::div(tags$i(i18n$t("_note1_interp_map")))
           )
         )
       )
@@ -42,7 +42,7 @@ shiny::div(
         shiny::div(
           shinydashboard::box(
             width = NULL,
-            title = "Filtra dati",
+            title = i18n$t("_filter_ui_title"),
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",
@@ -50,7 +50,7 @@ shiny::div(
           ),
           shinydashboard::box(
             width = NULL,
-            title = "Formato di output",
+            title = i18n$t("_outformat_ui_title"),
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",
@@ -58,7 +58,7 @@ shiny::div(
           ),
           shinydashboard::box(
             width = NULL,
-            title = "Opzioni di interpolazione",
+            title = i18n$t("_interp_options_ui_title"),
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",
@@ -66,7 +66,7 @@ shiny::div(
           ),
           shinydashboard::box(
             width = NULL,
-            title = "Opzioni di processamento",
+            title = i18n$t("_interp_proc_ui_title"),
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",

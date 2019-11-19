@@ -4,7 +4,7 @@ ui_guinterp <- shinydashboard::dashboardPage(
     title = "GUInterp",
     tags$li(class ="dropdown", tags$h3(
       style = "color:white;margin:0;padding-top:12px;padding-bottom:12px;padding-left:50px;padding-right:50px;",
-      "Interpolatore dati puntiformi"
+      i18n$t("_gui_title")
     )),
     tags$li(class ="dropdown", tags$a(
       href="https://github.com/ranghetti/guinterp",
@@ -18,8 +18,15 @@ ui_guinterp <- shinydashboard::dashboardPage(
       style="margin:0;padding-top:2px;padding-bottom:2px;padding-left:10px;padding-right:10px;",
       target="_blank"
     ))
+    # tags$li(class ="dropdown", pickerInput(
+    #   "sel_language", NULL,
+    #   choices = c("en", "it"),
+    #   choicesOpt = list(content = c(
+    #     "<img src='https://raw.githubusercontent.com/lipis/flag-icon-css/master/flags/4x3/gb.svg' height='100%'>\u2000EN",
+    #     "<img src='https://raw.githubusercontent.com/lipis/flag-icon-css/master/flags/4x3/it.svg' height='100%'>\u2000IT"
+    #   ))
+    # )
   ),
-  # shinydashboard::dashboardHeader(title="Interpolatore rese"),
 
   shinydashboard::dashboardSidebar(
     shinydashboard::sidebarMenu(
@@ -37,15 +44,7 @@ ui_guinterp <- shinydashboard::dashboardPage(
       ),
       shiny::tags$head(shiny::tags$style(".darkbutton{background-color:#28353b;color:#b8c7ce;width:200px;")), # background color and font color
 
-
-      # div(
-      #   style = "margin-top:30pt;margin-left:12pt;",
-      #   tags$h4("Menu")
-      # ),
-
-      # shinydashboard::menuItem("Selezione input", tabName = "tab_input", icon = icon("folder-open")),
-
-      hidden(shinydashboard::menuItem("Interpolazione", tabName = "tab_interp", icon = icon("folder-open"))),
+      hidden(shinydashboard::menuItem(i18n$t("Interpolation"), tabName = "tab_interp", icon = icon("folder-open"))),
 
       ### Bar with inputs and commands
       source(

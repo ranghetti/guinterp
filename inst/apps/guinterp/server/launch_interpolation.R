@@ -20,13 +20,12 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
   # Open waiting message
   show_modal_message(
     shiny::div(
-      shiny::p(
-        "L'interpolazione dei dati \u00E8 in corso,",tags$br(),
-        "attendere prego..."
-      ),
+      shiny::p(shiny::HTML(
+        i18n$t("_pb_interp_message")
+      )),
       shinyWidgets::progressBar(id = "pb_interp", value = 0, striped = TRUE)
     ),
-    title = "Caricamento dati"
+    title = i18n$t("_pb_interp_title")
   )
 
 
@@ -91,22 +90,21 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
   removeModal()
 
   shinyWidgets::sendSweetAlert(
-    session, title = "Interpolazione completata",
+    session, title = i18n$t("_interp_success_title"),
     text = shiny::div(
-      shiny::p("I dati sono stati correttamente interpolati."),
+      shiny::p(i18n$t("_interp_success_message1")),
       if (input$outraster_savesingles) {
-        tags$p(
-          "I raster dei singoli poligoni",
-          "sono stati salvati nella cartella", tags$br(),
+        shiny::p(
+          i18n$t("_interp_success_message2"), tags$br(),
           tags$span(style="font-family:monospace;",rv$interp_dir)
         )
       },
       shiny::p(
-          "Il raster finale \u00E8 stato salvato qui:", shiny::br(),
-          shiny::span(style="font-family:monospace;",rv$outraster_path)
-        )
+        i18n$t("_interp_success_message3"), tags$br(),
+        shiny::span(style="font-family:monospace;",rv$outraster_path)
+      )
     ),
-    type = "success", btn_labels = "Ok"
+    type = "success", btn_labels = i18n$t("_Ok")
   )
 
 })

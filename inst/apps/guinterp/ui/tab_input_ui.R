@@ -11,7 +11,7 @@ shiny::div(
           style = "margin-top:10px;padding-left:15px;",
           shiny::span(
             style="display:inline-block",
-            shiny::strong("Vettoriale dei poligoni")
+            shiny::strong(i18n$t("_load_borders"))
           ),
           shiny::span(
             style="display:inline-block",
@@ -20,7 +20,7 @@ shiny::div(
         ),
         actionButton(
           "button_load_borders",
-          label = "\u2000Carica",
+          label = paste0("\u2000",i18n$t("_Load")),
           class = "darkbutton",
           icon=icon("upload")
         )
@@ -30,7 +30,7 @@ shiny::div(
           style = "margin-top:10px;padding-left:15px;",
           shiny::span(
             style="display:inline-block",
-            shiny::strong("Punti da interpolare")
+            shiny::strong(i18n$t("_load_inputpts"))
           ),
           shiny::span(
             style="display:inline-block",
@@ -39,7 +39,7 @@ shiny::div(
         ),
         shinyjs::disabled(actionButton(
           "button_load_inputpts",
-          label = "\u2000Carica",
+          label = paste0("\u2000",i18n$t("_Load")),
           class = "darkbutton",
           icon=icon("upload")
         ))
@@ -54,7 +54,7 @@ shiny::div(
         style = "margin-top:20px;margin-bottom:50px;",
         actionButton(
           "interp_button",
-          label = strong("\u2000Interpola"),
+          label = paste0("\u2000",i18n$t("_interp_button")),
           class = "darkbutton",
           icon=icon("cogs")
         )
@@ -63,7 +63,7 @@ shiny::div(
         style = "margin-top:20px;",
         actionButton(
           "close_interp_button",
-          label = "\u2000Chiudi",
+          label = paste0("\u2000",i18n$t("_Close")),
           class = "darkbutton",
           icon=icon("window-close")
         )
@@ -75,7 +75,7 @@ shiny::div(
     style = "margin-top:20px;",
     actionButton(
       "close_app_button",
-      label = "\u2000Esci dall'interfaccia",
+      label = paste0("\u2000",i18n$t("_close_app_button")),
       class = "darkbutton",
       icon=icon("sign-out-alt")
     )

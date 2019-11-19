@@ -1,17 +1,16 @@
-# Content of the box "Opzioni di processamento"
+# Content of the box "Processing options"
 
 shiny::div(
 
   shiny::radioButtons(
     'turbo',
     shiny::span(
-      "Ottimizza l\'interpolazione per:\u2000",
+      paste0(i18n$t("_turbo"),"\u2000"),
       actionLink("help_turbo", icon("question-circle"))
     ),
-    c(
-      # None='',
-      'Uso desktop'='low',
-      'Uso server/workstation'='high'
+    setNames(
+      c("low", "high"),
+      c(i18n$t("_turbo_low"), i18n$t("_turbo_high"))
     ),
     selected = 'low'
   ),
@@ -19,20 +18,20 @@ shiny::div(
   shiny::div(
     shiny::div(
       style="display:inline-block;vertical-align:top;margin-bottom:5px;",
-      shiny::strong("Raster di output: \u00a0")
+      paste0(i18n$t("_outraster")," \u00a0")
     ),
     shiny::div(
       shiny::div(
         style="display:inline-block;vertical-align:top;width:70pt;",
         shinyFiles::shinySaveButton(
-          "path_outraster_sel", "Seleziona",
-          "Salva il raster di output come...",
+          "path_outraster_sel", i18n$t("_Select"),
+          i18n$t("_path_outraster_sel"),
           filetype = list(GeoTIFF = "tif")
         )
       ),
       shiny::div(
         style="display:inline-block;vertical-align:top;width:calc(100% - 70pt - 6px - 10pt - 15px);",
-        shiny::textInput("path_outraster_textin", NULL, "", placeholder = "salva in un raster temporaneo")
+        shiny::textInput("path_outraster_textin", NULL, "", placeholder = i18n$t("_path_outraster_textin_placeholder"))
       ),
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
@@ -44,7 +43,7 @@ shiny::div(
   shiny::div(
     checkboxInput(
       "outraster_savesingles",
-      "Salva anche i raster dei singoli poligoni",
+      i18n$t("_outraster_savesingles"),
       value = FALSE
     ),
     shiny::conditionalPanel(
@@ -52,18 +51,18 @@ shiny::div(
       shiny::div(
         shiny::div(
           style="vertical-align:top;margin-bottom:5px;",
-          shiny::strong("Cartella di output: \u00a0")
+          paste0(i18n$t("_outfolder")," \u00a0")
         ),
         shiny::div(
           style="display:inline-block;vertical-align:top;width:70pt;",
           shinyFiles::shinyDirButton(
-            "path_outdir_sel", "Seleziona",
-            "Seleziona la cartella di output delle mappe raster"
+            "path_outdir_sel", i18n$t("_Select"),
+            i18n$t("_path_outdir_sel")
           )
         ),
         shiny::div(
           style="display:inline-block;vertical-align:top;width:calc(100% - 70pt - 6px - 10pt - 15px);",
-          shiny::textInput("path_outdir_textin", NULL, "", placeholder = "usa una cartella temporanea")
+          shiny::textInput("path_outdir_textin", NULL, "", placeholder = i18n$t("_path_outdir_textin_placeholder"))
         ),
         shiny::div(
           style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
@@ -76,7 +75,7 @@ shiny::div(
   shiny::checkboxInput(
     "v_options_onoff",
     shiny::span(
-      shiny::strong("Opzioni avanzate\u2000"),
+      shiny::strong(paste0(i18n$t("_v_options_onoff"),"\u2000")),
       actionLink("help_v_options", icon("question-circle")),
       "\u00a0"
     ),
@@ -87,7 +86,7 @@ shiny::div(
     shiny::fluidRow(
       shiny::column(
         width = 6,
-        shiny::div("Distanza massima punti-pixel"),
+        shiny::div(i18n$t("_v_maxdist")),
         shiny::div(
           style="display:inline-block;vertical-align:middle;height:60px;padding-bottom:10px;",
           ""
@@ -96,7 +95,7 @@ shiny::div(
           style="display:inline-block;vertical-align:middle;width:60pt;",
           shinyWidgets::switchInput(
             "v_maxdist_onoff", value = TRUE,
-            size = "small", onLabel = "Auto", offLabel = "Man"
+            size = "small", onLabel = i18n$t("_Auto"), offLabel = i18n$t("_Man")
           )
         ),
         shiny::div(
@@ -106,7 +105,7 @@ shiny::div(
       ),
       shiny::column(
         width = 6,
-        shiny::div("Numero di punti per pixel"),
+        shiny::div(i18n$t("_v_nmax")),
         shiny::div(
           style="display:inline-block;vertical-align:middle;height:60px;padding-bottom:10px;",
           ""
@@ -115,7 +114,7 @@ shiny::div(
           style="display:inline-block;vertical-align:middle;width:60pt;",
           shinyWidgets::switchInput(
             "v_nmax_onoff", value = TRUE,
-            size = "small", onLabel = "Auto", offLabel = "Man"
+            size = "small", onLabel = i18n$t("_Auto"), offLabel = i18n$t("_Man")
           )
         ),
         shiny::div(
@@ -129,10 +128,10 @@ shiny::div(
   # shiny::radioButtons(
   #   'interp_overwrite',
   #   shiny::span(
-  #     "Sovrascrivere i raster esistenti?\u2000"#,
+  #     paste0(i18n$t("_interp_overwrite"),"\u2000")#,
   #     # actionLink("help_interp_overwrite", icon("question-circle"))
   #   ),
-  #   c('S\u00EC'=TRUE, 'No'=FALSE),
+  #   c(i18n$t("_Yes), i18n$t("_No)),
   #   selected = TRUE,
   #   inline = TRUE
   # )

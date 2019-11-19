@@ -1,0 +1,137 @@
+labels,en,it
+_Load,Load,Carica
+_Interpolate,Interpolate,Interpola
+_Close,Close,Chiudi
+_Import,Import,Importa
+_Export,Export,Esporta
+_On,On,On
+_Off,Off,Off
+_Yes,Yes,S\u00EC
+_No,No,No
+_Ok,Ok,Ok
+_Cancel,Cancel,Annulla
+_Save,Save,Salva
+_Exit,Exit,Esci
+_Select,Select,Seleziona
+_Auto,Auto,Auto
+_Man,Man,Man
+_Filename,Filename,Nome file
+_Filetype,File type,Tipo di file
+_gui_title,Point data interpolator,Interpolatore dati puntiformi
+_load_borders,Polygon vector file,Vettoriale dei poligoni
+_load_inputpts,Points to be interpolated,Punti da interpolare
+_interp_button,Interpolate,Interpola
+_close_app_button,Exit from the GUI,Esci dall'interfaccia
+_hist_title,Histogram,Istogramma
+_interp_map_title,Map,Mappa
+_note1_interp_map,Filtered points are shown in cyan,I punti filtrati sono mostrati in azzurro
+_filter_ui_title,Filter data,Filtra dati
+_outformat_ui_title,Output format,Formato di output
+_interp_options_ui_title,Interpolation settings,Opzioni di interpolazione
+_interp_proc_ui_title,Processing settings,Opzioni di processamento
+_filter_buttons,Point filtering,Filtraggio dei punti
+_filter_buttons_manual,Manual,Manuale
+_filter_buttons_auto,Default,Predefinito
+_filter_buttons_minimal,Only extremes,Solo valori estremi
+_filter_buttons_no,None,Nessuno
+_filters_title,Allowed values,Valori consentiti
+_miny,minimum,minimo
+_maxy,maximum,massimo
+_zscorey,Zscore,Zscore
+_rbiasy,Rbias,Rbias
+_rangeq,Quantiles,Intervallo dei quantili
+_pos,Minimum distance for polygon borders,Distanza minima dal bordo dei poligoni
+_importFilters,Import / export filters,Importa / esporta i filtri
+_sfb_importFilters,Select parameter file,Scegli il file dei parametri
+_importFilters_success,Filters were correctly imported,Importazione completata
+_downloadFilters,Save parameters as...,Salva i parametri come...
+_downloadFilters_success,Filters were correctly exported.,Esportazione completata
+_setdefaultFilters,Set as defaults,Imposta come predefiniti
+_setdefaultFilters_success,Current filters were correctly set as defaults.,I filtri attuali sono stati correttamente impostati come predefiniti.
+_maxptdist,Maximum distance from points,Distanza massima dai punti
+_interp_method,Interpolation method,Metodo di interpolazione
+_interp_method_krige,Ordinary Kriging (more reliable),Kriging ordinario (pi\u00F9 affidabile)
+_interp_method_idw,Inverse Distance Weighted (faster),Distanza inversa ponderata (pi\u00F9 veloce)
+_auto_vgm,Variogram definition,Definizione del variogramma
+_auto_vgm_auto,Automatic,Automatica
+_auto_vgm_semiauto,Semiautomatic,Semiautomatica
+_auto_vgm_manual,Manual,Manuale
+_fit_vgm_button,Settings,Impostazioni
+_focal_onoff,Smooth output rasters,Livella i raster interpolati
+_outgrid_type,Output grid,Griglia di output
+_outgrid_type_custom,Manually set resolution and projection,Definisci risoluzione e proiezione
+_outgrid_type_ref,Set from an existing raster,Scegli da un raster esistente
+_interp_res,Resolution (m),Risoluzione (m)
+_out_proj,Coordinate Reference System,Sistema di riferimento
+_refraster,Reference raster:,Raster di riferimento:
+_path_refraster_sel,Select the source raster of the CRS,Seleziona il raster da cui ottenere la griglia di riferimento
+_turbo,Optimise interpolation for:,Ottimizza l\'interpolazione per:
+_turbo_low,Desktop usage,Uso desktop
+_turbo_high,Server/workstation usage,Uso server/workstation
+_outraster,Output raster:,Raster di output:
+_path_outraster_sel,Save output raster as...,Salva il raster di output come...
+_path_outraster_textin_placeholder,save in a temporary file,salva in un raster temporaneo
+_outraster_savesingles,Save also single polygon's rasters,Salva anche i raster dei singoli poligoni
+_outfoolder,Output folder,Cartella di output
+_path_outdir_sel,Select output folder for raster maps,Seleziona la cartella di output delle mappe raster
+_path_outdir_textin_placeholder,use a temporary directory,usa una cartella temporanea
+_v_options_onoff,Advanced settings,Opzioni avanzate
+_v_maxdist,Maximum distance points-pixels,Distanza massima punti-pixel
+_v_nmax,Numbers of points per pixels,Numero di punti per pixel
+_interp_overwrite,Overwrite existing rasters?,Sovrascrivere i raster esistenti?
+_err_autofit_vgm_2,Points can not be univocally modelled; please manually check the output parameters.,I punti non sono modellabili univocamente: controllare manualmente i parametri generati.
+_pb_interp_message,Points are being interpolated,<br/>please wait...,L'interpolazione dei dati \u00E8 in corso,<br/>attendere prego...
+_pb_interp_title,Interpolating data,Interpolazione dati
+_interp_success_title,Interpolation completed,Interpolazione completata
+_interp_success_message1,Points were correctly interpolated.,I dati sono stati correttamente interpolati.
+_interp_success_message2,Single polygon's raster were saved in the folder,I raster dei singoli poligoni sono stati salvati nella cartella
+_interp_success_message3,Final raster was saved here:,Il raster finale \u00E8 stato salvato qui:
+_modal_loadborders_title,Select borders' vector files,Seleziona i poligonali dei bordi
+_border_type,Identify borders by:,Metodo di identificazione dei bordi
+_border_type_files,Loading a vector file,Carica da files
+_border_type_bbox,Using points' bounding box,Bounding box dei punti
+_borderpath_label,Input folder,Cartella di input
+_borderpath_button,Change,Cambia
+_borderpath_sfb,Select the folder containing borders' vector files,Seleziona la cartella contenente i file poligonali dei bordi
+_borders_showall,Show all files,Mostra tutti i file
+_select_uid_which,Univocal geometry ID,ID univoco delle geometrie
+_select_uid_which_no,Dissolve all,Dissolvi tutto
+_select_uid_which_record,Line number,Numero di riga
+_select_uid_which_attr,Select an attribute,Scegli un attributo
+_bbox_buffer,Buffer radius to be applied to points (m),Raggio del buffer da applicare ai punti (m)
+_tbl_empty,No files were found,Nessun file vettoriale trovato
+_invalid_file,Invalid file,File non valido
+_borders_polygon_raw_invalid_message,File %f is not a valid polygon vector file.,Il file %f non u00E8 un vettoriale poligonale valido.
+_modal_loadinputpts_title,Select vector files of points to be interpolated,Seleziona i file dei punti da interpolare
+_inputptspath_label,Input folder,Cartella di input
+_inputptspath_button,Change,Cambia
+_inputptspath_sfb,Select the folder containing vector files of points to be interpolated,Seleziona la cartella contenente i files con i punti da interpolare
+_inputptsfiletype_vect,Vector files,Vettoriale
+_inputptsfiletype_txt,Text files,File di testo
+_inputpts_showall,Show all files,Mostra tutti i file
+_select_inputvar,Variable to be interpolated,Variabile da interpolare
+_select_xvar,Coordinate X,Coordinata X
+_select_yvar,Coordinate Y,Coordinata Y
+_inputpts_sp_invalid_message,File %f is not a valid point vector file, or it does not contain any numeric field.,Il file %f non \u00E8 un vettoriale puntiforme valido oppure non contiene campi numerici.
+_inputpts_table_invalid_message,File %f is not a valid table file, or it does not contain any numeric field.,Il file %f non \u00E8 un tabellare riconosciuto, oppure non contiene campi numerici.
+_modal_variogram_title,Interpolation settings,Impostazioni di interpolazione
+_modeltype,Model type,Tipo di modello
+_modeltype_exp,Exponential,Esponenziale
+_modeltype_sph,Spheroidal,Sferoidale
+_modeltype_gau,Gaussian,Gaussiano
+_modeltype_wav,Wavelength,Wavelength
+_variogram_param_label,Variogram parameters,Parametri del variogramma
+_variogram_psill,pSill,<em>pSill</em>
+_variogram_range,Range,<em>Range</em>
+_variogram_nugget,Nugget,<em>Nugget</em>
+_autofit_vgm,Optimise,Ottimizza
+_interp_sampling,Points to be used,Punti da utilizzare
+_vgm_cutoff,Maximum distance,Massima distanza
+_semiauto_title,Settings,Impostazioni
+_semiauto_autorange,Variogram range,<em>Range</em> del variogramma
+_hist_xlab,Selected variable,Variabile selezionata
+_hist_ylab,# Points,# Punti
+_mapgroup_ortophoto,Ortophoto,Ortofoto
+_mapgroup_map,Map,Mappa
+_mapgroup_points,Used points,Punti utilizzati
+_mapgroup_raster,Interpolated raster,Raster interpolato

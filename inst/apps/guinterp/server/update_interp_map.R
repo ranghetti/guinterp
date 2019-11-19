@@ -33,12 +33,12 @@ output$interp_map <- leaflet::renderLeaflet({
   req(rv$inputpts_points, rv$borders_polygon)
   leaflet::leaflet() %>%
     addTiles("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-             group = "Ortofoto") %>%
+             group = i18n$t("_mapgroup_ortophoto")) %>%
     addTiles("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_only_labels/{z}/{x}/{y}.png",
-             group = "Ortofoto") %>%
-    # addTiles(group = "Mappa") %>%
+             group = i18n$t("_mapgroup_ortophoto")) %>%
+    # addTiles(group = i18n$t("_mapgroup_map")) %>%
     addTiles("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-             group = "Mappa") %>%
+             group = i18n$t("_mapgroup_map")) %>%
     leaflet::addPolygons(
       data         = rv$borders_polygon,
       color        = "#bfbfbf", fill = NA, weight = 2.5,
@@ -55,20 +55,20 @@ output$interp_map <- leaflet::renderLeaflet({
       lat2 = max(rv$inputpts_points$lat)
     ) %>%
     leaflet::addLayersControl(
-      baseGroups    = c("Ortofoto", "Mappa"),
-      overlayGroups = c("Punti utilizzati","Raster interpolato"),
+      baseGroups    = c(i18n$t("_mapgroup_ortophoto"),i18n$t("_mapgroup_map")),
+      overlayGroups = c(i18n$t("_mapgroup_points"),i18n$t("_mapgroup_raster")),
       options       = layersControlOptions(collapsed = TRUE)
     ) %>%
-    leaflet::showGroup(c("Punti utilizzati")) %>%
-    leaflet::hideGroup(c("Raster interpolato"))
+    leaflet::showGroup(i18n$t("_mapgroup_points")) %>%
+    leaflet::hideGroup(i18n$t("_mapgroup_raster"))
 })
 
 
 # Update the map when filters are changed
 observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon), { # LEAVE OBSERVEEVENT!
-  # observe non è reattivo verso rv$change_interp, quindi non funziona correttamente.
-  # per rendere questo codice reattivo ad altre variabili, aggiungerle al
-  # vettore di observeevent oppure variare rv$change_interp dove occorre.
+  # observe is not reactive for rv$change_interp, so it does not work properly.
+  # To make this code reactive for other variables, add these ones to
+  # observeevent's vecto, or change rv$change_interp where needed.
   # samplesize <- 1E3 #nrow(rv$inputpts_points) # TODO use a limit
   req(rv$inputpts_points, rv$borders_polygon)
   # Change the colour scale when filters or variable are changed
@@ -90,7 +90,7 @@ observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon), { # LEAVE
         layerId      = paste0("pts_",rv$inputpts_points[sid < samplesize & filter == TRUE, ]$sid),
         radius       = 3, stroke = FALSE, fillOpacity = 0.4, fillColor = "cyan",
         label        = ~format(selvar, digits = 0,nsmall = 1),
-        group        = "Punti utilizzati",
+        group        = i18n$t("_mapgroup_points"),
         labelOptions = labelOptions(style = list("background-color" = "#FFCCCC"))
       )
   }
@@ -103,7 +103,7 @@ observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon), { # LEAVE
       radius    = 3, stroke = FALSE, fillOpacity = 0.65,
       fillColor = ~rv$pal(rv$inputpts_points[sid < samplesize & filter == FALSE,][[map_selvariable]]),
       label     = ~format(selvar, digits = 0, nsmall = 1),
-      group     = "Punti utilizzati",
+      group     = i18n$t("_mapgroup_points"),
       labelOptions = labelOptions(style = list("background-color" = "#CCFFCC"))
     ) %>%
       leaflet::addLegend(
@@ -136,7 +136,7 @@ observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon), { # LEAVE
           # layerId = "interp_raster",
           x      = rv$interp_merged,
           colors = rv$pal, opacity = 1,
-          group  = "Raster interpolato"
+          group  = i18n$t("_mapgroup_raster"),
         )
     }
   }
@@ -154,10 +154,10 @@ observeEvent(rv$new_interpolation, {
       # layerId = "interp_raster",
       x      = rv$interp_merged,
       colors = rv$pal, opacity = 1,
-      group  = "Raster interpolato"
+      group  = i18n$t("_mapgroup_raster"),
     ) %>%
-    leaflet::hideGroup(c("Punti utilizzati")) %>%
-    leaflet::showGroup(c("Raster interpolato"))
+    leaflet::hideGroup(i18n$t("_mapgroup_points")) %>%
+    leaflet::showGroup(i18n$t("_mapgroup_raster"))
 })
 
 observeEvent(rv$new_inputs, {

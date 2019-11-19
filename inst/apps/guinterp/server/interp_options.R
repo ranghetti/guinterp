@@ -64,7 +64,7 @@ observeEvent(rv$autofit_vgm, {
     )})
     output$err_autofit_vgm_2 <- renderUI({shiny::div(
       style="color:red;",
-      "I punti non sono modellabili univocamente: controllare manualmente i parametri generati."
+      i18n$t("_err_autofit_vgm_2")
     )})
   }
   updateNumericInput(session, "sill", value=signif(v.auto[,"psill"],3)[2])

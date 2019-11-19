@@ -27,29 +27,29 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
       size = "l",
       shinydashboard::box(
         status = "primary", width = NULL, solidHeader = TRUE,
-        title = "Impostazioni di interpolazione",
+        title = i18n$t("_modal_variogram_title"),
 
         shiny::fluidRow(
 
           shiny::column(
             width=3,
             radioButtons(
-              "model", label = "Tipo di modello",
-              choices = list(
-                "Esponenziale"="Exp",
-                "Sferoidale"="Sph",
-                "Gaussiano"="Gau",
-                "Wavelength"="Wav"
+              "model", label = i18n$t("_modeltype"),
+              choiceValues = c("Exp", "Sph", "Gau"), #"Wav"
+              choiceNames = c(
+                i18n$t("_modeltype_exp"),
+                i18n$t("_modeltype_sph"),
+                i18n$t("_modeltype_gau") #_modeltype_wav
               ),
               selected = if (is.null(shiny::isolate(input$model))) {"Exp"} else {shiny::isolate(input$model)}
             ),
             shiny::div(
               style = "margin-bottom:0.75em;",
-              shiny::strong("Parametri del variogramma")
+              shiny::strong(i18n$t("_variogram_param_label"))
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:30pt;",
-              shiny::em("pSill")
+              shiny::HTML(i18n$t("_variogram_psill"))
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:calc(100% - 30pt - 13px);padding-left:10px;margin-bottom:-5px;",
@@ -66,7 +66,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:30pt;",
-              shiny::em("Nugget")
+              shiny::HTML(i18n$t("_variogram_nugget"))
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:calc(100% - 30pt - 13px);padding-left:10px;margin-bottom:-5px;",
@@ -83,7 +83,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:30pt;",
-              shiny::em("Range")
+              shiny::HTML(i18n$t("_variogram_range"))
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:calc(100% - 30pt - 13px);padding-left:10px;margin-bottom:-5px;",
@@ -98,13 +98,10 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
                 min = 0
               )
             ),
-            # numericInput("sill", label = shiny::em("Sill"), value = 1),
-            # numericInput("nugget", label = shiny::em("Nugget"), value = 0),
-            # numericInput("range", label = shiny::em("Range"), value = 100),
             shiny::div(
               shiny::div(
                 style = "display:inline-block;position:relative;width:calc(100% - 15pt - 13px);",
-                actionButton("autofit_vgm", "Ottimizza", width = "100%")
+                actionButton("autofit_vgm", i18n$t("_autofit_vgm"), width = "100%")
               ),
               shiny::div(
                 style = "display:inline-block;position:relative;padding-left:10px;",
@@ -120,7 +117,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
                 width=6,
                 sliderInput(
                   inputId="interp_sampling",
-                  label="Punti da utilizzare",
+                  label=i18n$t("_interp_sampling"),
                   min = 0,
                   max = ceiling(nrow(rv$inputpts_sf)),
                   value = if (is.null(shiny::isolate(input$interp_sampling))) {
@@ -135,7 +132,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
                 width=6,
                 sliderInput(
                   inputId="vgm_cutoff",
-                  label="Massima distanza",
+                  label=i18n$t("_vgm_cutoff"),
                   min = 10,
                   max = ceiling(rv$max_diagonal*2/3),
                   value = if (is.null(shiny::isolate(input$vgm_cutoff))) {
@@ -158,9 +155,9 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
 
       ),
       footer = shiny::div(
-        actionButton("save_vgm", "\u2004Salva", icon = shiny::icon("check"))#,
-        # modalButton("\u2004Esci", icon = shiny::icon("ban")) # TODO riattivalo,
-        # andando a ripristinare le impsotazioni prima della modifica
+        actionButton("save_vgm", paste0("\u2004",i18n$t("_Save")), icon = shiny::icon("check"))#,
+        # modalButton(paste0("\u2004",i18n$t("_Exit")), icon = shiny::icon("ban")) # TODO re-activate,
+        # restoring settings set before editing them
       )
 
     )
@@ -176,21 +173,21 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
       size = "s",
       shinydashboard::box(
         status = "primary", width = NULL, solidHeader = TRUE,
-        title = "Impostazioni",
+        title = i18n$t("_semiauto_title"),
         radioButtons(
-          "semiauto_model", label = "Tipo di modello",
-          choices = list(
-            "Esponenziale"="Exp",
-            "Sferoidale"="Sph",
-            "Gaussiano"="Gau",
-            "Wavelength"="Wav"
+          "semiauto_model", label = i18n$t("_modeltype"),
+          choiceValues = c("Exp", "Sph", "Gau"), #"Wav"
+          choiceNames = c(
+            i18n$t("_modeltype_exp"),
+            i18n$t("_modeltype_sph"),
+            i18n$t("_modeltype_gau") #_modeltype_wav
           ),
           selected = if (is.null(shiny::isolate(input$semiauto_model))) {"Exp"} else {shiny::isolate(input$semiauto_model)}
         ),
         # numericInput("semiauto_range", label = shiny::span(shiny::em("Range"), "del variogramma"), value = 50)
         shiny::div(
           style="vertical-align:center;",
-          shiny::strong(shiny::em("Range"), "del variogramma")
+          shiny::strong(shiny::HTML(i18n$t("_semiauto_autorange")))
         ),
         # shiny::div(
         #   style="display:inline-block;vertical-align:middle;height:80px;padding-bottom:10px;",
@@ -201,7 +198,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
           shinyWidgets::switchInput(
             "semiauto_autorange",
             value = if (is.null(shiny::isolate(input$semiauto_autorange))) {TRUE} else {shiny::isolate(input$semiauto_autorange)},
-            size = "small", onLabel = "Auto", offLabel = "Man"
+            size = "small", onLabel = i18n$t("_Auto"), offLabel = i18n$t("_Man")
           )
         ),
         shiny::div(
@@ -217,7 +214,10 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
           )
         )
       ),
-      footer = shinyjs::disabled(actionButton("save_semiauto", "\u2004Salva", icon = shiny::icon("check")))
+      footer = shinyjs::disabled(actionButton(
+        "save_semiauto", paste("\u2004",i18n$t("_Save")),
+        icon = shiny::icon("check")
+      ))
     )
     shiny::showModal(fit_semiauto_gui)
   }

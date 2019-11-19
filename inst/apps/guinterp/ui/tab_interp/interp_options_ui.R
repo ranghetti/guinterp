@@ -1,11 +1,11 @@
-# Content of the box "Opzioni di interpolazione"
+# Content of the box "Interpolation settings"
 
 shiny::div(
 
   shiny::div(
     style="vertical-align:center;",
     shiny::span(
-      shiny::strong("Distanza massima dai punti\u2000"),
+      shiny::strong(paste0(i18n$t("_maxptdist"),"\u2000")),
       actionLink("help_maxptdist", icon("question-circle")),
       "\u00a0"
     )
@@ -18,7 +18,7 @@ shiny::div(
     style="display:inline-block;vertical-align:middle;width:50pt;",
     shinyWidgets::switchInput(
       "maxptdist_onoff", value = TRUE,
-      size = "small", onLabel = "S\u00EC", offLabel = "No"
+      size = "small", onLabel = i18n$t("_Yes"), offLabel = i18n$t("_No")
     )
   ),
   shiny::div(
@@ -33,18 +33,17 @@ shiny::div(
   shiny::radioButtons(
     'interp_method',
     shiny::span(
-      "Metodo di interpolazione\u2000",
+      paste0(i18n$t("_interp_method"),"\u2000"),
       actionLink("help_interp_method", icon("question-circle"))
     ),
-    c(
-      # None='',
-      'Kriging ordinario (pi\u00F9 affidabile)'='krige',
-      'Distanza inversa ponderata (pi\u00F9 veloce)'='idw'
+    setNames(
+      c("krige", "idw"),
+      c(i18n$t("_interp_method_krige"), i18n$t("_interp_method_idw"))
     ),
-    selected = 'krige'
+    selected = "krige"
   ),
 
-  uiOutput("interp_sampling"),
+  # uiOutput("interp_sampling"), # FIXME remove?
 
   shiny::conditionalPanel(
     condition = "input.interp_method == 'krige'",
@@ -54,16 +53,19 @@ shiny::div(
         shiny::radioButtons(
           'auto_vgm',
           shiny::span(
-            "Definizione del variogramma\u2000",
+            paste0(i18n$t("_auto_vgm"),"\u2000"),
             actionLink("help_auto_vgm", icon("question-circle"))
           ),
-          c('Automatica'="auto", 'Semiautomatica'="semiauto", 'Manuale'="manual"),
+          setNames(
+            c("auto", "semiauto", "manual"),
+            c(i18n$t("_auto_vgm_auto"), i18n$t("_auto_vgm_semiauto"), i18n$t("_auto_vgm_manual"))
+          ),
           selected = "auto"
         )
       ),
       shiny::div(
         style = "display:inline-block;position:relative;vertical-align:top;margin-top:40px;margin-left:-20px;",
-        actionButton("fit_vgm_button", "Impostazioni")
+        actionButton("fit_vgm_button", paste0("\u2004",i18n$t("_fit_vgm_button")), icon = shiny::icon("cog"))
       )
     )
   ),
@@ -71,7 +73,7 @@ shiny::div(
   shiny::checkboxInput(
     "focal_onoff",
     shiny::span(
-      "Livella i raster interpolati\u2000",
+      paste0(i18n$t("_focal_onoff"),"\u2000"),
       actionLink("help_focal", icon("question-circle"))
     ),
     value = TRUE

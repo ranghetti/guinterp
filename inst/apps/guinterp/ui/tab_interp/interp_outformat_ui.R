@@ -1,13 +1,13 @@
-# Content of the box "Formato di output"
+# Content of the box "Output format"
 
 shiny::div(
 
   shiny::radioButtons(
     "outgrid_type",
-    "Griglia di output",
-    c(
-      "Definisci risoluzione e proiezione" = "custom",
-      "Scegli da un raster esistente" = "ref"
+    i18n$t("_outgrid_type"),
+    setNames(
+      c("custom", "ref"),
+      c(i18n$t("_outgrid_type_custom"), i18n$t("_outgrid_type_ref"))
     ),
     selected = "custom"
   ),
@@ -18,7 +18,7 @@ shiny::div(
         width = 5,
         shiny::numericInput(
           'interp_res',
-          "Risoluzione (m)",
+          i18n$t("_interp_res"),
           value = 5, min = 0.01, max = 100, step = 1
         )
       ),
@@ -40,13 +40,13 @@ shiny::div(
     shiny::div(
       shiny::div(
         style="display:inline-block;vertical-align:top;margin-bottom:5px;",
-        shiny::strong("Raster di riferimento: \u00a0")),
+        shiny::strong(paste0(i18n$t("_refraster")," \u00a0"))),
       shiny::div(
         shiny::div(
           style="display:inline-block;vertical-align:top;width:70pt;",
           shinyFiles::shinyFilesButton(
-            "path_refraster_sel", "Seleziona",
-            "Seleziona il raster da cui ottenere la griglia di riferimento",
+            "path_refraster_sel", i18n$t("_Select"),
+            i18n$t("_path_refraster_sel"),
             multiple = FALSE#,
             # filetype = list(
             #   GeoTIFF = c("tif", "tiff"),

@@ -13,7 +13,7 @@ observeEvent(rv$change_interp, {
       ggplot2::geom_histogram(data=rv$inputpts_points[sid<=samplesize&filter==FALSE,], colour="white", fill="darkgreen", breaks=rv$hist_breaks) +
       ggplot2::geom_histogram(data=rv$inputpts_points[sid<=samplesize&filter==TRUE,], colour="white", fill="red", breaks=rv$hist_breaks) +
       ggplot2::ylim(rv$hist_ylim) +
-      ggplot2::xlab("Variabile selezionata") + ylab("# Punti")
+      ggplot2::xlab(i18n$t("_hist_xlab")) + ggplot2::ylab(i18n$t("_hist_ylab"))
     if (!is.null(input$miny) & !is.null(input$maxy) & input$check_rangey & input$filter_buttons == "manual") {
       p <- p + ggplot2::geom_vline(xintercept = c(input$miny, input$maxy), colour="red")
     }

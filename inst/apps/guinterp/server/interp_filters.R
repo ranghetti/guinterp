@@ -93,7 +93,7 @@ output$indata_rangey <- renderUI({
       style="display:inline-block;position:relative;",
       shiny::numericInput(
         inputId = "miny",
-        label = shiny::span(style="font-weight:normal;", "minimo (t/ha)"),
+        label = shiny::span(style="font-weight:normal;", i18n$t("_miny")),
         min = 0,
         max = ceiling(max(rv$inputpts_points$selvar)),
         value = round(quantile(rv$inputpts_points$selvar, .02), 2),
@@ -104,7 +104,7 @@ output$indata_rangey <- renderUI({
       style="display:inline-block;position:relative;padding-left:10px;",
       shiny::numericInput(
         inputId = "maxy",
-        label = shiny::span(style="font-weight:normal;", "massimo (t/ha)"),
+        label = shiny::span(style="font-weight:normal;", i18n$t("_maxy")),
         min = 0,
         max = ceiling(max(rv$inputpts_points$selvar)),
         value = round(quantile(rv$inputpts_points$selvar, .98), 2),
@@ -254,7 +254,7 @@ observeEvent(input$downloadFilters, {
 
     shinyWidgets::sendSweetAlert(
       session, title = NULL,
-      text = "Esportazione completata",
+      text = i18n$t("_downloadFilters_success"),
       type = "success", btn_labels = "Ok"
     )
   }
@@ -299,7 +299,7 @@ observeEvent(rv$importFilters, {
 
   shinyWidgets::sendSweetAlert(
     session, title = NULL,
-    text = "Esportazione completata",
+    text = i18n$t("_importFilters_success"),
     type = "success", btn_labels = "Ok"
   )
 })
@@ -371,7 +371,7 @@ observeEvent(input$setdefaultFilters, {
 
   shinyWidgets::sendSweetAlert(
     session, title = NULL,
-    text = "I filtri attuali sono stati correttamente impostati come predefiniti.",
+    text = i18n$t("_setdefaultFilters_success"),
     type = "success", btn_labels = "Ok"
   )
 })
