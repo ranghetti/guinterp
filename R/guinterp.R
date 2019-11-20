@@ -1,6 +1,7 @@
 #' @title Main GUI for app gestione dati
 #' @description FUNCTION_DESCRIPTION
-#' @param language "en" (default) or "it" currently implemented
+#' @param language "en" or "it" currently implemented
+#'  (default is to retrieve it from system settings)
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
 #' @rdname guinterp
@@ -8,6 +9,14 @@
 #' @author Luigi Ranghetti, phD (2019) <ranghetti.l@irea.cnr.it>
 #' @importFrom shiny shinyOptions runApp
 guinterp <- function(language = "en")  {
+
+  # set language
+  if (all(
+    missing(language),
+    grepl("^[Ii][Tt]", Sys.getlocale("LC_CTYPE"))
+  )) {
+    language <- "it"
+  }
 
   # run
   if (interactive()) {

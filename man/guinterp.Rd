@@ -7,7 +7,8 @@
 guinterp(language = "en")
 }
 \arguments{
-\item{language}{"en" (default) or "it" currently implemented}
+\item{language}{"en" or "it" currently implemented
+(default is to retrieve it from system settings)}
 }
 \value{
 OUTPUT_DESCRIPTION

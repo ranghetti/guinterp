@@ -75,7 +75,7 @@ _outraster,Output raster:,Raster di output:
 _path_outraster_sel,Save output raster as...,Salva il raster di output come...
 _path_outraster_textin_placeholder,save in a temporary file,salva in un raster temporaneo
 _outraster_savesingles,Save also single polygon's rasters,Salva anche i raster dei singoli poligoni
-_outfoolder,Output folder,Cartella di output
+_outfolder,Output folder,Cartella di output
 _path_outdir_sel,Select output folder for raster maps,Seleziona la cartella di output delle mappe raster
 _path_outdir_textin_placeholder,use a temporary directory,usa una cartella temporanea
 _v_options_onoff,Advanced settings,Opzioni avanzate
