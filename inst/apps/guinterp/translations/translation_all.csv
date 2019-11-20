@@ -83,7 +83,7 @@ _v_maxdist,Maximum distance points-pixels,Distanza massima punti-pixel
 _v_nmax,Numbers of points per pixels,Numero di punti per pixel
 _interp_overwrite,Overwrite existing rasters?,Sovrascrivere i raster esistenti?
 _err_autofit_vgm_2,Points can not be univocally modelled; please manually check the output parameters.,I punti non sono modellabili univocamente: controllare manualmente i parametri generati.
-_pb_interp_message,Points are being interpolated,<br/>please wait...,L'interpolazione dei dati \u00E8 in corso,<br/>attendere prego...
+_pb_interp_message,Points are being interpolated&#44;<br/>please wait...,L'interpolazione dei dati &#232; in corso&#44;<br/>attendere prego...
 _pb_interp_title,Interpolating data,Interpolazione dati
 _interp_success_title,Interpolation completed,Interpolazione completata
 _interp_success_message1,Points were correctly interpolated.,I dati sono stati correttamente interpolati.
@@ -115,8 +115,8 @@ _inputpts_showall,Show all files,Mostra tutti i file
 _select_inputvar,Variable to be interpolated,Variabile da interpolare
 _select_xvar,Coordinate X,Coordinata X
 _select_yvar,Coordinate Y,Coordinata Y
-_inputpts_sp_invalid_message,File %f is not a valid point vector file, or it does not contain any numeric field.,Il file %f non \u00E8 un vettoriale puntiforme valido oppure non contiene campi numerici.
-_inputpts_table_invalid_message,File %f is not a valid table file, or it does not contain any numeric field.,Il file %f non \u00E8 un tabellare riconosciuto, oppure non contiene campi numerici.
+_inputpts_sp_invalid_message,File %f is not a valid point vector file\u002C or it does not contain any numeric field.,Il file %f non \u00E8 un vettoriale puntiforme valido oppure non contiene campi numerici.
+_inputpts_table_invalid_message,File %f is not a valid table file\u002C or it does not contain any numeric field.,Il file %f non \u00E8 un tabellare riconosciuto\u002C oppure non contiene campi numerici.
 _modal_variogram_title,Interpolation settings,Impostazioni di interpolazione
 _modeltype,Model type,Tipo di modello
 _modeltype_exp,Exponential,Esponenziale
