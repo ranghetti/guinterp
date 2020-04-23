@@ -7,7 +7,7 @@ output$out_proj_textinput <- renderUI({
   textInput(
     "out_proj",
     span(
-      paste0(i18n$t("_out_proj"),"\u2000"),
+      ph(ht("_out_proj", i18n),"\u2000"),
       shiny::actionLink("help_out_proj", icon("question-circle"))
     ),
     value = st_crs_utm_from_lonlat(

@@ -4,7 +4,7 @@ ui_guinterp <- shinydashboard::dashboardPage(
     title = "GUInterp",
     tags$li(class ="dropdown", tags$h3(
       style = "color:white;margin:0;padding-top:12px;padding-bottom:12px;padding-left:50px;padding-right:50px;",
-      i18n$t("_gui_title")
+      ht("_gui_title", i18n)
     )),
     tags$li(class ="dropdown", tags$a(
       href="https://github.com/ranghetti/guinterp",
@@ -44,7 +44,7 @@ ui_guinterp <- shinydashboard::dashboardPage(
       ),
       shiny::tags$head(shiny::tags$style(".darkbutton{background-color:#28353b;color:#b8c7ce;width:200px;")), # background color and font color
 
-      hidden(shinydashboard::menuItem(i18n$t("_Interpolate"), tabName = "tab_interp", icon = icon("folder-open"))),
+      hidden(shinydashboard::menuItem(ht("_Interpolate", i18n), tabName = "tab_interp", icon = icon("folder-open"))),
 
       ### Bar with inputs and commands
       source(

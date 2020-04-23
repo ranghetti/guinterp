@@ -6,9 +6,16 @@
 \alias{filter_pts_resample}
 \title{Update filter values}
 \usage{
-filter_pts(indata, metric, value, inlayer = NULL,
-  id_fieldname = "idfield", byfield = FALSE, samplesize = 1e+05,
-  par1 = NA)
+filter_pts(
+  indata,
+  metric,
+  value,
+  inlayer = NULL,
+  id_fieldname = "idfield",
+  byfield = FALSE,
+  samplesize = 1e+05,
+  par1 = NA
+)
 
 filter_pts_reset(indata, filters = NA)
 

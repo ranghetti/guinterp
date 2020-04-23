@@ -4,10 +4,22 @@
 \alias{interp_inputpts}
 \title{Interpolate points of a single polygon}
 \usage{
-interp_inputpts(indata_sf, field_poly, vgm.fit, globgrid,
-  method = "krige", n_cores = 1, focal_types = NULL,
-  focal_d = NULL, border = 0, outdir = tempdir(), outname = NA,
-  samplesize = 10000, nmax = 1000, maxdist = Inf)
+interp_inputpts(
+  indata_sf,
+  field_poly,
+  vgm.fit,
+  globgrid,
+  method = "krige",
+  n_cores = 1,
+  focal_types = NULL,
+  focal_d = NULL,
+  border = 0,
+  outdir = tempdir(),
+  outname = NA,
+  samplesize = 10000,
+  nmax = 1000,
+  maxdist = Inf
+)
 }
 \arguments{
 \item{indata_sf}{points of a single field (with optional "idfield" attribute)}

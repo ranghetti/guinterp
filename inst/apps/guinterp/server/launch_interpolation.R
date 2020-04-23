@@ -21,11 +21,11 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
   show_modal_message(
     shiny::div(
       shiny::p(shiny::HTML(
-        i18n$t("_pb_interp_message")
+        ht("_pb_interp_message", i18n)
       )),
       shinyWidgets::progressBar(id = "pb_interp", value = 0, striped = TRUE)
     ),
-    title = i18n$t("_pb_interp_title")
+    title = ht("_pb_interp_title", i18n)
   )
 
 
@@ -90,21 +90,21 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
   removeModal()
 
   shinyWidgets::sendSweetAlert(
-    session, title = i18n$t("_interp_success_title"),
+    session, title = ht("_interp_success_title", i18n),
     text = shiny::div(
-      shiny::p(i18n$t("_interp_success_message1")),
+      shiny::p(ht("_interp_success_message1", i18n)),
       if (input$outraster_savesingles) {
         shiny::p(
-          i18n$t("_interp_success_message2"), tags$br(),
+          ht("_interp_success_message2", i18n), tags$br(),
           tags$span(style="font-family:monospace;",rv$interp_dir)
         )
       },
       shiny::p(
-        i18n$t("_interp_success_message3"), tags$br(),
+        ht("_interp_success_message3", i18n), tags$br(),
         shiny::span(style="font-family:monospace;",rv$outraster_path)
       )
     ),
-    type = "success", btn_labels = i18n$t("_Ok")
+    type = "success", btn_labels = ht("_Ok", i18n)
   )
 
 })

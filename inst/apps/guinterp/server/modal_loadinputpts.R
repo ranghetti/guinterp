@@ -2,14 +2,14 @@
 
 observeEvent(input$button_load_inputpts, {
   showModal(modalDialog(
-    title = i18n$t("_modal_loadinputpts_title"),
+    title = ht("_modal_loadinputpts_title", i18n),
     size = "m",
 
     div(
       style="vertical-align:top;",
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:85pt;padding-top:8px;",
-        shiny::strong(i18n$t("_inputptspath_label"))
+        shiny::strong(ht("_inputptspath_label", i18n))
       ),
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:calc(100% - 85pt - 50pt - 15px - 10pt - 10px);",
@@ -18,8 +18,8 @@ observeEvent(input$button_load_inputpts, {
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:50pt;",
         shinyFiles::shinyDirButton(
-          "inputptspath", i18n$t("_inputptspath_button"),
-          i18n$t("_inputptspath_sfb")
+          "inputptspath", ht("_inputptspath_button", i18n),
+          ht("_inputptspath_sfb", i18n)
         )
       ),
       shiny::div(
@@ -33,17 +33,14 @@ observeEvent(input$button_load_inputpts, {
         div(
           div(
             style = "display:inline-block;padding-right:10pt;",
-            shiny::strong(i18n$t("_Filetype"))
+            shiny::strong(ht("_Filetype", i18n))
           ),
           div(
             style = "display:inline-block;padding-right:20pt;",
             radioButtons(
               "inputptsfiletype",
               NULL, #"_Filetype",
-              choiceNames = c(
-                i18n$t("_inputptsfiletype_vect"),
-                i18n$t("_inputptsfiletype_txt")
-              ),
+              choiceNames = ht(c("_inputptsfiletype_vect", "_inputptsfiletype_txt"), i18n),
               choiceValues = c("vect", "txt"),
               selected = "vect",
               inline = TRUE
@@ -57,7 +54,7 @@ observeEvent(input$button_load_inputpts, {
           style="margin-top:-10px;",
           checkboxInput(
             "inputpts_showall",
-            i18n$t("_inputpts_showall"),
+            ht("_inputpts_showall", i18n),
             value = FALSE
           )
         )
@@ -70,7 +67,7 @@ observeEvent(input$button_load_inputpts, {
       )
     ),
 
-    actionButton("load_inputpts", strong(paste0("\u2000",i18n$t("_Load"))), icon=icon("upload")),
+    actionButton("load_inputpts", strong(ph("\u2000",ht("_Load", i18n))), icon=icon("upload")),
 
     fluidRow(
       column(
@@ -91,10 +88,10 @@ observeEvent(input$button_load_inputpts, {
     footer = tagList(
       shinyjs::disabled(actionButton(
         "save_extent_inputpts",
-        strong(paste0("\u2000",i18n$t("_Ok"))),
+        strong(ph("\u2000",ht("_Ok", i18n))),
         icon = icon("check")
       )),
-      modalButton(paste0("\u2000",i18n$t("_Cancel")), icon = icon("ban"))
+      modalButton(ph("\u2000",ht("_Cancel", i18n)), icon = icon("ban"))
     )
   ))
 })
@@ -155,7 +152,7 @@ output$selector_inputvar <- renderUI({
   req(rv$inputpts_points_raw)
   selectInput(
     "select_inputvar",
-    label = i18n$t("_select_inputvar"),
+    label = ht("_select_inputvar", i18n),
     choices = rv$inputpts_names,
     selected = rv$def_inputvar
   )
@@ -165,7 +162,7 @@ output$selector_xvar <- renderUI({
   if (input$inputptsfiletype == "txt") {
     selectInput(
       "select_xvar",
-      label = i18n$t("_select_xvar"),
+      label = ht("_select_xvar", i18n),
       choices = rv$inputpts_names,
       selected = rv$def_xvar
     )
@@ -176,7 +173,7 @@ output$selector_yvar <- renderUI({
   if (input$inputptsfiletype == "txt") {
     selectInput(
       "select_yvar",
-      label = i18n$t("_select_yvar"),
+      label = ht("_select_yvar", i18n),
       choices = rv$inputpts_names,
       selected = rv$def_yvar
     )
@@ -282,10 +279,10 @@ observeEvent(input$load_inputpts, {
       },
       error = function(e) {
         shinyWidgets::sendSweetAlert(
-          session, title = i18n$t("_invalid_file"),
+          session, title = ht("_invalid_file", i18n),
           text = gsub(
             "\\%f", basename(rv$inputpts_path),
-            i18n$t("_inputpts_sp_invalid_message")
+            ht("_inputpts_sp_invalid_message", i18n)
           ),
           type = "error", btn_labels = "Ok"
         )
@@ -304,10 +301,10 @@ observeEvent(input$load_inputpts, {
       },
       error = function(e) {
         shinyWidgets::sendSweetAlert(
-          session, title = i18n$t("_invalid_file"),
+          session, title = ht("_invalid_file", i18n),
           text = gsub(
             "\\%f", basename(rv$inputpts_path),
-            i18n$t("_inputpts_table_invalid_message")
+            ht("_inputpts_table_invalid_message", i18n)
           ),
           type = "error", btn_labels = "Ok"
         )

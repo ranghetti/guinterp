@@ -4,10 +4,10 @@ shiny::div(
 
   shiny::radioButtons(
     "outgrid_type",
-    i18n$t("_outgrid_type"),
+    ht("_outgrid_type", i18n),
     setNames(
       c("custom", "ref"),
-      c(i18n$t("_outgrid_type_custom"), i18n$t("_outgrid_type_ref"))
+      ht(c("_outgrid_type_custom", "_outgrid_type_ref"), i18n)
     ),
     selected = "custom"
   ),
@@ -18,7 +18,7 @@ shiny::div(
         width = 5,
         shiny::numericInput(
           'interp_res',
-          i18n$t("_interp_res"),
+          ht("_interp_res", i18n),
           value = 5, min = 0.01, max = 100, step = 1
         )
       ),
@@ -40,13 +40,13 @@ shiny::div(
     shiny::div(
       shiny::div(
         style="display:inline-block;vertical-align:top;margin-bottom:5px;",
-        shiny::strong(paste0(i18n$t("_refraster")," \u00a0"))),
+        shiny::strong(ph(ht("_refraster", i18n)," \u00a0"))),
       shiny::div(
         shiny::div(
           style="display:inline-block;vertical-align:top;width:70pt;",
           shinyFiles::shinyFilesButton(
-            "path_refraster_sel", i18n$t("_Select"),
-            i18n$t("_path_refraster_sel"),
+            "path_refraster_sel", ht("_Select", i18n),
+            ht("_path_refraster_sel", i18n),
             multiple = FALSE#,
             # filetype = list(
             #   GeoTIFF = c("tif", "tiff"),

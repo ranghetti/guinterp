@@ -54,7 +54,7 @@ observeEvent(c(input$filter_buttons), {
 
   } else if (input$filter_buttons=="minimal") {
     # Minimal filter
-    show_modal_message(shiny::p(i18n$t("_filtered_ptsdata")))
+    show_modal_message(ht("_filtered_ptsdata", i18n))
     filtered_ptsdata <- tryCatch({
       rv$inputpts_points <- filter_pts_reset(rv$inputpts_points) %>%
         filter_pts(
@@ -70,7 +70,7 @@ observeEvent(c(input$filter_buttons), {
 
   } else if (input$filter_buttons=="no") {
     # No filter
-    show_modal_message(shiny::p(i18n$t("_filtered_ptsdata_restore")))
+    show_modal_message(ht("_filtered_ptsdata_restore", i18n))
     filtered_ptsdata <- tryCatch({
       rv$inputpts_points <- filter_pts_reset(rv$inputpts_points)
     })
@@ -93,7 +93,7 @@ output$indata_rangey <- renderUI({
       style="display:inline-block;position:relative;",
       shiny::numericInput(
         inputId = "miny",
-        label = shiny::span(style="font-weight:normal;", i18n$t("_miny")),
+        label = shiny::span(style="font-weight:normal;", ht("_miny", i18n)),
         min = 0,
         max = ceiling(max(rv$inputpts_points$selvar)),
         value = round(quantile(rv$inputpts_points$selvar, .02), 2),
@@ -104,7 +104,7 @@ output$indata_rangey <- renderUI({
       style="display:inline-block;position:relative;padding-left:10px;",
       shiny::numericInput(
         inputId = "maxy",
-        label = shiny::span(style="font-weight:normal;", i18n$t("_maxy")),
+        label = shiny::span(style="font-weight:normal;", ht("_maxy", i18n)),
         min = 0,
         max = ceiling(max(rv$inputpts_points$selvar)),
         value = round(quantile(rv$inputpts_points$selvar, .98), 2),
@@ -254,7 +254,7 @@ observeEvent(input$downloadFilters, {
 
     shinyWidgets::sendSweetAlert(
       session, title = NULL,
-      text = i18n$t("_downloadFilters_success"),
+      text = ht("_downloadFilters_success", i18n),
       type = "success", btn_labels = "Ok"
     )
   }
@@ -299,7 +299,7 @@ observeEvent(rv$importFilters, {
 
   shinyWidgets::sendSweetAlert(
     session, title = NULL,
-    text = i18n$t("_importFilters_success"),
+    text = ht("_importFilters_success", i18n),
     type = "success", btn_labels = "Ok"
   )
 })
@@ -371,7 +371,7 @@ observeEvent(input$setdefaultFilters, {
 
   shinyWidgets::sendSweetAlert(
     session, title = NULL,
-    text = i18n$t("_setdefaultFilters_success"),
+    text = ht("_setdefaultFilters_success", i18n),
     type = "success", btn_labels = "Ok"
   )
 })

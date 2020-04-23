@@ -17,7 +17,7 @@ shiny::div(
             width = NULL,
             status = "danger",
             solidHeader = TRUE,
-            title = i18n$t("_hist_title"),
+            title = ht("_hist_title", i18n),
             collapsible = TRUE,
             plotOutput("hist", height = "270px")
           ),
@@ -27,9 +27,9 @@ shiny::div(
             status = "danger",
             solidHeader = TRUE,
             collapsible = TRUE,
-            title = i18n$t("_interp_map_title"),
+            title = ht("_interp_map_title", i18n),
             leaflet::leafletOutput("interp_map", height = 650),
-            shiny::div(tags$i(i18n$t("_note1_interp_map")))
+            shiny::div(tags$i(ht("_note1_interp_map", i18n)))
           )
         )
       )
@@ -42,7 +42,7 @@ shiny::div(
         shiny::div(
           shinydashboard::box(
             width = NULL,
-            title = i18n$t("_filter_ui_title"),
+            title = ht("_filter_ui_title", i18n),
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",
@@ -50,7 +50,7 @@ shiny::div(
           ),
           shinydashboard::box(
             width = NULL,
-            title = i18n$t("_outformat_ui_title"),
+            title = ht("_outformat_ui_title", i18n),
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",
@@ -58,7 +58,7 @@ shiny::div(
           ),
           shinydashboard::box(
             width = NULL,
-            title = i18n$t("_interp_options_ui_title"),
+            title = ht("_interp_options_ui_title", i18n),
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",
@@ -66,7 +66,7 @@ shiny::div(
           ),
           shinydashboard::box(
             width = NULL,
-            title = i18n$t("_interp_proc_ui_title"),
+            title = ht("_interp_proc_ui_title", i18n),
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",

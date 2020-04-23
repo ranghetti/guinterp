@@ -2,13 +2,13 @@
 
 observeEvent(input$button_load_borders, {
   showModal(modalDialog(
-    title = i18n$t("_modal_loadborders_title"),
+    title = ht("_modal_loadborders_title", i18n),
     size = "m",
 
     radioButtons(
-      "border_type", label = i18n$t("_border_type"),
+      "border_type", label = ht("_border_type", i18n),
       choiceValues = c("files", "bbox"),
-      choiceNames = c(i18n$t("_border_type_files"), i18n$t("_border_type_bbox")),
+      choiceNames = ht(c("_border_type_files", "_border_type_bbox"), i18n),
       selected = "record"
     ),
 
@@ -19,7 +19,7 @@ observeEvent(input$button_load_borders, {
           style="vertical-align:top;",
             shiny::div(
               style = "display:inline-block;vertical-align:top;width:85pt;padding-top:8px;",
-              shiny::strong(i18n$t("_borderpath_label"))
+              shiny::strong(ht("_borderpath_label", i18n))
             ),
             shiny::div(
               style = "display:inline-block;vertical-align:top;width:calc(100% - 85pt - 50pt - 15px - 10pt - 10px);",
@@ -28,8 +28,8 @@ observeEvent(input$button_load_borders, {
             shiny::div(
               style = "display:inline-block;vertical-align:top;width:50pt;",
               shinyFiles::shinyDirButton(
-                "borderpath", i18n$t("_borderpath_button"),
-                i18n$t("_borderpath_sfb")
+                "borderpath", ht("_borderpath_button", i18n),
+                ht("_borderpath_sfb", i18n)
               )
             ),
             shiny::div(
@@ -48,7 +48,7 @@ observeEvent(input$button_load_borders, {
               style="margin-top:-10px;",
               checkboxInput(
                 "borders_showall",
-                i18n$t("_borders_showall"),
+                ht("_borders_showall", i18n),
                 value = FALSE
               )
             )
@@ -63,20 +63,20 @@ observeEvent(input$button_load_borders, {
 
         actionButton(
           "load_extent_borders",
-          strong(paste0("\u2000",i18n$t("_Load"))),
+          strong(ph("\u2000",ht("_Load", i18n))),
           icon=icon("upload")
         ),
 
         shiny::div(
           style = "margin-top:15px;",
           shinyjs::disabled(radioButtons(
-            "select_uid_which", label = i18n$t("_select_uid_which"),
+            "select_uid_which", label = ht("_select_uid_which", i18n),
             choiceValues = c("no", "record", "attr"),
-            choiceNames = c(
-              i18n$t("_select_uid_which_no"),
-              i18n$t("_select_uid_which_record"),
-              i18n$t("_select_uid_which_attr")
-            ),
+            choiceNames = ht(c(
+              "_select_uid_which_no",
+              "_select_uid_which_record",
+              "_select_uid_which_attr"
+            ), i18n),
             selected = "record"
           ))
         ),
@@ -87,7 +87,7 @@ observeEvent(input$button_load_borders, {
     conditionalPanel(
       condition = "input.border_type == 'bbox'",
       numericInput(
-        "bbox_buffer", i18n$t("_bbox_buffer"),
+        "bbox_buffer", ht("_bbox_buffer", i18n),
         value = 15, min = 0, step = 1
       )
     ),
@@ -97,10 +97,10 @@ observeEvent(input$button_load_borders, {
     footer = tagList(
       shinyjs::disabled(actionButton(
         "save_extent_borders",
-        strong(paste0("\u2000",i18n$t("_Ok"))),
+        strong(ph("\u2000",ht("_Ok", i18n))),
         icon = icon("check")
       )),
-      modalButton(paste0("\u2000",i18n$t("_Cancel")), icon = icon("ban"))
+      modalButton(ph("\u2000",ht("_Cancel", i18n)), icon = icon("ban"))
     )
   ))
 })
@@ -235,7 +235,7 @@ observeEvent(input$load_extent_borders, {
     },
     error = function(e) {
       shinyWidgets::sendSweetAlert(
-        session, title = i18n$t("_invalid_file"),
+        session, title = ht("_invalid_file", i18n),
         text = gsub(
           "\\%f", basename(rv$borders_path),
           i18n$t("_borders_polygon_raw_invalid_message")

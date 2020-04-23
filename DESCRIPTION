@@ -41,4 +41,4 @@ Imports:
 Encoding: UTF-8
 URL: https://github.com/ranghetti/guinterp
 BugReports: https://github.com/ranghetti/guinterp/issues
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0

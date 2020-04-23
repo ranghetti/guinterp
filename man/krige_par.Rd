@@ -4,8 +4,16 @@
 \alias{krige_par}
 \title{Parallelise kriging}
 \usage{
-krige_par(formula, locations, newdata, model = NA, n_cores = NA,
-  method = "krige", nmax = Inf, maxdist = Inf)
+krige_par(
+  formula,
+  locations,
+  newdata,
+  model = NA,
+  n_cores = NA,
+  method = "krige",
+  nmax = Inf,
+  maxdist = Inf
+)
 }
 \arguments{
 \item{formula}{TODO}

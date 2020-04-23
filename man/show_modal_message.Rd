@@ -4,9 +4,15 @@
 \alias{show_modal_message}
 \title{Show modal message}
 \usage{
-show_modal_message(message, title = NULL, icon = "cog",
-  icon_colour = "default", size = "s", easyClose = FALSE,
-  footer = NULL)
+show_modal_message(
+  message,
+  title = NULL,
+  icon = "cog",
+  icon_colour = "default",
+  size = "s",
+  easyClose = FALSE,
+  footer = NULL
+)
 }
 \arguments{
 \item{message}{TODO}

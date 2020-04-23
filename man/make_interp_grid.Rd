@@ -4,8 +4,13 @@
 \alias{make_interp_grid}
 \title{Create global output grid}
 \usage{
-make_interp_grid(indata_sf, outres = 5, outcrs = st_crs(indata_sf),
-  offset = c(0, 0), border = 15)
+make_interp_grid(
+  indata_sf,
+  outres = 5,
+  outcrs = st_crs(indata_sf),
+  offset = c(0, 0),
+  border = 15
+)
 }
 \arguments{
 \item{indata_sf}{TODO all input points}

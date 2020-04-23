@@ -6,7 +6,7 @@ _Import,Import,Importa
 _Export,Export,Esporta
 _On,On,On
 _Off,Off,Off
-_Yes,Yes,S\u00EC
+_Yes,Yes,S&#236;
 _No,No,No
 _Ok,Ok,Ok
 _Cancel,Cancel,Annulla
@@ -53,8 +53,8 @@ _setdefaultFilters,Set as defaults,Imposta come predefiniti
 _setdefaultFilters_success,Current filters were correctly set as defaults.,I filtri attuali sono stati correttamente impostati come predefiniti.
 _maxptdist,Maximum distance from points,Distanza massima dai punti
 _interp_method,Interpolation method,Metodo di interpolazione
-_interp_method_krige,Ordinary Kriging (more reliable),Kriging ordinario (pi\u00F9 affidabile)
-_interp_method_idw,Inverse Distance Weighted (faster),Distanza inversa ponderata (pi\u00F9 veloce)
+_interp_method_krige,Ordinary Kriging (more reliable),Kriging ordinario (pi&#249; affidabile)
+_interp_method_idw,Inverse Distance Weighted (faster),Distanza inversa ponderata (pi&#249; veloce)
 _auto_vgm,Variogram definition,Definizione del variogramma
 _auto_vgm_auto,Automatic,Automatica
 _auto_vgm_semiauto,Semiautomatic,Semiautomatica
@@ -68,7 +68,7 @@ _interp_res,Resolution (m),Risoluzione (m)
 _out_proj,Coordinate Reference System,Sistema di riferimento
 _refraster,Reference raster:,Raster di riferimento:
 _path_refraster_sel,Select the source raster of the CRS,Seleziona il raster da cui ottenere la griglia di riferimento
-_turbo,Optimise interpolation for:,Ottimizza l\'interpolazione per:
+_turbo,Optimise interpolation for:,Ottimizza l'interpolazione per:
 _turbo_low,Desktop usage,Uso desktop
 _turbo_high,Server/workstation usage,Uso server/workstation
 _outraster,Output raster:,Raster di output:
@@ -88,7 +88,7 @@ _pb_interp_title,Interpolating data,Interpolazione dati
 _interp_success_title,Interpolation completed,Interpolazione completata
 _interp_success_message1,Points were correctly interpolated.,I dati sono stati correttamente interpolati.
 _interp_success_message2,Single polygon's raster were saved in the folder,I raster dei singoli poligoni sono stati salvati nella cartella
-_interp_success_message3,Final raster was saved here:,Il raster finale \u00E8 stato salvato qui:
+_interp_success_message3,Final raster was saved here:,Il raster finale &#232; stato salvato qui:
 _modal_loadborders_title,Select borders' vector files,Seleziona i poligonali dei bordi
 _border_type,Identify borders by:,Metodo di identificazione dei bordi
 _border_type_files,Loading a vector file,Carica da files
@@ -104,7 +104,7 @@ _select_uid_which_attr,Select an attribute,Scegli un attributo
 _bbox_buffer,Buffer radius to be applied to points (m),Raggio del buffer da applicare ai punti (m)
 _tbl_empty,No files were found,Nessun file vettoriale trovato
 _invalid_file,Invalid file,File non valido
-_borders_polygon_raw_invalid_message,File %f is not a valid polygon vector file.,Il file %f non u00E8 un vettoriale poligonale valido.
+_borders_polygon_raw_invalid_message,File %f is not a valid polygon vector file.,Il file %f non &#232; un vettoriale poligonale valido.
 _modal_loadinputpts_title,Select vector files of points to be interpolated,Seleziona i file dei punti da interpolare
 _inputptspath_label,Input folder,Cartella di input
 _inputptspath_button,Change,Cambia
@@ -115,8 +115,8 @@ _inputpts_showall,Show all files,Mostra tutti i file
 _select_inputvar,Variable to be interpolated,Variabile da interpolare
 _select_xvar,Coordinate X,Coordinata X
 _select_yvar,Coordinate Y,Coordinata Y
-_inputpts_sp_invalid_message,File %f is not a valid point vector file\u002C or it does not contain any numeric field.,Il file %f non \u00E8 un vettoriale puntiforme valido oppure non contiene campi numerici.
-_inputpts_table_invalid_message,File %f is not a valid table file\u002C or it does not contain any numeric field.,Il file %f non \u00E8 un tabellare riconosciuto\u002C oppure non contiene campi numerici.
+_inputpts_sp_invalid_message,File %f is not a valid point vector file&#44; or it does not contain any numeric field.,Il file %f non &#232; un vettoriale puntiforme valido oppure non contiene campi numerici.
+_inputpts_table_invalid_message,File %f is not a valid table file&#44; or it does not contain any numeric field.,Il file %f non &#232; un tabellare riconosciuto&#44; oppure non contiene campi numerici.
 _modal_variogram_title,Interpolation settings,Impostazioni di interpolazione
 _modeltype,Model type,Tipo di modello
 _modeltype_exp,Exponential,Esponenziale

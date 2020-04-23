@@ -210,7 +210,7 @@ shiny::observeEvent(input$help_maxptdist, {
       title = "Distanza massima dai punti",
       size = "s",
       shiny::p(shiny::HTML(
-        "\u00E8 possibile indicare una distanza massima dai punti",
+        "\u00C8 possibile indicare una distanza massima dai punti",
         "oltre la quale non effettuare interpolazioni: per farlo,",
         "impostare il primo selettore su \"S\u00EC\", e indicare la distanza voluta",
         "con il secondo selettore."
