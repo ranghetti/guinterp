@@ -83,7 +83,7 @@ observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon), { # LEAVE
     leaflet::removeShape(paste0("pts_", rv$inputpts_points$sid)) %>%
     leaflet::removeShape(paste0("brd_buf_", rv$borders_polygon$id_geom))
   if (nrow(rv$inputpts_points[sid < samplesize & filter==TRUE,]) > 0) {
-    leaflet::addCircles(
+    leaflet::addCircleMarkers(
       leaflet::leafletProxy("interp_map"),
         ~lon, ~lat,
         data         = rv$inputpts_points[sid < samplesize & filter==TRUE,],
@@ -95,12 +95,12 @@ observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon), { # LEAVE
       )
   }
   if (nrow(rv$inputpts_points[sid < samplesize & filter==FALSE,]) > 0) {
-    leaflet::addCircles(
+    leaflet::addCircleMarkers(
       leaflet::leafletProxy("interp_map"),
       ~lon, ~lat,
       data      = rv$inputpts_points[sid < samplesize & filter == FALSE,],
       layerId   = paste0("pts_", rv$inputpts_points[sid < samplesize & filter == FALSE,]$sid),
-      radius    = 3, stroke = FALSE, fillOpacity = 0.65,
+      radius    = 5, stroke = FALSE, fillOpacity = 0.65,
       fillColor = ~rv$pal(rv$inputpts_points[sid < samplesize & filter == FALSE,][[map_selvariable]]),
       label     = ~format(selvar, digits = 0, nsmall = 1),
       group     = i18n$t("_mapgroup_points"),
