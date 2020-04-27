@@ -47,8 +47,10 @@ _pos,Minimum distance for polygon borders,Distanza minima dal bordo dei poligoni
 _importFilters,Import / export filters,Importa / esporta i filtri
 _sfb_importFilters,Select parameter file,Scegli il file dei parametri
 _importFilters_success,Filters were correctly imported,Importazione completata
+_importFilters_message,Note: manual point selections can not be exported.,Nota: i filtri di selezione manuale dei punti non possono essere importati.
 _downloadFilters,Save parameters as...,Salva i parametri come...
-_downloadFilters_success,Filters were correctly exported.,Esportazione completata
+_downloadFilters_success,Filters were correctly exported,Esportazione completata
+_downloadFilters_message,Note: manual point selections were not exported.,Nota: i filtri di selezione manuale dei punti non sono stati esportati.
 _setdefaultFilters,Set as defaults,Imposta come predefiniti
 _setdefaultFilters_success,Current filters were correctly set as defaults.,I filtri attuali sono stati correttamente impostati come predefiniti.
 _maxptdist,Maximum distance from points,Distanza massima dai punti
@@ -138,3 +140,6 @@ _mapgroup_ortophoto,Ortophoto,Ortofoto
 _mapgroup_map,Map,Mappa
 _mapgroup_points,Used points,Punti utilizzati
 _mapgroup_raster,Interpolated raster,Raster interpolato
+_editmap,Select points drawing polygons,Selezione dei punti tramite poligoni
+_editmap_reverse_t,Filter selected points,Filtra i punti selezionati
+_editmap_reverse_f,Keep selected points (filter others),Mantieni i punti selezionati (filtra gli altri)

@@ -28,10 +28,10 @@ colourPal <- function(colourData, selvariable, na.colour = NA) {
   }
 }
 
-output$interp_map <- leaflet::renderLeaflet({
 
+observeEvent(c(rv$inputpts_points, rv$borders_polygon), {
   req(rv$inputpts_points, rv$borders_polygon)
-  leaflet::leaflet() %>%
+  rv$base_interp_map <- leaflet::leaflet() %>%
     addTiles("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
              group = i18n$t("_mapgroup_ortophoto")) %>%
     addTiles("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_only_labels/{z}/{x}/{y}.png",
@@ -62,6 +62,7 @@ output$interp_map <- leaflet::renderLeaflet({
     leaflet::showGroup(i18n$t("_mapgroup_points")) %>%
     leaflet::hideGroup(i18n$t("_mapgroup_raster"))
 })
+output$interp_map <- leaflet::renderLeaflet(rv$base_interp_map)
 
 
 # Update the map when filters are changed

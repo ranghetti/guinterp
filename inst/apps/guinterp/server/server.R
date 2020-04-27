@@ -60,6 +60,12 @@ server_guinterp <- function(input, output, session) {
     local=TRUE
   )$value
 
+  #### Modal dialog for edit map ####
+  source(
+    system.file("apps/guinterp/server/modal_editmap.R", package="guinterp"),
+    local=TRUE
+  )$value
+
   #### Modal dialog for variogram ####
   source(
     system.file("apps/guinterp/server/modal_variogram.R", package="guinterp"),

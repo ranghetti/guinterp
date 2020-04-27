@@ -5,10 +5,8 @@ shiny::div(
   shiny::radioButtons(
     "outgrid_type",
     ht("_outgrid_type", i18n),
-    setNames(
-      c("custom", "ref"),
-      ht(c("_outgrid_type_custom", "_outgrid_type_ref"), i18n)
-    ),
+    choiceNames = ht(c("_outgrid_type_custom", "_outgrid_type_ref"), i18n),
+    choiceValues = c("custom", "ref"),
     selected = "custom"
   ),
   shiny:::conditionalPanel(

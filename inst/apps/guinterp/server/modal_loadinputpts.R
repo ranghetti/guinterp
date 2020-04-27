@@ -280,10 +280,10 @@ observeEvent(input$load_inputpts, {
       error = function(e) {
         shinyWidgets::sendSweetAlert(
           session, title = ht("_invalid_file", i18n),
-          text = gsub(
+          text = shiny::span(gsub(
             "\\%f", basename(rv$inputpts_path),
             ht("_inputpts_sp_invalid_message", i18n)
-          ),
+          )),
           type = "error", btn_labels = "Ok"
         )
         x <- sf::st_polygon(); attr(x, "valid") <- FALSE; x
@@ -302,10 +302,10 @@ observeEvent(input$load_inputpts, {
       error = function(e) {
         shinyWidgets::sendSweetAlert(
           session, title = ht("_invalid_file", i18n),
-          text = gsub(
+          text = shiny::span(gsub(
             "\\%f", basename(rv$inputpts_path),
             ht("_inputpts_table_invalid_message", i18n)
-          ),
+          )),
           type = "error", btn_labels = "Ok"
         )
         x <- data.table::data.table(); attr(x, "valid") <- FALSE; x

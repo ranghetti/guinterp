@@ -72,7 +72,7 @@ read_inputpts <- function(
     idfield = as.character(id_geom),
     selvar,
     f_rangev = FALSE, f_rangey = FALSE, f_zscorey = FALSE, f_rbiasy = FALSE,
-    f_rangeq = FALSE, f_pos = FALSE, filter = FALSE
+    f_rangeq = FALSE, f_pos = FALSE, f_editmap = FALSE, filter = FALSE
   )]
   # Update progress bar
   if (!is.null(c(.shiny_session, .shiny_pbar_id))) {

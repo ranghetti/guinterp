@@ -94,7 +94,7 @@ observeEvent(input$button_load_borders, {
 
     # leafletOutput("view_map_borders", height=400, width="100%"),
     easyClose = FALSE,
-    footer = tagList(
+    footer = shiny::tagList(
       shinyjs::disabled(actionButton(
         "save_extent_borders",
         strong(ph("\u2000",ht("_Ok", i18n))),
@@ -236,10 +236,10 @@ observeEvent(input$load_extent_borders, {
     error = function(e) {
       shinyWidgets::sendSweetAlert(
         session, title = ht("_invalid_file", i18n),
-        text = gsub(
+        text = shiny::span(gsub(
           "\\%f", basename(rv$borders_path),
-          i18n$t("_borders_polygon_raw_invalid_message")
-        ),
+          ht("_borders_polygon_raw_invalid_message", i18n)
+        )),
         type = "error", btn_labels = "Ok"
       )
       x <- sf::st_polygon(); attr(x, "valid") <- FALSE; x

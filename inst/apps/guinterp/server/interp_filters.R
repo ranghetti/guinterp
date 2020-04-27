@@ -216,6 +216,29 @@ output$indata_rangey <- renderUI({
     }
   })
 
+  observeEvent(c(input$check_editmap, input$pos, input$filter_buttons, rv$editmap_geoms), ignoreNULL = FALSE, ignoreInit = FALSE, {
+    req(rv$inputpts_points, rv$borders_polygon)
+    if (input$filter_buttons == "manual") {
+      if (input$check_editmap) {
+        shinyjs::enable("editmap")
+        req(rv$editmap_geoms)
+        rv$inputpts_points <- filter_pts(
+          rv$inputpts_points, "editmap", rv$editmap_geoms,
+          inlayer = rv$borders_polygon,
+          id_fieldname="id_geom",
+          byfield = TRUE, samplesize = NA,
+          reverse = as.logical(input$editmap_reverse)
+        )
+      } else {
+        shinyjs::disable("editmap")
+        filter_pts_reset(rv$inputpts_points, "editmap")
+      }
+      rv$change_interp <- sample(1E6,1) # dummy var for map/hist update
+    }
+  })
+
+
+
   # Set initial value
   # (it is done in this way, so that points are filtered
   # also when the app is opened)
@@ -253,8 +276,9 @@ observeEvent(input$downloadFilters, {
     )
 
     shinyWidgets::sendSweetAlert(
-      session, title = NULL,
-      text = ht("_downloadFilters_success", i18n),
+      session,
+      title = shiny::span(ht("_downloadFilters_success", i18n)),
+      text = shiny::span(ht("_downloadFilters_message", i18n)),
       type = "success", btn_labels = "Ok"
     )
   }
@@ -298,8 +322,9 @@ observeEvent(rv$importFilters, {
   }
 
   shinyWidgets::sendSweetAlert(
-    session, title = NULL,
-    text = ht("_importFilters_success", i18n),
+    session,
+    title = shiny::span(ht("_importFilters_success", i18n)),
+    text = shiny::span(ht("_importFilters_message", i18n)),
     type = "success", btn_labels = "Ok"
   )
 })
@@ -371,7 +396,7 @@ observeEvent(input$setdefaultFilters, {
 
   shinyWidgets::sendSweetAlert(
     session, title = NULL,
-    text = ht("_setdefaultFilters_success", i18n),
+    text = shiny::span(ht("_setdefaultFilters_success", i18n)),
     type = "success", btn_labels = "Ok"
   )
 })

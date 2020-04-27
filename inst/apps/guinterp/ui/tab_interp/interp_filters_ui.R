@@ -31,18 +31,18 @@ shiny::div(
         shiny::strong(ph(ht("_filters_title", i18n),"\u2000"))
       ),
       shiny::div(
-        style="display:inline-block;vertical-align:middle;height:80px;padding-bottom:10px;",
+        style="display:inline-block;vertical-align:bottom;height:80px;padding-bottom:10px;",
         ""
       ),
       shiny::div(
-        style="display:inline-block;vertical-align:middle;width:50pt;",
+        style="display:inline-block;vertical-align:bottom;width:50pt;",
         shinyWidgets::switchInput(
           "check_rangey", value = FALSE,
           size = "small", onLabel = ht("_On", i18n), offLabel = ht("_Off", i18n)
         )
       ),
       shiny::div(
-        style="display:inline-block;vertical-align:middle;width:calc(100% - 50pt - 3px - 2pt);",
+        style="display:inline-block;vertical-align:bottom;width:calc(100% - 50pt - 3px - 2pt);",
         shiny::uiOutput("indata_rangey")
       ),
       shiny::hr(style = "margin-top: 0em; margin-bottom: 0.75em;"),
@@ -163,6 +163,27 @@ shiny::div(
       ),
       shiny::hr(style = "margin-top: 0em; margin-bottom: 1em;"),
 
+      shiny::div(
+        style="vertical-align:center;",
+        shiny::strong(ph(ht("_editmap", i18n),"\u2000"))
+      ),
+      # shiny::div(
+      #   style="display:inline-block;vertical-align:middle;height:60px;padding-bottom:10px;",
+      #   ""
+      # ),
+      shiny::div(
+        style="display:inline-block;vertical-align:top;margin-top:12px;width:50pt;",
+        shinyWidgets::switchInput(
+          "check_editmap", value = FALSE,
+          size = "small", onLabel = ht("_On", i18n), offLabel = ht("_Off", i18n)
+        )
+      ),
+      shiny::div(
+        style="display:inline-block;vertical-align:top;margin-top:10px;width:calc(100% - 50pt - 3px - 2pt);",
+        shiny::actionButton("editmap", ht("_Select", i18n))
+      ),
+      shiny::hr(style = "margin-top: 0em; margin-bottom: 1em;"),
+
 
       # Import/export filters
       shiny::tags$head(shiny::tags$script(src = "message-handler.js")),
@@ -171,7 +192,7 @@ shiny::div(
         shiny::div(
           style = "padding-bottom:5px;",
           shiny::div(
-            style="display:inline-block;vertical-align:middle;",
+            style="display:inline-block;vertical-align:middle;margin-top:10px;",
             shinyFiles::shinyFilesButton(
               "sfb_importFilters",
               ht("_Import", i18n), ht("_sfb_importFilters", i18n),
@@ -179,7 +200,7 @@ shiny::div(
             )
           ),
           shiny::div(
-            style="display:inline-block;vertical-align:middle;padding-left:10px;",
+            style="display:inline-block;vertical-align:middle;margin-top:10px;padding-left:10px;",
             shinyFiles::shinySaveButton(
               "downloadFilters",
               ht("_Export", i18n), ht("_downloadFilters", i18n),
@@ -188,7 +209,7 @@ shiny::div(
           )
         ),
         shiny::div(
-          style = "padding-bottom:5px;",
+          style = "padding-bottom:5px;margin-top:5px;",
           shiny::actionButton(
             "setdefaultFilters", ht("_setdefaultFilters", i18n)
           )
