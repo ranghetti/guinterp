@@ -167,10 +167,6 @@ shiny::div(
         style="vertical-align:center;",
         shiny::strong(ph(ht("_editmap", i18n),"\u2000"))
       ),
-      # shiny::div(
-      #   style="display:inline-block;vertical-align:middle;height:60px;padding-bottom:10px;",
-      #   ""
-      # ),
       shiny::div(
         style="display:inline-block;vertical-align:top;margin-top:12px;width:50pt;",
         shinyWidgets::switchInput(
@@ -181,6 +177,23 @@ shiny::div(
       shiny::div(
         style="display:inline-block;vertical-align:top;margin-top:10px;width:calc(100% - 50pt - 3px - 2pt);",
         shiny::actionButton("editmap", ht("_Select", i18n))
+      ),
+      shiny::hr(style = "margin-top: 0em; margin-bottom: 1em;"),
+
+      shiny::div(
+        style="vertical-align:center;",
+        shiny::strong(ph(ht("_selpts", i18n),"\u2000"))
+      ),
+      shiny::div(
+        style="display:inline-block;vertical-align:top;margin-top:12px;width:50pt;",
+        shinyWidgets::switchInput(
+          "check_selpts", value = FALSE,
+          size = "small", onLabel = ht("_On", i18n), offLabel = ht("_Off", i18n)
+        )
+      ),
+      shiny::div(
+        style="display:inline-block;vertical-align:top;margin-top:10px;width:calc(100% - 50pt - 3px - 2pt);",
+        shiny::actionButton("selpts", ht("_Select", i18n))
       ),
       shiny::hr(style = "margin-top: 0em; margin-bottom: 1em;"),
 

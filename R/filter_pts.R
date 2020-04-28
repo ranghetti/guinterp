@@ -1,12 +1,12 @@
 #' @title Update filter values
 #' @description `filter_pts` updates filter values (altering the original dataframe).
 #' @param indata TODO
-#' @param metric one between f_rangev, f_rangey, f_zscorey, f_rbiasy, f_rangeq, f_pos, f_editmap
+#' @param metric one between f_rangev, f_rangey, f_zscorey, f_rbiasy, f_rangeq, f_pos, f_editmap, f_selpts
 #' @param value value or values to apply (depending on metric)
 #' @param inlayer optional: sf of fields (see also `id_fieldname`)
 #' @param id_fieldname optional: name of the `inlayer` field containing unique ID of fields (default: "idfield")
 #' @param byfield if FALSE (default), consider data as a unique field; if TRUE, iterate each filter on field `id_fieldname`
-#' @param reverse if TRUE, the filter is applied reversed (this makes sense only for `f_editmap`). default is FALSE.
+#' @param reverse if TRUE, the filter is applied reversed (this makes sense only for `f_editmap` and `f_selpts`). default is FALSE.
 #' @param samplesize maximum size of the sample of the original data to work with (default: 100000; if NA: all the points)
 #' @param par1 additional parameter for filtering (now used only for area to filter / not to filter NA values)
 #' @import data.table
@@ -36,7 +36,7 @@ filter_pts <- function(
   # Check input data
   if (any(
     !is(indata, "data.table"),
-    !all(c("uid","sid","lat","lon","idfield","selvar","f_rangev","f_rangey","f_zscorey","f_rbiasy","f_rangeq","f_pos","f_editmap", "filter") %in% names(indata))
+    !all(c("uid","sid","lat","lon","idfield","selvar","f_rangev","f_rangey","f_zscorey","f_rbiasy","f_rangeq","f_pos","f_editmap", "f_selpts","filter") %in% names(indata))
   )) {
     stop("The input object is not a valid data.table.")
   }
@@ -184,10 +184,14 @@ filter_pts <- function(
       f_editmap := reverse
       ]
 
+  } else if (metric == "selpts") {
+    outdata[sid <= samplesize & uid %in% value, f_selpts := reverse]
+    outdata[sid <= samplesize & !uid %in% value, f_selpts := !reverse]
+
   } else stop("Metric is not recognised.")
 
   # Update global filter
-  outdata[sid <= samplesize, filter := f_rangev|f_rangey|f_zscorey|f_rbiasy|f_rangeq|f_pos|f_editmap]
+  outdata[sid <= samplesize, filter := f_rangev|f_rangey|f_zscorey|f_rbiasy|f_rangeq|f_pos|f_editmap|f_selpts]
 
   return(outdata)
 
@@ -204,11 +208,11 @@ filter_pts <- function(
 filter_pts_reset <- function(indata, filters = NA) {
   outdata <- indata # no effect
   if (is.na(filters)) { # if NA, reset all; otherwise, only specified filters
-    outdata[,c("f_rangev","f_rangey","f_zscorey","f_rbiasy","f_rangeq","f_pos","f_editmap","filter") := as.list(rep(FALSE,8))]
+    outdata[,c("f_rangev","f_rangey","f_zscorey","f_rbiasy","f_rangeq","f_pos","f_editmap","f_selpts","filter") := as.list(rep(FALSE,9))]
   } else {
     # TODO check that "filters" contains only allowed values
     outdata[,paste0("f_",filters) := as.list(FALSE)]
-    outdata[,filter := f_rangev|f_rangey|f_zscorey|f_rbiasy|f_rangeq|f_pos|f_editmap]
+    outdata[,filter := f_rangev|f_rangey|f_zscorey|f_rbiasy|f_rangeq|f_pos|f_editmap|f_selpts]
   }
   return(outdata)
 }

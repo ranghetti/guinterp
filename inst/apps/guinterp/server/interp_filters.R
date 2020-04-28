@@ -237,6 +237,27 @@ output$indata_rangey <- renderUI({
     }
   })
 
+  observeEvent(c(input$check_selpts, input$pos, input$filter_buttons, rv$selpts_uids), ignoreNULL = FALSE, ignoreInit = FALSE, {
+    req(rv$inputpts_points, rv$borders_polygon)
+    if (input$filter_buttons == "manual") {
+      if (input$check_selpts) {
+        shinyjs::enable("selpts")
+        req(rv$selpts_uids)
+        rv$inputpts_points <- filter_pts(
+          rv$inputpts_points, "selpts", rv$selpts_uids,
+          inlayer = rv$borders_polygon,
+          id_fieldname="id_geom",
+          byfield = TRUE, samplesize = NA,
+          reverse = as.logical(input$selpts_reverse)
+        )
+      } else {
+        shinyjs::disable("selpts")
+        # filter_pts_reset(rv$inputpts_points, "selpts")
+      }
+      rv$change_interp <- sample(1E6,1) # dummy var for map/hist update
+    }
+  })
+
 
 
   # Set initial value

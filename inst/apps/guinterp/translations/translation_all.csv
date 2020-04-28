@@ -143,3 +143,4 @@ _mapgroup_raster,Interpolated raster,Raster interpolato
 _editmap,Select points drawing polygons,Selezione dei punti tramite poligoni
 _editmap_reverse_t,Filter selected points,Filtra i punti selezionati
 _editmap_reverse_f,Keep selected points (filter others),Mantieni i punti selezionati (filtra gli altri)
+_selpts,Manually select points,Selezione manuale dei punti

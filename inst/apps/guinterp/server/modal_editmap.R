@@ -54,7 +54,7 @@ observeEvent(input$editmap, ignoreInit = TRUE, {
     size = "l",
     shinydashboard::box(
       status = "primary", width = NULL, solidHeader = TRUE,
-      title = ht("_semiauto_title", i18n),
+      # title = ht("_semiauto_title", i18n),
       mapedit::editModUI(editmap_ns_name)
     ),
     shiny::radioButtons(
@@ -66,7 +66,7 @@ observeEvent(input$editmap, ignoreInit = TRUE, {
     ),
     footer = shiny::tagList(
       actionButton(
-        "save_editdata", ph("\u2004",ht("_Save", i18n)),
+        "save_editmap", ph("\u2004",ht("_Save", i18n)),
         icon = shiny::icon("check")
       ),
       modalButton(ph("\u2004",ht("_Exit", i18n)), icon = shiny::icon("ban"))
@@ -74,7 +74,7 @@ observeEvent(input$editmap, ignoreInit = TRUE, {
   ))
 })
 
-observeEvent(input$save_editdata, ignoreInit = TRUE, {
+observeEvent(input$save_editmap, ignoreInit = TRUE, {
 
   # convert points+radius to circles
   rv$editmap_geoms <- rv$editmap_interp()$finished

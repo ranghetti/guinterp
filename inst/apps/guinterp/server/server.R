@@ -66,6 +66,12 @@ server_guinterp <- function(input, output, session) {
     local=TRUE
   )$value
 
+  #### Modal dialog for select points ####
+  source(
+    system.file("apps/guinterp/server/modal_selpts.R", package="guinterp"),
+    local=TRUE
+  )$value
+
   #### Modal dialog for variogram ####
   source(
     system.file("apps/guinterp/server/modal_variogram.R", package="guinterp"),
