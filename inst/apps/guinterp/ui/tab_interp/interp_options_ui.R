@@ -23,11 +23,7 @@ shiny::div(
   ),
   shiny::div(
     style="display:inline-block;vertical-align:middle;width:calc(100% - 50pt - 3px - 2pt);",
-    shiny::sliderInput(
-      inputId="maxptdist", label=NULL,
-      min = 0, max = 100, value = 15,
-      post = " m", step = 1
-    )
+    shiny::uiOutput("maxptdist_ui")
   ),
 
   shiny::radioButtons(

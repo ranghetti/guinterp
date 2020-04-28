@@ -114,6 +114,24 @@ output$indata_rangey <- renderUI({
   )
 })
 
+output$pos_ui <- shiny::renderUI({
+  req(rv$inputpts_points, rv$borders_polygon)
+  maxdist <- max(sapply(
+    sf::st_geometry(st_transform_utm(rv$borders_polygon)),
+    function(x) {with(as.list(sf::st_bbox(x)), sqrt((xmax-xmin)^2+(ymax-ymin)^2))}
+  ))
+  shiny::sliderInput(
+    inputId="pos",
+    label=NULL,
+    min = 0,
+    max = ceiling(maxdist/10^floor(log10(maxdist))/2)*10^floor(log10(maxdist)),
+    value = maxdist/50,
+    post = " m",
+    step = 10^(floor(log10(maxdist))-2)
+  )
+})
+
+
 
 # Filters
 # observe({
@@ -125,6 +143,7 @@ output$indata_rangey <- renderUI({
       if (input$check_rangey) {
         shinyjs::enable("miny")
         shinyjs::enable("maxy")
+        req(input$miny, input$maxy)
         rv$inputpts_points <- filter_pts(
           rv$inputpts_points, "rangey", c(input$miny,input$maxy),
           inlayer = rv$borders_polygon,
@@ -202,6 +221,7 @@ output$indata_rangey <- renderUI({
     if (input$filter_buttons == "manual") {
       if (input$check_pos) {
         shinyjs::enable("pos")
+        req(input$pos)
         rv$inputpts_points <- filter_pts(
           rv$inputpts_points, "pos", input$pos,
           inlayer = rv$borders_polygon,
@@ -242,17 +262,18 @@ output$indata_rangey <- renderUI({
     if (input$filter_buttons == "manual") {
       if (input$check_selpts) {
         shinyjs::enable("selpts")
-        req(rv$selpts_uids)
-        rv$inputpts_points <- filter_pts(
-          rv$inputpts_points, "selpts", rv$selpts_uids,
-          inlayer = rv$borders_polygon,
-          id_fieldname="id_geom",
-          byfield = TRUE, samplesize = NA,
-          reverse = as.logical(input$selpts_reverse)
-        )
+        if (!is.null(rv$selpts_uids) > 0) {
+          rv$inputpts_points <- filter_pts(
+            rv$inputpts_points, "selpts", rv$selpts_uids,
+            inlayer = rv$borders_polygon,
+            id_fieldname="id_geom",
+            byfield = TRUE, samplesize = NA,
+            reverse = as.logical(input$selpts_reverse)
+          )
+        }
       } else {
         shinyjs::disable("selpts")
-        # filter_pts_reset(rv$inputpts_points, "selpts")
+        filter_pts_reset(rv$inputpts_points, "selpts")
       }
       rv$change_interp <- sample(1E6,1) # dummy var for map/hist update
     }

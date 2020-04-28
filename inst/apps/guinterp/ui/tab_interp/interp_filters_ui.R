@@ -151,15 +151,7 @@ shiny::div(
       ),
       shiny::div(
         style="display:inline-block;vertical-align:middle;width:calc(100% - 50pt - 3px - 2pt);",
-        shiny::sliderInput(
-          inputId="pos",
-          label=NULL,
-          min = 0,
-          max = 50,
-          value = 5,
-          post = " m",
-          step = 0.1
-        )
+        shiny::uiOutput("pos_ui")
       ),
       shiny::hr(style = "margin-top: 0em; margin-bottom: 1em;"),
 

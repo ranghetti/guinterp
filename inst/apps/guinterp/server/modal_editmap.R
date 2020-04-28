@@ -52,17 +52,16 @@ observeEvent(input$editmap, ignoreInit = TRUE, {
 
   shiny::showModal(shiny::modalDialog(
     size = "l",
-    shinydashboard::box(
-      status = "primary", width = NULL, solidHeader = TRUE,
-      # title = ht("_semiauto_title", i18n),
-      mapedit::editModUI(editmap_ns_name)
-    ),
-    shiny::radioButtons(
-      "editmap_reverse", NULL,
-      choiceNames = ht(c("_editmap_reverse_t", "_editmap_reverse_f"), i18n),
-      choiceValues = c(TRUE, FALSE),
-      selected = TRUE,
-      inline = TRUE
+    mapedit::editModUI(editmap_ns_name),
+    shiny::div(
+      style = "margin-top:15px;text-align:center;",
+      shiny::radioButtons(
+        "editmap_reverse", NULL,
+        choiceNames = ht(c("_editmap_reverse_t", "_editmap_reverse_f"), i18n),
+        choiceValues = c(TRUE, FALSE),
+        selected = TRUE,
+        inline = TRUE
+      )
     ),
     footer = shiny::tagList(
       actionButton(
