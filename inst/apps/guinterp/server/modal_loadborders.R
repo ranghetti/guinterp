@@ -129,12 +129,23 @@ observeEvent(c(input$border_type, rv$borders_polygon_raw), ignoreInit = TRUE, ig
     shinyjs::enable("save_extent_borders")
   }
 })
+observeEvent(input$borderfiles_tbl_rows_selected, ignoreNULL = FALSE, {
+  if (length(input$borderfiles_tbl_rows_selected) > 0) {
+    shinyjs::enable("load_extent_borders")
+  } else {
+    shinyjs::disable("load_extent_borders")
+  }
+})
 
 
 # UID selector
 output$selector_uid <- renderUI({
   req(rv$borders_polygon_raw)
-  borders_names <- names(rv$borders_polygon_raw)[names(rv$borders_polygon_raw)!="geometry"]
+  borders_names <- names(rv$borders_polygon_raw)[
+    sapply(names(rv$borders_polygon_raw), function(x){
+      !inherits(rv$borders_polygon_raw[[x]], "sfc")
+    })
+    ]
   conditionalPanel(
     condition = "input.select_uid_which == 'attr'",
     selectInput(

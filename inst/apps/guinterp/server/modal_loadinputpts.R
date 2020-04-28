@@ -117,6 +117,13 @@ observeEvent(rv$inputpts_points_raw, ignoreInit = FALSE, ignoreNULL = FALSE, {
     shinyjs::enable("save_extent_inputpts")
   }
 })
+observeEvent(input$inputptsfiles_tbl_rows_selected, ignoreNULL = FALSE, {
+  if (length(input$inputptsfiles_tbl_rows_selected) > 0) {
+    shinyjs::enable("load_inputpts")
+  } else {
+    shinyjs::disable("load_inputpts")
+  }
+})
 
 
 # Variable selector

@@ -119,6 +119,7 @@ observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon), { # LEAVE
   }
 
   if (input$check_pos & input$filter_buttons == "manual") {
+    req(input$pos)
     leaflet::leafletProxy("interp_map") %>%
       leaflet::addPolygons(
         layerId = paste0("brd_buf_", rv$borders_polygon$id_geom),
