@@ -163,7 +163,7 @@ filter_pts <- function(
     }
 
   } else if (metric == "editmap") {
-    if (is.null(value)) {
+    if (length(value) == 0) {
       value <- sf::st_sfc(sf::st_polygon(), crs = 4326)
     }
     if (st_crs(value) != st_crs(outdata_sf)) {

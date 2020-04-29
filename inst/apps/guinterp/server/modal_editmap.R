@@ -77,7 +77,7 @@ observeEvent(input$save_editmap, ignoreInit = TRUE, {
 
   # convert points+radius to circles
   rv$editmap_geoms <- rv$editmap_interp()$finished
-  if (is.null(rv$editmap_geoms)) {rv$editmap_geoms <- sf::st_as_sfc(list(sf::st_polygon()), crs = 4326)}
+  if (is.null(rv$editmap_geoms)) {rv$editmap_geoms <- list()} # so to apply filter
   if (!is.null(rv$editmap_geoms$radius)) {
     rv$editmap_geoms$radius[is.na(rv$editmap_geoms$radius)] <- 0
     rv$editmap_geoms <- st_buffer_m(rv$editmap_geoms, 1.001 * rv$editmap_geoms$radius)
