@@ -134,8 +134,8 @@ _interp_sampling,Points to be used,Punti da utilizzare
 _vgm_cutoff,Maximum distance,Massima distanza
 _semiauto_title,Settings,Impostazioni
 _semiauto_autorange,Variogram range,<em>Range</em> del variogramma
-_hist_xlab,Selected variable,Variabile selezionata
-_hist_ylab,# Points,# Punti
+_hist_xlab,Selected variable (%v),Variabile selezionata (%v)
+_hist_ylab,% Points,% Punti
 _mapgroup_ortophoto,Ortophoto,Ortofoto
 _mapgroup_map,Map,Mappa
 _mapgroup_points,Used points,Punti utilizzati
