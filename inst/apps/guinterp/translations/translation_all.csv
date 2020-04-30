@@ -52,7 +52,7 @@ _downloadFilters,Save parameters as...,Salva i parametri come...
 _downloadFilters_success,Filters were correctly exported,Esportazione completata
 _downloadFilters_message,Note: manual point selections were not exported.,Nota: i filtri di selezione manuale dei punti non sono stati esportati.
 _setdefaultFilters,Set as defaults,Imposta come predefiniti
-_setdefaultFilters_success,Current filters were correctly set as defaults.,I filtri attuali sono stati correttamente impostati come predefiniti.
+_setdefaultFilters_success,Current filters (except manual selections) were correctly set as defaults.,I filtri attuali (ad eccezione delle selezioni manuali) sono stati correttamente impostati come predefiniti.
 _maxptdist,Maximum distance from points,Distanza massima dai punti
 _interp_method,Interpolation method,Metodo di interpolazione
 _interp_method_krige,Ordinary Kriging (more reliable),Kriging ordinario (pi&#249; affidabile)
