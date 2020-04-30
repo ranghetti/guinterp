@@ -7,9 +7,11 @@
 #' @param .shiny_pbar_id TODO
 #' @import data.table
 #' @importFrom data.table data.table fread rbindlist setkey
-#' @importFrom sf st_read
+#' @importFrom sf st_read st_geometry st_transform st_coordinates st_join
 #' @importFrom jsonlite fromJSON
 #' @importFrom stringr str_pad
+#' @importFrom dplyr select rename mutate
+#' @importFrom shinyWidgets updateProgressBar
 #' @export
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
@@ -67,8 +69,8 @@ read_inputpts <- function(
   outdata <- data.table(rawdata_sf)[,list(
     uid = seq_len(nrow(rawdata_sf)),
     sid = sample(nrow(rawdata_sf)), # ID in raw order and sampled order
-    lat = st_coordinates(st_transform(rawdata_sf$geometry,4326))[,"Y"],
-    lon = st_coordinates(st_transform(rawdata_sf$geometry,4326))[,"X"],
+    lat = st_coordinates(st_transform(st_geometry(rawdata_sf),4326))[,"Y"],
+    lon = st_coordinates(st_transform(st_geometry(rawdata_sf),4326))[,"X"],
     idfield = as.character(id_geom),
     selvar,
     f_rangev = FALSE, f_rangey = FALSE, f_zscorey = FALSE, f_rbiasy = FALSE,
