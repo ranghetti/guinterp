@@ -249,6 +249,9 @@ output$pos_ui <- shiny::renderUI({
           byfield = TRUE, samplesize = NA,
           reverse = as.logical(input$editmap_reverse)
         )
+        if (all(sf::st_is_empty(rv$editmap_geoms))) {
+          rv$editmap_geoms <- NULL
+        }
       } else {
         shinyjs::disable("editmap")
         filter_pts_reset(rv$inputpts_points, "editmap")
