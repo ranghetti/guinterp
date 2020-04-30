@@ -7,9 +7,11 @@
 #' @param .shiny_pbar_id TODO
 #' @import data.table
 #' @importFrom data.table data.table fread rbindlist setkey
-#' @importFrom sf st_read
+#' @importFrom sf st_read st_geometry st_transform st_coordinates st_join
 #' @importFrom jsonlite fromJSON
 #' @importFrom stringr str_pad
+#' @importFrom dplyr select rename mutate
+#' @importFrom shinyWidgets updateProgressBar
 #' @export
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
