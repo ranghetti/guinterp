@@ -10,7 +10,7 @@
 #' @importFrom sf st_read st_geometry st_transform st_coordinates st_join
 #' @importFrom jsonlite fromJSON
 #' @importFrom stringr str_pad
-#' @importFrom dplyr select rename mutate
+#' @importFrom dplyr select rename mutate filter
 #' @importFrom shinyWidgets updateProgressBar
 #' @export
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
@@ -26,7 +26,7 @@ read_inputpts <- function(
     #   y <- st_read(x)
     #   # Update progress bar
     #   if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
-    #     shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 50*which(input==x)/length(input))
+    #     updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 50*which(input==x)/length(input))
     #   }
     #   y
     # }))
@@ -41,9 +41,9 @@ read_inputpts <- function(
   if (is.null(input[[varname]])) {
     stop(paste0("The selected files do not include variable '",varname,"'."))
   } else {
-    rawdata_sf <- dplyr::select(input, varname) %>%
-      dplyr::rename(selvar = varname) %>%
-      sf::st_transform(4326) # reproject to longlat
+    rawdata_sf <- select(input, varname) %>%
+      rename(selvar = varname) %>%
+      st_transform(4326) # reproject to longlat
   }
 
 
@@ -51,12 +51,12 @@ read_inputpts <- function(
   rawdata_sf <- if (!is.null(borders)) {
     suppressMessages(
       rawdata_sf[,names(rawdata_sf)!="id_geom"] %>%
-        sf::st_join(borders)
-    ) %>% dplyr::filter(!is.na(id_geom))
+        st_join(borders)
+    ) %>% filter(!is.na(id_geom))
   } else {
-    dplyr::mutate(rawdata_sf, id_geom = 0)
+    mutate(rawdata_sf, id_geom = 0)
   } %>%
-    dplyr::filter(!is.na(selvar)) # remove points with empty varname
+    filter(!is.na(selvar)) # remove points with empty varname
 
   # error if points do not intersect borders
   if (nrow(rawdata_sf)==0) {
@@ -86,12 +86,12 @@ read_inputpts <- function(
 
   # Update progress bar
   if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
-    shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 70)
+    updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 70)
   }
 
   # Update progress bar
   if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
-    shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 100)
+    updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 100)
     Sys.sleep(0.5)
   }
 

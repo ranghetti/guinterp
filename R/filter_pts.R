@@ -14,7 +14,7 @@
 #' @importFrom data.table setkey
 #' @importFrom methods is
 #' @importFrom stats sd
-#' @importFrom sf st_crs st_transform st_contains
+#' @importFrom sf st_crs st_transform st_contains st_sfc st_polygon
 #' @export
 #' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
@@ -166,7 +166,7 @@ filter_pts <- function(
 
   } else if (metric == "editmap") {
     if (length(value) == 0) {
-      value <- sf::st_sfc(sf::st_polygon(), crs = 4326)
+      value <- st_sfc(st_polygon(), crs = 4326)
     }
     if (st_crs(value) != st_crs(outdata_sf)) {
       outdata_sf <- st_transform(outdata_sf, st_crs(value))

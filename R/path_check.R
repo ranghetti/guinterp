@@ -10,23 +10,23 @@
 path_check <- function(path) {
   if (all(!is.null(path), length(path) > 0, path[1] != "")) {
     if (!dir.exists(path)) {
-      return(shiny::renderUI(shiny::span(
+      return(renderUI(span(
         style = "color:red",
         "\u2718"
       )))
     } else if (file.access(path, mode = 2) < 0) {
-      return(shiny::renderUI(shiny::span(
+      return(renderUI(span(
         style = "color:red",
         "\u2718"
       )))
     } else {
-      return(shiny::renderUI(shiny::span(
+      return(renderUI(span(
         style = "color:darkgreen",
         "\u2714"
       )))
     }
   } else {
-    return(shiny::renderText(""))
+    return(renderText(""))
   }
 }
 
@@ -49,20 +49,20 @@ raster_check <- function(path) {
       error = function(e) e
     )
     if (is(selraster, "stars")) {
-      out <- shiny::renderUI(shiny::span(
+      out <- renderUI(span(
         style = "color:darkgreen",
         "\u2714"
       ))
       attr(out, "isvalid") <- TRUE
     } else {
-      out <- shiny::renderUI(shiny::span(
+      out <- renderUI(span(
         style = "color:red",
         "\u2718"
       ))
       attr(out, "isvalid") <- FALSE
     }
   } else {
-    out <-shiny::renderText("")
+    out <-renderText("")
     attr(out, "isvalid") <- NA
   }
   return(out)

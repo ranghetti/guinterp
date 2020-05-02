@@ -40,7 +40,9 @@
 #' @importFrom sf st_join st_as_sf st_area st_buffer st_crs st_transform
 #'  st_union st_bbox st_intersection st_polygon st_sfc
 #' @importFrom dplyr mutate filter group_by summarise
+#' @importFrom shinyWidgets updateProgressBar
 #' @importFrom stars read_stars
+#' @importFrom stats var
 #' @export
 #' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
@@ -162,10 +164,10 @@ guinterp_process <- function(
         v <- variogram(
           selvar ~ 1,
           inputpts_sf[inputpts_sf$idfield == sel_field,],
-          cutoff = inputpts_sf[inputpts_sf$idfield == sel_field,] %>%
-            st_bbox() %>% as.list() %>%
-            with(c((xmax-xmin)^2, (ymax-ymin)^2)) %>%
-            sum() %>% sqrt()/3 %>% ceiling()
+          cutoff = ceiling(sqrt(sum(with(
+            as.list(st_bbox(inputpts_sf[inputpts_sf$idfield == sel_field,])),
+            c((xmax-xmin)^2, (ymax-ymin)^2)
+          )))/3)
         )
 
         vgm[[sel_field]] <- fit.variogram(v, vgm_man, fit.sills = TRUE, fit.ranges = TRUE)
@@ -183,7 +185,7 @@ guinterp_process <- function(
 
   # Update progress bar
   if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
-    shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 5)
+    updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 5)
   }
 
   # Calcola n_cores
@@ -192,7 +194,7 @@ guinterp_process <- function(
   } else if (parallel==FALSE) {
     1
   } else {
-    min(parallel::detectCores()-1, 16) # use at most 16 cores
+    min(detectCores()-1, 16) # use at most 16 cores
   }
   if (n_cores <= 1) {
     `%DO%` <- `%do%`
@@ -236,7 +238,7 @@ guinterp_process <- function(
       }
       # Update progress bar
       if (!is.null(c(.shiny_session, .shiny_pbar_id)) & n_cores<=1) {
-        shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 5+30*i/length(unique(inputpts_sf$idfield)))
+        updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 5+30*i/length(unique(inputpts_sf$idfield)))
       }
       sel_inputpts_sf_b3
     }
@@ -251,7 +253,7 @@ guinterp_process <- function(
 
   # Update progress bar
   if (!is.null(c(.shiny_session, .shiny_pbar_id)) & n_cores<=1) {
-    shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 35)
+    updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 35)
   }
 
   ## Interpola
@@ -309,7 +311,7 @@ guinterp_process <- function(
     }
     # Update progress bar
     if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
-      shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 35+60*i/length(unique(inputpts_sf$idfield)))
+      updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 35+60*i/length(unique(inputpts_sf$idfield)))
     }
     file.path(interp_dir, out_name) # existing files will be also considered for merging, in this way
   }
@@ -347,7 +349,7 @@ guinterp_process <- function(
 
   # Update progress bar
   if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
-    shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 100)
+    updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 100)
   }
 
   out_list

@@ -22,7 +22,7 @@ guinterp <- function(language = "en")  {
   if (interactive()) {
     options(device.ask.default = FALSE)
     shinyOptions(ui_lang = language)
-    return(shiny::runApp(
+    return(runApp(
       system.file("apps/guinterp", package = "guinterp"),
       display.mode = "normal",
       launch.browser = TRUE

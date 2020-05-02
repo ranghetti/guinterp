@@ -96,7 +96,7 @@ interp_inputpts <- function(
   # export raster
   if (is.na(outname)) {
     if (is.na(sel_idfield)) {
-      outname <- paste0('polygon_',stringr::str_pad(sample(1E4,1),4,"left","0"),'.tif')
+      outname <- paste0('polygon_',str_pad(sample(1E4,1),4,"left","0"),'.tif')
     } else {
       outname <- paste0("polygon_",sel_idfield,".tif")
     }
