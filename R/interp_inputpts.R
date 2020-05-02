@@ -35,7 +35,7 @@ interp_inputpts <- function(
   border = 0, # border (in crs unit) to be cut
   outdir = tempdir(), # directory where rasters are stored
   outname = NA, # name of the output tif
-  samplesize=1E4, # maximum size of the sample of the original data to work with (default: 10000; if NA: all the points)
+  samplesize = 1E4, # maximum size of the sample of the original data to work with (default: 10000; if NA: all the points)
   nmax=1E3, # argument of krige() and idw()
   maxdist=Inf # argument of krige() and idw()
 ) {
@@ -63,11 +63,10 @@ interp_inputpts <- function(
     indata_sf <- st_transform(indata_sf, st_crs(globgrid))
   }
 
-  # subsample
   if (is.na(samplesize)) {
-    samplesize <- length(indata_sf)
+    samplesize <- nrow(indata_sf)
   }
-  if (samplesize < length(indata_sf)) {
+  if (samplesize < nrow(indata_sf)) {
     indata_sf_sub <- indata_sf[indata_sf$sid <= samplesize,]
   } else {
     indata_sf_sub <- indata_sf

@@ -4,7 +4,7 @@
 \alias{inputpts_to_sf}
 \title{Make sf from filtered data}
 \usage{
-inputpts_to_sf(indata, outcrs = 3857, all = FALSE)
+inputpts_to_sf(indata, outcrs = 3857, all = FALSE, sid = "sid3")
 }
 \arguments{
 \item{indata}{TODO}
@@ -12,6 +12,8 @@ inputpts_to_sf(indata, outcrs = 3857, all = FALSE)
 \item{outcrs}{`CRS` output CRS}
 
 \item{all}{logical (TRUE for all points, FALSE for only filtered ones)}
+
+\item{sid}{character: name of the ID field to be used (`"uid"`, `"sid1"`, `"sid2"`, `"sid3"` or `"sid4"`)}
 }
 \description{
 TODO

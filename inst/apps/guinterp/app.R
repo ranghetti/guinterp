@@ -19,6 +19,7 @@ require(magrittr)
 require(leaflet)
 require(jsonlite)
 require(data.table)
+library(guinterp)
 
 jscode <- "shinyjs.closeWindow = function() { open(location, '_self').close(); }"
 

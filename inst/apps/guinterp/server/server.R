@@ -54,6 +54,18 @@ server_guinterp <- function(input, output, session) {
     local=TRUE
   )$value
 
+  #### Sample size for visualisation ####
+  source(
+    system.file("apps/guinterp/server/samplesize_view.R", package="guinterp"),
+    local=TRUE
+  )$value
+
+  #### Update histogram ####
+  source(
+    system.file("apps/guinterp/server/update_interp_histogram.R", package="guinterp"),
+    local=TRUE
+  )$value
+
   #### Update map ####
   source(
     system.file("apps/guinterp/server/update_interp_map.R", package="guinterp"),
@@ -75,12 +87,6 @@ server_guinterp <- function(input, output, session) {
   #### Modal dialog for variogram ####
   source(
     system.file("apps/guinterp/server/modal_variogram.R", package="guinterp"),
-    local=TRUE
-  )$value
-
-  #### Update histogram ####
-  source(
-    system.file("apps/guinterp/server/update_interp_histogram.R", package="guinterp"),
     local=TRUE
   )$value
 

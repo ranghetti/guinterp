@@ -1,13 +1,6 @@
 #   ____________________________________________________________________________
 #   Observer used to subset points when filter values are changed           ####
 
-# # Sample data for visualization TODO
-samplesize <- 1E4 # FIXME make dynamic
-# observeEvent(input$sampling_data, {
-#   req(rv$inputpts_points)
-# })
-
-
 ## Main filter ----
 
 observeEvent(c(input$filter_buttons), {

@@ -17,6 +17,7 @@ guinterp_process(
   out_crs = NA,
   grid_offset = c(0, 0),
   samplesize = 10000,
+  samplescheme = "random",
   buffer_radius = 15,
   parallel = TRUE,
   vgm = NA,
@@ -54,6 +55,8 @@ no additional filter is applied; if FALSE, a standard automatic filter is applie
 
 \item{samplesize}{maximum size of the sample of the original data to work with (default: 10000; if NA: all the points)}
 
+\item{samplescheme}{sampling scheme within geometries (`"random"`, `"strat_npts"` or `"strat_area"`)}
+
 \item{buffer_radius}{numeric: buffer (default: 15) to be applied internally to field borders.}
 
 \item{parallel}{(optional) Logical or integer: if TRUE (default), interpolation
@@ -70,7 +73,7 @@ If NA (default), they are automatically computed.}
 \item{v_maxdist}{TODO.}
 
 \item{merge}{logical: if TRUE (default), merge raster of single fields and
-return the pèath of the merged raster; if FALSE, return the paths of the
+return the path of the merged raster; if FALSE, return the paths of the
 single field rasters.}
 
 \item{overwrite}{Logical: should existing raster being reprocessed? (default: FALSE)}

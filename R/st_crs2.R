@@ -1,7 +1,7 @@
 #' @title Retrieve coordinate reference system from sf or sfc object
 #' @name st_crs2
 #' @description This function is a wrapper for [sf::st_crs], unless accepting
-#'  also UTM timezones (see details) and threating numeric `character` strings
+#'  also UTM timezones (see details) and treating numeric `character` strings
 #'  as integers.
 #' @param x numeric, character, or object of class \link{sf} or \link{sfc}
 #' @param ... other parameters passed to [sf::st_crs].

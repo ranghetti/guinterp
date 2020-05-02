@@ -5,26 +5,26 @@ observeEvent(input$editmap, ignoreInit = TRUE, {
   filter_pts_reset(editmap_inputpts, "editmap")
 
   editmap_map <- rv$base_interp_map
-  if (nrow(editmap_inputpts[sid < samplesize & filter==TRUE,]) > 0) {
+  if (nrow(editmap_inputpts[sid3 <= input$samplesize_view & filter==TRUE,]) > 0) {
     editmap_map <- leaflet::addCircleMarkers(
       editmap_map,
       ~lon, ~lat,
-      data         = editmap_inputpts[sid < samplesize & filter==TRUE,],
-      layerId      = paste0("pts_",editmap_inputpts[sid < samplesize & filter == TRUE, ]$sid),
+      data         = editmap_inputpts[sid3 <= input$samplesize_view & filter==TRUE,],
+      layerId      = paste0("pts_",editmap_inputpts[sid3 <= input$samplesize_view & filter == TRUE, ]$uid),
       radius       = 3, stroke = FALSE, fillOpacity = 0.4, fillColor = "cyan",
       label        = ~format(selvar, digits = 0,nsmall = 1),
       group        = i18n$t("_mapgroup_points"),
       labelOptions = labelOptions(style = list("background-color" = "#FFCCCC"))
     )
   }
-  if (nrow(editmap_inputpts[sid < samplesize & filter==FALSE,]) > 0) {
+  if (nrow(editmap_inputpts[sid3 <= input$samplesize_view & filter==FALSE,]) > 0) {
     editmap_map <- leaflet::addCircleMarkers(
       editmap_map,
       ~lon, ~lat,
-      data      = editmap_inputpts[sid < samplesize & filter == FALSE,],
-      layerId   = paste0("pts_", editmap_inputpts[sid < samplesize & filter == FALSE,]$sid),
+      data      = editmap_inputpts[sid3 <= input$samplesize_view & filter == FALSE,],
+      layerId   = paste0("pts_", editmap_inputpts[sid3 <= input$samplesize_view & filter == FALSE,]$uid),
       radius    = 5, stroke = FALSE, fillOpacity = 0.65,
-      fillColor = ~rv$pal(editmap_inputpts[sid < samplesize & filter == FALSE,][[map_selvariable]]),
+      fillColor = ~rv$pal(editmap_inputpts[sid3 <= input$samplesize_view & filter == FALSE,][[map_selvariable]]),
       label     = ~format(selvar, digits = 0, nsmall = 1),
       group     = i18n$t("_mapgroup_points"),
       labelOptions = labelOptions(style = list("background-color" = "#CCFFCC"))
@@ -33,7 +33,7 @@ observeEvent(input$editmap, ignoreInit = TRUE, {
   editmap_map <- leaflet::addLegend(
     editmap_map,
     "bottomright", pal = rv$pal,
-    values = editmap_inputpts[sid < samplesize & filter == FALSE,],
+    values = editmap_inputpts[sid3 <= input$samplesize_view & filter == FALSE,],
     layerId = "colorLegend",
     title = switch(
       map_selvariable,

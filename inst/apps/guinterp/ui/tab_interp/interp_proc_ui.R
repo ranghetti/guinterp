@@ -128,7 +128,42 @@ shiny::div(
           shiny::uiOutput("v_nmax_ui")
         )
       )
-    )
+    ),
+
+    shiny::div(
+      style="vertical-align:center;",
+      shiny::strong(ph(ht("_samplesize_proc_onoff", i18n),"\u2000"))
+    ),
+    shiny::div(
+      style="display:inline-block;vertical-align:middle;height:65px;padding-bottom:10px;",
+      ""
+    ),
+    shiny::div(
+      style="display:inline-block;vertical-align:middle;width:50pt;",
+      shinyWidgets::switchInput(
+        "samplesize_proc_onoff", value = FALSE,
+        size = "small", onLabel = ht("_Yes", i18n), offLabel = ht("_No", i18n)
+      )
+    ),
+    shiny::div(
+      style="display:inline-block;vertical-align:middle;width:calc(100% - 50pt - 3px - 2pt);",
+      shiny::uiOutput("samplesize_proc_ui")
+    ),
+    shinyjs::disabled(shiny::radioButtons(
+      "samplescheme",
+      shiny::span(
+        style = "font-weight:normal;",
+        ph(ht("_samplescheme", i18n),"\u2000")#,
+        # actionLink("help_interp_overwrite", icon("question-circle"))
+      ),
+      choiceNames = ht(c(
+        "_samplescheme_random", "_samplescheme_strat_npts",
+        "_samplescheme_strat_area", "_samplescheme_strat_prop"
+      ), i18n),
+      choiceValues = c("casual", "strat_npts", "strat_area", "strat_prop"),
+      selected = "strat_area"
+    ))
+
   )
 
   # shiny::radioButtons(

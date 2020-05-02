@@ -83,6 +83,13 @@ _path_outdir_textin_placeholder,use a temporary directory,usa una cartella tempo
 _v_options_onoff,Advanced settings,Opzioni avanzate
 _v_maxdist,Maximum distance points-pixels,Distanza massima punti-pixel
 _v_nmax,Numbers of points per pixels,Numero di punti per pixel
+_samplesize_proc_onoff,Subset points to interpolate,Usa un campione di punti per l'interpolazione
+_samplesize_proc,Points amount,Numero di punti
+_samplescheme,Sampling scheme within polygons,Schema di campionamento nei poligoni
+_samplescheme_random,Random,Casuale
+_samplescheme_strat_npts,Stratified (fixed),Stratificato (fisso)
+_samplescheme_strat_area,Stratified (area-weighted),Stratificato (pesato sulle aree)
+_samplescheme_strat_prop,Proportional,Proporzionale
 _interp_overwrite,Overwrite existing rasters?,Sovrascrivere i raster esistenti?
 _err_autofit_vgm_2,Points can not be univocally modelled; please manually check the output parameters.,I punti non sono modellabili univocamente: controllare manualmente i parametri generati.
 _pb_interp_message,Points are being interpolated&#44;<br/>please wait...,L'interpolazione dei dati &#232; in corso&#44;<br/>attendere prego...
@@ -144,3 +151,4 @@ _editmap,Select points drawing polygons,Selezione dei punti tramite poligoni
 _editmap_reverse_t,Filter selected points,Filtra i punti selezionati
 _editmap_reverse_f,Keep selected points (filter others),Mantieni i punti selezionati (filtra gli altri)
 _selpts,Manually select points,Selezione manuale dei punti
+_samplesize_view,Amount of points to be visualised,Numero di punti da visualizzare

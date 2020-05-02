@@ -14,6 +14,7 @@
 #' @param out_crs optional: CRS of output raster (default: CRS of inputpts)
 #' @param grid_offset optional: grid offset from point (0,0) in out_crs (2-length numeric)
 #' @param samplesize maximum size of the sample of the original data to work with (default: 10000; if NA: all the points)
+#' @param samplescheme sampling scheme within geometries (`"random"`, `"strat_npts"` or `"strat_area"`)
 #' @param buffer_radius numeric: buffer (default: 15) to be applied internally to field borders.
 #' @param parallel (optional) Logical or integer: if TRUE (default), interpolation
 #'  is executed using multiple cores in order to speed up the execution.
@@ -25,7 +26,7 @@
 #' @param v_nmax TODO.
 #' @param v_maxdist TODO.
 #' @param merge logical: if TRUE (default), merge raster of single fields and
-#'  return the pèath of the merged raster; if FALSE, return the paths of the
+#'  return the path of the merged raster; if FALSE, return the paths of the
 #'  single field rasters.
 #' @param overwrite Logical: should existing raster being reprocessed? (default: FALSE)
 #' @param .shiny_session TODO
@@ -58,6 +59,7 @@ guinterp_process <- function(
   out_crs = NA,
   grid_offset = c(0,0),
   samplesize = 1E4,
+  samplescheme = "random",
   buffer_radius = 15,
   parallel = TRUE,
   vgm = NA,
@@ -88,7 +90,7 @@ guinterp_process <- function(
     filter_pts(
       inputpts, "rangeq", c(.02,.98), # filter points < 2° and > 98° percentiles
       inlayer = inlayer,
-      byfield = TRUE, samplesize = NA
+      byfield = TRUE, samplesize = Inf
     )
   } else {inputpts}
 
@@ -100,7 +102,17 @@ guinterp_process <- function(
     )
   }
   if (!is(out_crs, "crs")) {out_crs <- st_crs2(out_crs)}
-  inputpts_sf <- inputpts_to_sf(inputpts_f, outcrs = out_crs) %>%
+  inputpts_sf <- inputpts_to_sf(
+    inputpts_f,
+    outcrs = out_crs,
+    sid = switch(
+      samplescheme,
+      random = "sid1",
+      strat_npts = "sid2",
+      strat_area = "sid3",
+      strat_prop = "sid4"
+    )
+  ) %>%
     st_transform(out_crs)
 
   inlayer <- st_transform(inlayer, out_crs)

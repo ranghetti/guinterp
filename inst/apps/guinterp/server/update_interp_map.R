@@ -70,46 +70,45 @@ observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon), { # LEAVE
   # observe is not reactive for rv$change_interp, so it does not work properly.
   # To make this code reactive for other variables, add these ones to
   # observeevent's vecto, or change rv$change_interp where needed.
-  # samplesize <- 1E3 #nrow(rv$inputpts_points) # TODO use a limit
   req(rv$inputpts_points, rv$borders_polygon)
   # Change the colour scale when filters or variable are changed
   rv$pal <- colourPal(
-    rv$inputpts_points[sid < samplesize & filter == FALSE,],
+    rv$inputpts_points[sid3 <= input$samplesize_view & filter == FALSE,],
     map_selvariable,
     na.colour = NA
   )
 
   leaflet::leafletProxy("interp_map") %>%
     # leaflet::clearShapes() %>%
-    leaflet::removeShape(paste0("pts_", rv$inputpts_points$sid)) %>%
-    leaflet::removeShape(paste0("brd_buf_", rv$borders_polygon$id_geom))
-  if (nrow(rv$inputpts_points[sid < samplesize & filter==TRUE,]) > 0) {
+    leaflet::removeMarker(paste0("pts_", rv$inputpts_points$uid)) %>%
+    leaflet::removeMarker(paste0("brd_buf_", rv$borders_polygon$id_geom))
+  if (nrow(rv$inputpts_points[sid3 <= input$samplesize_view & filter==TRUE,]) > 0) {
     leaflet::addCircleMarkers(
       leaflet::leafletProxy("interp_map"),
         ~lon, ~lat,
-        data         = rv$inputpts_points[sid < samplesize & filter==TRUE,],
-        layerId      = paste0("pts_",rv$inputpts_points[sid < samplesize & filter == TRUE, ]$sid),
+        data         = rv$inputpts_points[sid3 <= input$samplesize_view & filter==TRUE,],
+        layerId      = paste0("pts_",rv$inputpts_points[sid3 <= input$samplesize_view & filter == TRUE,]$uid),
         radius       = 3, stroke = FALSE, fillOpacity = 0.4, fillColor = "cyan",
         label        = ~format(selvar, digits = 0,nsmall = 1),
         group        = i18n$t("_mapgroup_points"),
         labelOptions = labelOptions(style = list("background-color" = "#FFCCCC"))
       )
   }
-  if (nrow(rv$inputpts_points[sid < samplesize & filter==FALSE,]) > 0) {
+  if (nrow(rv$inputpts_points[sid3 <= input$samplesize_view & filter==FALSE,]) > 0) {
     leaflet::addCircleMarkers(
       leaflet::leafletProxy("interp_map"),
       ~lon, ~lat,
-      data      = rv$inputpts_points[sid < samplesize & filter == FALSE,],
-      layerId   = paste0("pts_", rv$inputpts_points[sid < samplesize & filter == FALSE,]$sid),
+      data      = rv$inputpts_points[sid3 <= input$samplesize_view & filter == FALSE,],
+      layerId   = paste0("pts_", rv$inputpts_points[sid3 <= input$samplesize_view & filter == FALSE,]$uid),
       radius    = 5, stroke = FALSE, fillOpacity = 0.65,
-      fillColor = ~rv$pal(rv$inputpts_points[sid < samplesize & filter == FALSE,][[map_selvariable]]),
+      fillColor = ~rv$pal(rv$inputpts_points[sid3 <= input$samplesize_view & filter == FALSE,][[map_selvariable]]),
       label     = ~format(selvar, digits = 0, nsmall = 1),
       group     = i18n$t("_mapgroup_points"),
       labelOptions = labelOptions(style = list("background-color" = "#CCFFCC"))
     ) %>%
       leaflet::addLegend(
         "bottomleft", pal = rv$pal,
-        values = rv$inputpts_points[sid < samplesize & filter == FALSE,],
+        values = rv$inputpts_points[sid3 <= input$samplesize_view & filter == FALSE,],
         layerId = "colorLegend",
         title = switch(
           map_selvariable,

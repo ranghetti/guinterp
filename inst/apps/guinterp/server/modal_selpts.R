@@ -5,18 +5,18 @@ observeEvent(input$selpts, ignoreInit = TRUE, {
   filter_pts_reset(selpts_inputpts, "selpts")
 
   selpts_pal <- colourPal(
-    selpts_inputpts[sid < samplesize & filter == FALSE,],
+    selpts_inputpts[sid3 < Inf & filter == FALSE,],
     map_selvariable,
     na.colour = NA
   )
 
   selpts_map <- rv$base_interp_map
-  if (nrow(selpts_inputpts[sid < samplesize & filter==TRUE,]) > 0) {
+  if (nrow(selpts_inputpts[sid3 < Inf & filter==TRUE,]) > 0) {
     selpts_map <- leaflet::addCircleMarkers(
       selpts_map,
       ~lon, ~lat,
-      data         = selpts_inputpts[sid < samplesize & filter==TRUE,],
-      layerId      = paste0("pts_",selpts_inputpts[sid < samplesize & filter == TRUE, ]$sid),
+      data         = selpts_inputpts[sid3 < Inf & filter==TRUE,],
+      layerId      = paste0("pts_",selpts_inputpts[sid3 < Inf & filter == TRUE, ]$uid),
       radius       = 3, stroke = TRUE, weight = 1, opacity = 1, color = "black", fillOpacity = 1,
       fillColor    = "cyan",
       label        = ~format(selvar, digits = 0,nsmall = 1),
@@ -24,14 +24,14 @@ observeEvent(input$selpts, ignoreInit = TRUE, {
       labelOptions = labelOptions(style = list("background-color" = "#FFCCCC"))
     )
   }
-  if (nrow(selpts_inputpts[sid < samplesize & filter==FALSE,]) > 0) {
+  if (nrow(selpts_inputpts[sid3 < Inf & filter==FALSE,]) > 0) {
     selpts_map <- leaflet::addCircleMarkers(
       selpts_map,
       ~lon, ~lat,
-      data      = selpts_inputpts[sid < samplesize & filter == FALSE,],
-      layerId   = paste0("pts_", selpts_inputpts[sid < samplesize & filter == FALSE,]$sid),
+      data      = selpts_inputpts[sid3 < Inf & filter == FALSE,],
+      layerId   = paste0("pts_", selpts_inputpts[sid3 < Inf & filter == FALSE,]$uid),
       radius    = 5, stroke = TRUE, weight = 1, opacity = 1, color = "black", fillOpacity = 1,
-      fillColor = ~selpts_pal(selpts_inputpts[sid < samplesize & filter == FALSE,][[map_selvariable]]),
+      fillColor = ~selpts_pal(selpts_inputpts[sid3 < Inf & filter == FALSE,][[map_selvariable]]),
       label     = ~format(selvar, digits = 0, nsmall = 1),
       group     = i18n$t("_mapgroup_points"),
       labelOptions = labelOptions(style = list("background-color" = "#CCFFCC"))
@@ -40,7 +40,7 @@ observeEvent(input$selpts, ignoreInit = TRUE, {
   selpts_map <- leaflet::addLegend(
     selpts_map,
     "bottomright", pal = selpts_pal,
-    values = selpts_inputpts[sid < samplesize & filter == FALSE,],
+    values = selpts_inputpts[sid3 < Inf & filter == FALSE,],
     layerId = "colorLegend",
     title = switch(
       map_selvariable,
@@ -88,7 +88,7 @@ observe({
 })
 
 observeEvent(input$save_selpts, ignoreInit = TRUE, {
-  rv$selpts_uids <- rv$inputpts_points[sid %in% as.integer(
+  rv$selpts_uids <- rv$inputpts_points[uid %in% as.integer(
     gsub("^pts_","",rv$selpts_interp()$id[rv$selpts_interp()$selected=="TRUE"])
   ), uid]
   shiny::removeModal()

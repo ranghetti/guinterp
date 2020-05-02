@@ -22,7 +22,7 @@ If \code{x} is 0 < numeric <= 60, return \code{crs} object for UTM timezone \cod
 }
 \description{
 This function is a wrapper for [sf::st_crs], unless accepting
- also UTM timezones (see details) and threating numeric `character` strings
+ also UTM timezones (see details) and treating numeric `character` strings
  as integers.
 }
 \details{

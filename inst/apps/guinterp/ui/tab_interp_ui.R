@@ -12,6 +12,15 @@ shiny::div(
       shiny::conditionalPanel(
         condition = "output.interp_onoff",
         div(
+          # Sample size ---
+          shinydashboard::box(
+            width = NULL,
+            # status = "danger",
+            solidHeader = FALSE,
+            # title = ht("_samplesize_view_title", i18n),
+            # collapsible = TRUE,
+            shiny::uiOutput("samplesize_view_ui")
+          ),
           # Histograms ---
           shinydashboard::box(
             width = NULL,

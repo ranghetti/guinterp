@@ -30,6 +30,7 @@ ui_guinterp <- shinydashboard::dashboardPage(
 
   shinydashboard::dashboardSidebar(
     shinydashboard::sidebarMenu(
+      style = "position: fixed; overflow: visible;",
       id = "tabs",
 
       # Tags

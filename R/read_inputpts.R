@@ -64,18 +64,26 @@ read_inputpts <- function(
   }
 
 
-  # assign UID
-  set.seed(24029) # to grant repetibility
+  # assign UID and SIDs
   outdata <- data.table(rawdata_sf)[,list(
-    uid = seq_len(nrow(rawdata_sf)),
-    sid = sample(nrow(rawdata_sf)), # ID in raw order and sampled order
+    uid = seq_len(nrow(rawdata_sf)), # ID in raw order
+    fid = as.integer(NA), # ID in sampled order (field-specific)
+    sid1 = as.integer(NA), # ID in sampled order
+    sid2 = as.integer(NA), # ID in sampled order weighted by field
+    sid3 = as.integer(NA), # ID in sampled order weighted by field area
+    sid4 = as.integer(NA), # ID in sampled order (same # points per field)
     lat = st_coordinates(st_transform(st_geometry(rawdata_sf),4326))[,"Y"],
     lon = st_coordinates(st_transform(st_geometry(rawdata_sf),4326))[,"X"],
     idfield = as.character(id_geom),
+    area = as.numeric(NA),
     selvar,
     f_rangev = FALSE, f_rangey = FALSE, f_zscorey = FALSE, f_rbiasy = FALSE,
     f_rangeq = FALSE, f_pos = FALSE, f_editmap = FALSE, filter = FALSE
   )]
+  outdata[,area := if (length(unique(idfield))>1) {as.numeric(st_area(borders))[match(idfield, as.character(borders$id_geom))]} else {1}]
+  set.seed(24029) # to grant repetibility
+  invisible(filter_pts_resample(outdata))
+
   # Update progress bar
   if (!is.null(c(.shiny_session, .shiny_pbar_id))) {
     shinyWidgets::updateProgressBar(session = .shiny_session, id = .shiny_pbar_id, value = 70)
@@ -89,7 +97,7 @@ read_inputpts <- function(
 
   # end of custom_ibf format
 
-  setkey(outdata,sid)
+  setkey(outdata,sid3)
   return(outdata) #temp
 
 }
