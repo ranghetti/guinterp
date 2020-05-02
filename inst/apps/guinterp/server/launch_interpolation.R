@@ -44,7 +44,7 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
     interp_method = input$interp_method,
     smooth = input$focal_onoff,
     interp_res = rv$interp_res,
-    out_crs = rv$outproj,
+    out_crs = rv$outcrs,
     grid_offset = rv$grid_offset,
     buffer_radius = if (input$maxptdist_onoff) {input$maxptdist} else {Inf},
     vgm = switch(

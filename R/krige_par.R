@@ -65,7 +65,7 @@ krige_par <- function(
   if (all(
     !is.na(st_crs(newdata)$epsg) & !is.na(st_crs(locations)$epsg),
     st_crs(newdata)$epsg == st_crs(locations)$epsg,
-    st_crs(newdata)$proj4string != st_crs(locations)$proj4string
+    st_crs(newdata) != st_crs(locations)
   )) {
     st_crs(newdata) <- st_crs(locations)
   }
