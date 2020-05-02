@@ -38,6 +38,7 @@ h <- function(t) {
 #' @name ht
 #' @rdname ht
 #' @param i18n Object containing translations
+#' @export
 ht <- function(x, i18n) {
   if (length(x) == 1) {
     h(i18n$t(x))
@@ -51,4 +52,5 @@ ht <- function(x, i18n) {
 #' @rdname ht
 #' @importFrom shiny HTML
 #' @param ... Elements to be pasted.
+#' @export
 ph <- function(...) {HTML(paste0(...))}
