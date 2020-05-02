@@ -4,13 +4,30 @@
 \alias{guinterp_process}
 \title{Process a group of fields}
 \usage{
-guinterp_process(inputpts, inlayer, filtered = TRUE,
-  id_fieldname = "idfield", interp_dir = tempdir(),
-  out_path = tempfile(), interp_method = "krige", smooth = TRUE,
-  interp_res = 5, out_crs = NA, grid_offset = c(0, 0),
-  samplesize = 10000, buffer_radius = 15, parallel = TRUE,
-  vgm = NA, v_nmax = Inf, v_maxdist = Inf, merge = TRUE,
-  overwrite = TRUE, .shiny_session = NULL, .shiny_pbar_id = NULL)
+guinterp_process(
+  inputpts,
+  inlayer,
+  filtered = TRUE,
+  id_fieldname = "idfield",
+  interp_dir = tempdir(),
+  out_path = tempfile(),
+  interp_method = "krige",
+  smooth = TRUE,
+  interp_res = 5,
+  out_crs = NA,
+  grid_offset = c(0, 0),
+  samplesize = 10000,
+  samplescheme = "random",
+  buffer_radius = 15,
+  parallel = TRUE,
+  vgm = NA,
+  v_nmax = Inf,
+  v_maxdist = Inf,
+  merge = TRUE,
+  overwrite = TRUE,
+  .shiny_session = NULL,
+  .shiny_pbar_id = NULL
+)
 }
 \arguments{
 \item{inputpts}{TODO}
@@ -38,6 +55,8 @@ no additional filter is applied; if FALSE, a standard automatic filter is applie
 
 \item{samplesize}{maximum size of the sample of the original data to work with (default: 10000; if NA: all the points)}
 
+\item{samplescheme}{sampling scheme within geometries (`"random"`, `"strat_npts"` or `"strat_area"`)}
+
 \item{buffer_radius}{numeric: buffer (default: 15) to be applied internally to field borders.}
 
 \item{parallel}{(optional) Logical or integer: if TRUE (default), interpolation
@@ -54,7 +73,7 @@ If NA (default), they are automatically computed.}
 \item{v_maxdist}{TODO.}
 
 \item{merge}{logical: if TRUE (default), merge raster of single fields and
-return the pèath of the merged raster; if FALSE, return the paths of the
+return the path of the merged raster; if FALSE, return the paths of the
 single field rasters.}
 
 \item{overwrite}{Logical: should existing raster being reprocessed? (default: FALSE)}

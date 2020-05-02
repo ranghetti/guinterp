@@ -4,8 +4,13 @@
 \alias{read_inputpts}
 \title{Read point data}
 \usage{
-read_inputpts(input, borders = NULL, varname = NA,
-  .shiny_session = NULL, .shiny_pbar_id = NULL)
+read_inputpts(
+  input,
+  borders = NULL,
+  varname = NA,
+  .shiny_session = NULL,
+  .shiny_pbar_id = NULL
+)
 }
 \arguments{
 \item{input}{TODO}

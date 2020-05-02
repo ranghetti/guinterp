@@ -20,13 +20,12 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
   # Open waiting message
   show_modal_message(
     shiny::div(
-      shiny::p(
-        "L'interpolazione dei dati \u00E8 in corso,",tags$br(),
-        "attendere prego..."
-      ),
+      shiny::p(shiny::HTML(
+        ht("_pb_interp_message", i18n)
+      )),
       shinyWidgets::progressBar(id = "pb_interp", value = 0, striped = TRUE)
     ),
-    title = "Caricamento dati"
+    title = ht("_pb_interp_title", i18n)
   )
 
 
@@ -39,13 +38,13 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
     id_fieldname="id_geom",
     interp_dir = rv$interp_dir,
     out_path = rv$outraster_path,
-    # samplesize = if (input$interp_method=="krige") {1E4} else {Inf},
-    samplesize = Inf,
+    samplesize = if (input$samplesize_proc_onoff) {input$samplesize_proc} else {Inf},
+    samplescheme = input$samplescheme,
     parallel = (input$turbo == "high"),
     interp_method = input$interp_method,
     smooth = input$focal_onoff,
     interp_res = rv$interp_res,
-    out_crs = rv$outproj,
+    out_crs = rv$outcrs,
     grid_offset = rv$grid_offset,
     buffer_radius = if (input$maxptdist_onoff) {input$maxptdist} else {Inf},
     vgm = switch(
@@ -91,22 +90,21 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
   removeModal()
 
   shinyWidgets::sendSweetAlert(
-    session, title = "Interpolazione completata",
+    session, title = ht("_interp_success_title", i18n),
     text = shiny::div(
-      shiny::p("I dati sono stati correttamente interpolati."),
+      shiny::p(ht("_interp_success_message1", i18n)),
       if (input$outraster_savesingles) {
-        tags$p(
-          "I raster dei singoli poligoni",
-          "sono stati salvati nella cartella", tags$br(),
+        shiny::p(
+          ht("_interp_success_message2", i18n), tags$br(),
           tags$span(style="font-family:monospace;",rv$interp_dir)
         )
       },
       shiny::p(
-          "Il raster finale \u00E8 stato salvato qui:", shiny::br(),
-          shiny::span(style="font-family:monospace;",rv$outraster_path)
-        )
+        ht("_interp_success_message3", i18n), tags$br(),
+        shiny::span(style="font-family:monospace;",rv$outraster_path)
+      )
     ),
-    type = "success", btn_labels = "Ok"
+    type = "success", btn_labels = ht("_Ok", i18n)
   )
 
 })

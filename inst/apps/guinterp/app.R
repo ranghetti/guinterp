@@ -11,6 +11,7 @@ require(shinydashboard)
 require(shinyFiles)
 require(shinyWidgets)
 require(shinyjs)
+require(shiny.i18n)
 require(sf)
 require(ggplot2)
 require(foreach)
@@ -18,6 +19,7 @@ require(magrittr)
 require(leaflet)
 require(jsonlite)
 require(data.table)
+library(guinterp)
 
 jscode <- "shinyjs.closeWindow = function() { open(location, '_self').close(); }"
 
@@ -27,6 +29,10 @@ jscode <- "shinyjs.closeWindow = function() { open(location, '_self').close(); }
 onStop(function() {
   cat("Session stopped\n")
 })
+
+# read dictionary
+i18n <- shiny.i18n::Translator$new(translation_csvs_path = "./translations")
+i18n$set_translation_language(getShinyOption("ui_lang", "en"))
 
 #   ____________________________________________________________________________
 #   Source initialization script and main UI                                ####

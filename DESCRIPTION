@@ -1,7 +1,7 @@
 Package: guinterp
 Type: Package
 Title: A Shiny GUI for spatial interpolation
-Version: 0.2.2
+Version: 0.2.2.9001
 Authors@R: c(person("Luigi", "Ranghetti", 
                     email = "luigi@ranghetti.info", 
                     role = c("aut", "cre"), 
@@ -35,10 +35,11 @@ Imports:
  shinyFiles,
  shinyjs,
  shinyWidgets,
+ shiny.i18n,
  stars,
  stats,
  stringr
 Encoding: UTF-8
 URL: https://github.com/ranghetti/guinterp
 BugReports: https://github.com/ranghetti/guinterp/issues
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0

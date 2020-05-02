@@ -6,9 +6,18 @@
 \alias{filter_pts_resample}
 \title{Update filter values}
 \usage{
-filter_pts(indata, metric, value, inlayer = NULL,
-  id_fieldname = "idfield", byfield = FALSE, samplesize = 1e+05,
-  par1 = NA)
+filter_pts(
+  indata,
+  metric,
+  value,
+  inlayer = NULL,
+  id_fieldname = "idfield",
+  byfield = FALSE,
+  reverse = FALSE,
+  samplesize = 1e+05,
+  sid = "sid3",
+  par1 = NA
+)
 
 filter_pts_reset(indata, filters = NA)
 
@@ -17,7 +26,7 @@ filter_pts_resample(indata)
 \arguments{
 \item{indata}{TODO}
 
-\item{metric}{one between f_rangev, f_rangey, f_zscorey, f_rbiasy, f_rangeq, f_pos}
+\item{metric}{one between f_rangev, f_rangey, f_zscorey, f_rbiasy, f_rangeq, f_pos, f_editmap, f_selpts}
 
 \item{value}{value or values to apply (depending on metric)}
 
@@ -25,9 +34,13 @@ filter_pts_resample(indata)
 
 \item{id_fieldname}{optional: name of the `inlayer` field containing unique ID of fields (default: "idfield")}
 
-\item{byfield}{if FALSE (default), consider data as a unique field; if TRUE, iterate each filter on field `id_fieldname``}
+\item{byfield}{if FALSE (default), consider data as a unique field; if TRUE, iterate each filter on field `id_fieldname`}
+
+\item{reverse}{if TRUE, the filter is applied reversed (this makes sense only for `f_editmap` and `f_selpts`). default is FALSE.}
 
 \item{samplesize}{maximum size of the sample of the original data to work with (default: 100000; if NA: all the points)}
+
+\item{sid}{character: name of the ID field to be used (`"uid"`, `"sid1"`, `"sid2"`, `"sid3"` or `"sid4"`)}
 
 \item{par1}{additional parameter for filtering (now used only for area to filter / not to filter NA values)}
 

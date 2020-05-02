@@ -7,7 +7,7 @@ output$out_proj_textinput <- renderUI({
   textInput(
     "out_proj",
     span(
-      "Sistema di riferimento\u2000",
+      ph(ht("_out_proj", i18n),"\u2000"),
       shiny::actionLink("help_out_proj", icon("question-circle"))
     ),
     value = st_crs_utm_from_lonlat(
@@ -22,13 +22,13 @@ output$out_proj_textinput <- renderUI({
 output$outproj_message <- renderUI({
   req(input$out_proj)
   # if required, take from reference raster
-  rv$outproj_validated <- tryCatch(
+  rv$outcrs_validated <- tryCatch(
     st_crs2(input$out_proj),
     error = function(e) {sf::st_crs(NA)}
-  )$proj4string
+  )
   if (input$out_proj=="") {
     ""
-  }  else if (is.na(rv$outproj_validated)) {
+  } else if (is.na(rv$outcrs_validated)) {
     span(style="color:red", "\u2718")
   } else {
     span(style="color:darkgreen", "\u2714")
@@ -37,10 +37,10 @@ output$outproj_message <- renderUI({
 
 
 # Change polygon extension if it was set as the bbox of the points
-observeEvent(rv$outproj_validated, {
-  req(rv$outproj_validated)
+observeEvent(rv$outcrs_validated, {
+  req(!is.na(rv$outcrs_validated))
   if (input$border_type == "bbox") {
-    rv$borders_polygon <- inputpts_to_sf(rv$inputpts_points, outcrs = rv$outproj_validated, all = TRUE) %>%
+    rv$borders_polygon <- inputpts_to_sf(rv$inputpts_points, outcrs = rv$outcrs_validated, all = TRUE) %>%
       st_bbox() %>%
       st_as_sfc() %>%
       st_buffer_m(input$bbox_buffer) %>%
@@ -53,11 +53,11 @@ observeEvent(rv$outproj_validated, {
 
 
 ## Define output grid basing on manual definition of res. and CR, or on the ref raster
-observeEvent(c(input$outgrid_type, input$interp_res, rv$outproj_validated, input$path_refraster_textin), {
+observeEvent(c(input$outgrid_type, input$interp_res, rv$outcrs_validated, input$path_refraster_textin), {
   if (input$outgrid_type == "custom") {
-    req(input$interp_res, rv$outproj_validated)
+    req(input$interp_res, rv$outcrs_validated)
     rv$interp_res <- input$interp_res
-    rv$outproj <- rv$outproj_validated
+    rv$outcrs <- rv$outcrs_validated
     rv$grid_offset <- c("xmin" = 0, "ymin" = 0)
   } else if (input$outgrid_type == "ref") {
     req(input$path_refraster_textin)
@@ -68,7 +68,7 @@ observeEvent(c(input$outgrid_type, input$interp_res, rv$outproj_validated, input
     req(rv$path_refraster_isvalid)
     outgrid_raster <- stars::read_stars(input$path_refraster_textin, proxy = TRUE, quiet = TRUE)
     rv$interp_res <- stars::st_dimensions(outgrid_raster)[[1]]$delta # assuming same resolution in x and y
-    rv$outproj <- sf::st_crs(outgrid_raster)$proj4string
+    rv$outcrs <- sf::st_crs(outgrid_raster)
     rv$grid_offset <- sf::st_bbox(outgrid_raster)[c("xmin","ymin")] %% rv$interp_res
   }
 })

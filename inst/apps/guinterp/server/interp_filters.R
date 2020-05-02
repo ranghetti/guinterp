@@ -1,13 +1,6 @@
 #   ____________________________________________________________________________
 #   Observer used to subset points when filter values are changed           ####
 
-# # Sample data for visualization TODO
-samplesize <- 1E4 # FIXME make dynamic
-# observeEvent(input$sampling_data, {
-#   req(rv$inputpts_points)
-# })
-
-
 ## Main filter ----
 
 observeEvent(c(input$filter_buttons), {
@@ -48,13 +41,13 @@ observeEvent(c(input$filter_buttons), {
       }
       rv$inputpts_points
     }, error = function(e) {
-      paste("Errore nel filtraggio dei files:", e$message)
+      paste(i18n$t("_filtered_ptsdata_error"), e$message)
     })
     shiny::removeModal()
 
   } else if (input$filter_buttons=="minimal") {
     # Minimal filter
-    show_modal_message(shiny::p("Filtraggio dei punti in corso..."))
+    show_modal_message(ht("_filtered_ptsdata", i18n))
     filtered_ptsdata <- tryCatch({
       rv$inputpts_points <- filter_pts_reset(rv$inputpts_points) %>%
         filter_pts(
@@ -64,13 +57,13 @@ observeEvent(c(input$filter_buttons), {
           byfield = TRUE, samplesize = NA
         )
     }, error = function(e) {
-      paste("Errore nel filtraggio dei files:", e$message)
+      paste(i18n$t("_filtered_ptsdata_error"), e$message)
     })
     shiny::removeModal()
 
   } else if (input$filter_buttons=="no") {
     # No filter
-    show_modal_message(shiny::p("Ripristino di tutti i punti in corso..."))
+    show_modal_message(ht("_filtered_ptsdata_restore", i18n))
     filtered_ptsdata <- tryCatch({
       rv$inputpts_points <- filter_pts_reset(rv$inputpts_points)
     })
@@ -93,7 +86,7 @@ output$indata_rangey <- renderUI({
       style="display:inline-block;position:relative;",
       shiny::numericInput(
         inputId = "miny",
-        label = shiny::span(style="font-weight:normal;", "minimo (t/ha)"),
+        label = shiny::span(style="font-weight:normal;", ht("_miny", i18n)),
         min = 0,
         max = ceiling(max(rv$inputpts_points$selvar)),
         value = round(quantile(rv$inputpts_points$selvar, .02), 2),
@@ -104,7 +97,7 @@ output$indata_rangey <- renderUI({
       style="display:inline-block;position:relative;padding-left:10px;",
       shiny::numericInput(
         inputId = "maxy",
-        label = shiny::span(style="font-weight:normal;", "massimo (t/ha)"),
+        label = shiny::span(style="font-weight:normal;", ht("_maxy", i18n)),
         min = 0,
         max = ceiling(max(rv$inputpts_points$selvar)),
         value = round(quantile(rv$inputpts_points$selvar, .98), 2),
@@ -113,6 +106,24 @@ output$indata_rangey <- renderUI({
     )
   )
 })
+
+output$pos_ui <- shiny::renderUI({
+  req(rv$inputpts_points, rv$borders_polygon)
+  maxdist <- max(sapply(
+    sf::st_geometry(st_transform_utm(rv$borders_polygon)),
+    function(x) {with(as.list(sf::st_bbox(x)), sqrt((xmax-xmin)^2+(ymax-ymin)^2))}
+  ))
+  shiny::sliderInput(
+    inputId="pos",
+    label=NULL,
+    min = 0,
+    max = ceiling(maxdist/10^floor(log10(maxdist))/2)*10^floor(log10(maxdist)),
+    value = maxdist/50,
+    post = " m",
+    step = 10^(floor(log10(maxdist))-2)
+  )
+})
+
 
 
 # Filters
@@ -125,6 +136,7 @@ output$indata_rangey <- renderUI({
       if (input$check_rangey) {
         shinyjs::enable("miny")
         shinyjs::enable("maxy")
+        req(input$miny, input$maxy)
         rv$inputpts_points <- filter_pts(
           rv$inputpts_points, "rangey", c(input$miny,input$maxy),
           inlayer = rv$borders_polygon,
@@ -202,6 +214,7 @@ output$indata_rangey <- renderUI({
     if (input$filter_buttons == "manual") {
       if (input$check_pos) {
         shinyjs::enable("pos")
+        req(input$pos)
         rv$inputpts_points <- filter_pts(
           rv$inputpts_points, "pos", input$pos,
           inlayer = rv$borders_polygon,
@@ -215,6 +228,52 @@ output$indata_rangey <- renderUI({
       rv$change_interp <- sample(1E6,1) # dummy var for map/hist update
     }
   })
+
+  observeEvent(c(input$check_editmap, input$pos, input$filter_buttons, rv$editmap_geoms), ignoreNULL = FALSE, ignoreInit = FALSE, {
+    req(rv$inputpts_points, rv$borders_polygon)
+    if (input$filter_buttons == "manual") {
+      if (input$check_editmap) {
+        shinyjs::enable("editmap")
+        req(rv$editmap_geoms)
+        rv$inputpts_points <- filter_pts(
+          rv$inputpts_points, "editmap", rv$editmap_geoms,
+          inlayer = rv$borders_polygon,
+          id_fieldname="id_geom",
+          byfield = TRUE, samplesize = NA,
+          reverse = as.logical(input$editmap_reverse)
+        )
+        if (length(rv$editmap_geoms) == 0) {rv$editmap_geoms <- NULL} # list() to NULL
+      } else {
+        shinyjs::disable("editmap")
+        filter_pts_reset(rv$inputpts_points, "editmap")
+      }
+      rv$change_interp <- sample(1E6,1) # dummy var for map/hist update
+    }
+  })
+
+  observeEvent(c(input$check_selpts, input$pos, input$filter_buttons, rv$selpts_uids), ignoreNULL = FALSE, ignoreInit = FALSE, {
+    req(rv$inputpts_points, rv$borders_polygon)
+    if (input$filter_buttons == "manual") {
+      if (input$check_selpts) {
+        shinyjs::enable("selpts")
+        if (!is.null(rv$selpts_uids) > 0) {
+          rv$inputpts_points <- filter_pts(
+            rv$inputpts_points, "selpts", rv$selpts_uids,
+            inlayer = rv$borders_polygon,
+            id_fieldname="id_geom",
+            byfield = TRUE, samplesize = NA,
+            reverse = as.logical(input$selpts_reverse)
+          )
+        }
+      } else {
+        shinyjs::disable("selpts")
+        filter_pts_reset(rv$inputpts_points, "selpts")
+      }
+      rv$change_interp <- sample(1E6,1) # dummy var for map/hist update
+    }
+  })
+
+
 
   # Set initial value
   # (it is done in this way, so that points are filtered
@@ -253,8 +312,9 @@ observeEvent(input$downloadFilters, {
     )
 
     shinyWidgets::sendSweetAlert(
-      session, title = NULL,
-      text = "Esportazione completata",
+      session,
+      title = shiny::span(ht("_downloadFilters_success", i18n)),
+      text = shiny::span(ht("_downloadFilters_message", i18n)),
       type = "success", btn_labels = "Ok"
     )
   }
@@ -298,8 +358,9 @@ observeEvent(rv$importFilters, {
   }
 
   shinyWidgets::sendSweetAlert(
-    session, title = NULL,
-    text = "Esportazione completata",
+    session,
+    title = shiny::span(ht("_importFilters_success", i18n)),
+    text = shiny::span(ht("_importFilters_message", i18n)),
     type = "success", btn_labels = "Ok"
   )
 })
@@ -371,7 +432,7 @@ observeEvent(input$setdefaultFilters, {
 
   shinyWidgets::sendSweetAlert(
     session, title = NULL,
-    text = "I filtri attuali sono stati correttamente impostati come predefiniti.",
+    text = shiny::span(ht("_setdefaultFilters_success", i18n)),
     type = "success", btn_labels = "Ok"
   )
 })

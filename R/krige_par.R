@@ -40,12 +40,12 @@ krige_par <- function(
     n_cores <- if (nrow(locations) < 1000) {
       1
     } else {
-      min(parallel::detectCores() - 1, 16) # use at most 16 cores
+      min(detectCores() - 1, 16) # use at most 16 cores
     }
   }
   if (!is(n_cores,"numeric") | n_cores < 1) {
     warning("Invalid 'n_cores' value; using a default value.")
-    n_cores <- min(parallel::detectCores() - 1, 16) # use at most 16 cores
+    n_cores <- min(detectCores() - 1, 16) # use at most 16 cores
   } else {
     n_cores <- as.integer(n_cores)
   }
@@ -65,7 +65,7 @@ krige_par <- function(
   if (all(
     !is.na(st_crs(newdata)$epsg) & !is.na(st_crs(locations)$epsg),
     st_crs(newdata)$epsg == st_crs(locations)$epsg,
-    st_crs(newdata)$proj4string != st_crs(locations)$proj4string
+    st_crs(newdata) != st_crs(locations)
   )) {
     st_crs(newdata) <- st_crs(locations)
   }
@@ -83,7 +83,7 @@ krige_par <- function(
         maxdist = as.numeric(maxdist)
       )
     } else if (method == "idw") {
-      gstat::idw(
+      idw(
         formula = as.formula(formula),
         locations = locations,
         newdata = newdata,
@@ -105,25 +105,25 @@ krige_par <- function(
     )
     newdata_parts <- lapply(parts, function(part) {newdata_pt[part,]})
 
-    cl <- parallel::makeCluster(
+    cl <- makeCluster(
       n_cores, outfile = file.path(tempdir(),"out_krige.txt"),
       type = if (Sys.info()["sysname"] == "Windows") {"PSOCK"} else {"FORK"}
     )
 
-    parallel::clusterEvalQ(cl = cl, expr = c(library(sf), library(stars), library(gstat)))
-    parallel::clusterExport(
+    clusterEvalQ(cl = cl, expr = c(library(sf), library(stars), library(gstat)))
+    clusterExport(
       cl,
       c("locations", "formula", "model", "nmax", "maxdist", "method"),
       envir=environment()
     )
-    parallelX <- parallel::parLapply(
+    parallelX <- parLapply(
       cl = cl,
       X = newdata_parts,
     # parallelX <- lapply(
     #   newdata_parts,
       function(sel_newdata) {
         if (method=="krige") {
-          gstat::krige(
+          krige(
             formula = as.formula(formula),
             locations = locations,
             newdata = sel_newdata,
@@ -132,7 +132,7 @@ krige_par <- function(
             maxdist = as.numeric(maxdist)
           )
         } else if (method=="idw") {
-          gstat::idw(
+          idw(
             formula = as.formula(formula),
             locations = locations,
             newdata = sel_newdata,
@@ -145,7 +145,7 @@ krige_par <- function(
 
       }
     )
-    parallel::stopCluster(cl)
+    stopCluster(cl)
 
     # Merge all the predictions
     mergeParallelX <- do.call("rbind", parallelX)

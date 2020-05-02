@@ -64,7 +64,7 @@ observeEvent(rv$autofit_vgm, {
     )})
     output$err_autofit_vgm_2 <- renderUI({shiny::div(
       style="color:red;",
-      "I punti non sono modellabili univocamente: controllare manualmente i parametri generati."
+      ht("_err_autofit_vgm_2", i18n)
     )})
   }
   updateNumericInput(session, "sill", value=signif(v.auto[,"psill"],3)[2])
@@ -104,3 +104,23 @@ observeEvent(input$save_semiauto, ignoreInit = TRUE, {
   }
   removeModal()
 })
+
+
+## Dynamic widgets
+output$maxptdist_ui <- shiny::renderUI({
+  req(rv$inputpts_points, rv$borders_polygon)
+  maxdist <- max(sapply(
+    sf::st_geometry(st_transform_utm(rv$borders_polygon)),
+    function(x) {with(as.list(sf::st_bbox(x)), sqrt((xmax-xmin)^2+(ymax-ymin)^2))}
+  ))
+  shiny::sliderInput(
+    inputId="maxptdist", label=NULL,
+    min = 0,
+    max = ceiling(maxdist/10^floor(log10(maxdist)))*10^floor(log10(maxdist)),
+    value = maxdist,
+    sep = "",
+    post = " m",
+    step = 10^(floor(log10(maxdist))-2)
+  )
+})
+

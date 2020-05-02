@@ -2,15 +2,13 @@
 
 observeEvent(input$button_load_borders, {
   showModal(modalDialog(
-    title = "Seleziona i poligonali dei bordi",
+    title = ht("_modal_loadborders_title", i18n),
     size = "m",
 
     radioButtons(
-      "border_type", label = "Metodo di identificazione dei bordi",
-      choices = list(
-        "Carica da files" = "files",
-        "Bounding box dei punti" = "bbox"
-      ),
+      "border_type", label = ht("_border_type", i18n),
+      choiceValues = c("files", "bbox"),
+      choiceNames = ht(c("_border_type_files", "_border_type_bbox"), i18n),
       selected = "record"
     ),
 
@@ -21,7 +19,7 @@ observeEvent(input$button_load_borders, {
           style="vertical-align:top;",
             shiny::div(
               style = "display:inline-block;vertical-align:top;width:85pt;padding-top:8px;",
-              shiny::strong("Cartella di input")
+              shiny::strong(ht("_borderpath_label", i18n))
             ),
             shiny::div(
               style = "display:inline-block;vertical-align:top;width:calc(100% - 85pt - 50pt - 15px - 10pt - 10px);",
@@ -30,8 +28,8 @@ observeEvent(input$button_load_borders, {
             shiny::div(
               style = "display:inline-block;vertical-align:top;width:50pt;",
               shinyFiles::shinyDirButton(
-                "borderpath", "Cambia",
-                "Seleziona la cartella contenente i files poligonali dei bordi"
+                "borderpath", ht("_borderpath_button", i18n),
+                ht("_borderpath_sfb", i18n)
               )
             ),
             shiny::div(
@@ -50,7 +48,7 @@ observeEvent(input$button_load_borders, {
               style="margin-top:-10px;",
               checkboxInput(
                 "borders_showall",
-                "Mostra tutti i file",
+                ht("_borders_showall", i18n),
                 value = FALSE
               )
             )
@@ -63,17 +61,22 @@ observeEvent(input$button_load_borders, {
           )
         ),
 
-        actionButton("load_extent_borders", strong("\u2000Carica"), icon=icon("upload")),
+        actionButton(
+          "load_extent_borders",
+          strong(ph("\u2000",ht("_Load", i18n))),
+          icon=icon("upload")
+        ),
 
         shiny::div(
           style = "margin-top:15px;",
           shinyjs::disabled(radioButtons(
-            "select_uid_which", label = "ID univoco delle geometrie",
-            choices = list(
-              "Dissolvi tutto" = "no",
-              "Numero di riga" = "record",
-              "Scegli un attributo" = "attr"
-            ),
+            "select_uid_which", label = ht("_select_uid_which", i18n),
+            choiceValues = c("no", "record", "attr"),
+            choiceNames = ht(c(
+              "_select_uid_which_no",
+              "_select_uid_which_record",
+              "_select_uid_which_attr"
+            ), i18n),
             selected = "record"
           ))
         ),
@@ -84,17 +87,20 @@ observeEvent(input$button_load_borders, {
     conditionalPanel(
       condition = "input.border_type == 'bbox'",
       numericInput(
-        "bbox_buffer",
-        "Raggio del buffer da applicare ai punti (m)",
+        "bbox_buffer", ht("_bbox_buffer", i18n),
         value = 15, min = 0, step = 1
       )
     ),
 
     # leafletOutput("view_map_borders", height=400, width="100%"),
     easyClose = FALSE,
-    footer = tagList(
-      shinyjs::disabled(actionButton("save_extent_borders", strong("\u2000Ok"), icon=icon("check"))),
-      modalButton("\u2000Annulla", icon = icon("ban"))
+    footer = shiny::tagList(
+      shinyjs::disabled(actionButton(
+        "save_extent_borders",
+        strong(ph("\u2000",ht("_Ok", i18n))),
+        icon = icon("check")
+      )),
+      modalButton(ph("\u2000",ht("_Cancel", i18n)), icon = icon("ban"))
     )
   ))
 })
@@ -123,12 +129,23 @@ observeEvent(c(input$border_type, rv$borders_polygon_raw), ignoreInit = TRUE, ig
     shinyjs::enable("save_extent_borders")
   }
 })
+observeEvent(input$borderfiles_tbl_rows_selected, ignoreNULL = FALSE, {
+  if (length(input$borderfiles_tbl_rows_selected) > 0) {
+    shinyjs::enable("load_extent_borders")
+  } else {
+    shinyjs::disable("load_extent_borders")
+  }
+})
 
 
 # UID selector
 output$selector_uid <- renderUI({
   req(rv$borders_polygon_raw)
-  borders_names <- names(rv$borders_polygon_raw)[names(rv$borders_polygon_raw)!="geometry"]
+  borders_names <- names(rv$borders_polygon_raw)[
+    sapply(names(rv$borders_polygon_raw), function(x){
+      !inherits(rv$borders_polygon_raw[[x]], "sfc")
+    })
+    ]
   conditionalPanel(
     condition = "input.select_uid_which == 'attr'",
     selectInput(
@@ -148,8 +165,6 @@ shiny::observe({
 
 
 # Observer used to automatically filter the shps available in the selected ----
-# folder based on spatial extent, conformity with standards and selections
-# in coltura/varietaand render the files table
 #
 observeEvent(
   c(input$borderpath_textin),
@@ -157,13 +172,14 @@ observeEvent(
 
     output$borderfiles_tbl <- DT::renderDT({
 
-      vect_tbl  <- data.frame(`Nome File` = "Nessun file vettoriale trovato")
+      vect_tbl  <- data.frame(i18n$t("_tbl_empty"), stringsAsFactors = FALSE)
+      names(vect_tbl) <- i18n$t("_Filename")
 
       if (dir.exists(input$borderpath_textin)) {
 
         # Get the list of files which intersect pcolt data.
         #  In case it was already retrieved, do not compute it again
-        #  TODO link the list of available files to a specific folder name!!!!
+        #  TODO link the list of available files to a specific folder name
         vect_list_all <- list.files(input$borderpath_textin, full.names = TRUE)
         vect_ext <- gsub("^.+\\.([^\\.]+)$","\\1",vect_list_all)
         vect_list <-  if (!input$borders_showall) {
@@ -176,10 +192,8 @@ observeEvent(
 
         if (length(vect_list > 0)) {
 
-          vect_tbl <- data.frame(
-            `Nome File` = basename(vect_list),
-            stringsAsFactors = FALSE
-          )
+          vect_tbl  <- data.frame(basename(vect_list), stringsAsFactors = FALSE)
+          names(vect_tbl) <- i18n$t("_Filename")
 
           dt_tbl <- DT::datatable(
             vect_tbl,
@@ -232,8 +246,11 @@ observeEvent(input$load_extent_borders, {
     },
     error = function(e) {
       shinyWidgets::sendSweetAlert(
-        session, title = "File non valido",
-        text = paste("Il file", basename(rv$borders_path), "non è un vettoriale poligonale valido."),
+        session, title = ht("_invalid_file", i18n),
+        text = shiny::span(gsub(
+          "\\%f", basename(rv$borders_path),
+          ht("_borders_polygon_raw_invalid_message", i18n)
+        )),
         type = "error", btn_labels = "Ok"
       )
       x <- sf::st_polygon(); attr(x, "valid") <- FALSE; x

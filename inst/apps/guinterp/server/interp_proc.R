@@ -120,3 +120,32 @@ observeEvent(c(input$v_maxdist_onoff, input$v_maxdist), ignoreInit = FALSE, igno
   }
 })
 
+# samplesize_proc
+observeEvent(c(rv$borders_polygon, input$samplesize_proc_onoff), {
+  req(rv$borders_polygon, input$v_options_onoff)
+  if (input$samplesize_proc_onoff) {
+    shinyjs::enable("samplesize_proc")
+    shinyjs::enable("samplescheme")
+  } else {
+    shinyjs::disable("samplesize_proc")
+    shinyjs::disable("samplescheme")
+  }
+})
+observeEvent(rv$new_inputs, {
+  req(rv$inputpts_points)
+  if (length(unique(rv$inputpts_points$idfield)) > 1) {
+    shinyjs::show("samplescheme")
+  } else {
+    shinyjs::hide("samplescheme")
+  }
+})
+output$samplesize_proc_ui <- shiny::renderUI({
+  req(rv$inputpts_points)
+  shinyjs::disabled(shiny::sliderInput(
+    inputId = "samplesize_proc", label = NULL,
+    min = 1, max = nrow(rv$inputpts_points),
+    value = min(nrow(rv$inputpts_points), 1E4)
+  ))
+})
+
+

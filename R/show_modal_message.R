@@ -27,13 +27,13 @@ show_modal_message <- function(message,
       "darkgrey"
     )
   }
-  shiny::modalDialog(
-    shiny::div(
+  modalDialog(
+    div(
       align = "center",
       if (!is.null(icon)) {
-        shiny::p(
+        p(
           style = paste0("text-align:center;font-size:500%;color:",icon_colour,";"),
-          shiny::icon(
+          icon(
             icon,
             class = if (icon %in% c("refresh","circle-o-notch","cog")) {
               "fa-spin"
@@ -45,15 +45,15 @@ show_modal_message <- function(message,
           )
         )
       },
-      shiny::div(message),
+      div(message),
       if (!is.null(title) & is.null(footer)) {
-        shiny::hr(style = "margin-top: 0.75em; margin-bottom: 0.75em;")
+        hr(style = "margin-top: 0.75em; margin-bottom: 0.75em;")
       }
     ),
-    title = if (!is.null(title)) {shiny::div(align = "center", title)},
+    title = if (!is.null(title)) {div(align = "center", title)},
     size = size,
     easyClose = easyClose,
     footer = footer
   ) %>%
-    shiny::showModal()
+    showModal()
 }

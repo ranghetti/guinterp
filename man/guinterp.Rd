@@ -4,7 +4,11 @@
 \alias{guinterp}
 \title{Main GUI for app gestione dati}
 \usage{
-guinterp()
+guinterp(language = "en")
+}
+\arguments{
+\item{language}{"en" or "it" currently implemented
+(default is to retrieve it from system settings)}
 }
 \value{
 OUTPUT_DESCRIPTION
