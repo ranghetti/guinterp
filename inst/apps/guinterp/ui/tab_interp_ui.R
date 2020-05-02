@@ -12,15 +12,6 @@ shiny::div(
       shiny::conditionalPanel(
         condition = "output.interp_onoff",
         div(
-          # Sample size ---
-          shinydashboard::box(
-            width = NULL,
-            # status = "danger",
-            solidHeader = FALSE,
-            # title = ht("_samplesize_view_title", i18n),
-            # collapsible = TRUE,
-            shiny::uiOutput("samplesize_view_ui")
-          ),
           # Histograms ---
           shinydashboard::box(
             width = NULL,
@@ -39,6 +30,15 @@ shiny::div(
             title = ht("_interp_map_title", i18n),
             leaflet::leafletOutput("interp_map", height = 650),
             shiny::div(tags$i(ht("_note1_interp_map", i18n)))
+          ),
+          # Sample size ---
+          shinydashboard::box(
+            width = NULL,
+            # status = "danger",
+            solidHeader = FALSE,
+            # title = ht("_samplesize_view_title", i18n),
+            # collapsible = TRUE,
+            shiny::uiOutput("samplesize_view_ui")
           )
         )
       )
