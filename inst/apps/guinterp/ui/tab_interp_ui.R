@@ -19,7 +19,18 @@ shiny::div(
             solidHeader = TRUE,
             title = ht("_hist_title", i18n),
             collapsible = TRUE,
-            plotOutput("hist", height = "270px")
+            shiny::fluidRow(
+              shiny::column(
+                width = 5,
+                shiny::uiOutput("whichfield_ui")
+              ),
+              shiny::column(
+                width = 7,
+                shiny::uiOutput("samplesize_stats_ui")
+              )
+            ),
+            shiny::plotOutput("hist", height = "270px"),
+            DT::dataTableOutput("summary")
           ),
           # Main map ---
           shinydashboard::box(
@@ -29,16 +40,11 @@ shiny::div(
             collapsible = TRUE,
             title = ht("_interp_map_title", i18n),
             leaflet::leafletOutput("interp_map", height = 650),
-            shiny::div(tags$i(ht("_note1_interp_map", i18n)))
-          ),
-          # Sample size ---
-          shinydashboard::box(
-            width = NULL,
-            # status = "danger",
-            solidHeader = FALSE,
-            # title = ht("_samplesize_view_title", i18n),
-            # collapsible = TRUE,
-            shiny::uiOutput("samplesize_view_ui")
+            shiny::div(
+              style = "text-align:right;",
+              tags$i(ht("_note1_interp_map", i18n))
+            ),
+            shiny::uiOutput("samplesize_map_ui")
           )
         )
       )

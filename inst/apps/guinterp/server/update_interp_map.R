@@ -1,6 +1,21 @@
 #   ____________________________________________________________________________
 #   Observers used to update the map during interpolation             ####
 
+# Samplesize
+output$samplesize_map_ui <- shiny::renderUI({
+  req(rv$inputpts_points)
+  shiny::sliderInput(
+    inputId = "samplesize_map", label = ht("_samplesize_map", i18n),
+    min = 0, max = nrow(rv$inputpts_points),
+    value = min(nrow(rv$inputpts_points), 1E4)
+  )
+})
+# observeEvent(input$samplesize_map, {
+#   req(rv$inputpts_points)
+#   rv$change_interp <- sample(1E6,1) # dummy var for map/hist update
+# })
+
+
 # Update the colour palette
 colourPal <- function(colourData, selvariable, na.colour = NA) {
   if (nrow(colourData) == 0) {
@@ -66,14 +81,14 @@ output$interp_map <- leaflet::renderLeaflet(rv$base_interp_map)
 
 
 # Update the map when filters are changed
-observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon), { # LEAVE OBSERVEEVENT!
+observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon, input$samplesize_map), { # LEAVE OBSERVEEVENT!
   # observe is not reactive for rv$change_interp, so it does not work properly.
   # To make this code reactive for other variables, add these ones to
   # observeevent's vecto, or change rv$change_interp where needed.
   req(rv$inputpts_points, rv$borders_polygon)
   # Change the colour scale when filters or variable are changed
   rv$pal <- colourPal(
-    rv$inputpts_points[sid3 <= input$samplesize_view & filter == FALSE,],
+    rv$inputpts_points[sid3 <= input$samplesize_map & filter == FALSE,],
     map_selvariable,
     na.colour = NA
   )
@@ -82,33 +97,33 @@ observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon), { # LEAVE
     # leaflet::clearShapes() %>%
     leaflet::removeMarker(paste0("pts_", rv$inputpts_points$uid)) %>%
     leaflet::removeMarker(paste0("brd_buf_", rv$borders_polygon$id_geom))
-  if (nrow(rv$inputpts_points[sid3 <= input$samplesize_view & filter==TRUE,]) > 0) {
+  if (nrow(rv$inputpts_points[sid3 <= input$samplesize_map & filter==TRUE,]) > 0) {
     leaflet::addCircleMarkers(
       leaflet::leafletProxy("interp_map"),
         ~lon, ~lat,
-        data         = rv$inputpts_points[sid3 <= input$samplesize_view & filter==TRUE,],
-        layerId      = paste0("pts_",rv$inputpts_points[sid3 <= input$samplesize_view & filter == TRUE,]$uid),
+        data         = rv$inputpts_points[sid3 <= input$samplesize_map & filter==TRUE,],
+        layerId      = paste0("pts_",rv$inputpts_points[sid3 <= input$samplesize_map & filter == TRUE,]$uid),
         radius       = 3, stroke = FALSE, fillOpacity = 0.4, fillColor = "cyan",
         label        = ~format(selvar, digits = 0,nsmall = 1),
         group        = i18n$t("_mapgroup_points"),
         labelOptions = labelOptions(style = list("background-color" = "#FFCCCC"))
       )
   }
-  if (nrow(rv$inputpts_points[sid3 <= input$samplesize_view & filter==FALSE,]) > 0) {
+  if (nrow(rv$inputpts_points[sid3 <= input$samplesize_map & filter==FALSE,]) > 0) {
     leaflet::addCircleMarkers(
       leaflet::leafletProxy("interp_map"),
       ~lon, ~lat,
-      data      = rv$inputpts_points[sid3 <= input$samplesize_view & filter == FALSE,],
-      layerId   = paste0("pts_", rv$inputpts_points[sid3 <= input$samplesize_view & filter == FALSE,]$uid),
+      data      = rv$inputpts_points[sid3 <= input$samplesize_map & filter == FALSE,],
+      layerId   = paste0("pts_", rv$inputpts_points[sid3 <= input$samplesize_map & filter == FALSE,]$uid),
       radius    = 5, stroke = FALSE, fillOpacity = 0.65,
-      fillColor = ~rv$pal(rv$inputpts_points[sid3 <= input$samplesize_view & filter == FALSE,][[map_selvariable]]),
+      fillColor = ~rv$pal(rv$inputpts_points[sid3 <= input$samplesize_map & filter == FALSE,][[map_selvariable]]),
       label     = ~format(selvar, digits = 0, nsmall = 1),
       group     = i18n$t("_mapgroup_points"),
       labelOptions = labelOptions(style = list("background-color" = "#CCFFCC"))
     ) %>%
       leaflet::addLegend(
         "bottomleft", pal = rv$pal,
-        values = rv$inputpts_points[sid3 <= input$samplesize_view & filter == FALSE,],
+        values = rv$inputpts_points[sid3 <= input$samplesize_map & filter == FALSE,],
         layerId = "colorLegend",
         title = switch(
           map_selvariable,
