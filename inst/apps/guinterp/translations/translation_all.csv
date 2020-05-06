@@ -151,4 +151,17 @@ _editmap,Select points drawing polygons,Selezione dei punti tramite poligoni
 _editmap_reverse_t,Filter selected points,Filtra i punti selezionati
 _editmap_reverse_f,Keep selected points (filter others),Mantieni i punti selezionati (filtra gli altri)
 _selpts,Manually select points,Selezione manuale dei punti
-_samplesize_view,Amount of points to be visualised,Numero di punti da visualizzare
+_samplesize_map,Amount of points to be visualised in the map,Numero di punti da visualizzare nella mappa
+_samplesize_stats,Amount of points to be used for the statistics,Numero di punti da utilizzare per le statistiche
+_whichfield,Polygons to be shown,Poligoni da visualizzare
+_whichfield_nothing,No polygons were selected,Nessun poligono selezionato
+_stats_nonfiltered,Non filtered points,Punti non filtrati
+_stats_all,All points,Tutti i punti
+_number,Size,Numerosit&agrave;
+_avg,Mean,Media
+_std,Std. dev.,Dev. st.
+_median,Median,Mediana
+_min,Min.,Minimo
+_1q,1st Qu.,1° quartile
+_3q,3rd Qu.,3° quartile
+_max,Max.,Massimo
