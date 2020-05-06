@@ -66,13 +66,13 @@ observeEvent(c(rv$change_interp, input$whichfield, input$samplesize_stats), {
         summary(inputpts_points_toview$selvar),
         sd(inputpts_points_toview$selvar, na.rm = TRUE))
     ))[,c(1,5,8,2:4,6:7)]
+    names(stats_summary) <- ht(c("_number","_avg","_std","_min","_1q","_median","_3q","_max"), i18n)
+    rownames(stats_summary) <- ht(c("_stats_nonfiltered","_stats_all"), i18n)
     if (sum(!inputpts_points_toview$filter) == 0) {
       stats_summary <- stats_summary[2,]
     }
     stats_summary[,2:3] <- format(stats_summary[,2:3], digits = 3)
     stats_summary[,4:8] <- format(round(stats_summary[,4:8], 5), drop0trailing = TRUE)
-    names(stats_summary) <- ht(c("_number","_avg","_std","_min","_1q","_median","_3q","_max"), i18n)
-    rownames(stats_summary) <- ht(c("_stats_nonfiltered","_stats_all"), i18n)
 
     DT::datatable(
       stats_summary,
