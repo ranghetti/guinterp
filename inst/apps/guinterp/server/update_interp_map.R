@@ -85,7 +85,7 @@ observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon, input$samp
   # observe is not reactive for rv$change_interp, so it does not work properly.
   # To make this code reactive for other variables, add these ones to
   # observeevent's vecto, or change rv$change_interp where needed.
-  req(rv$inputpts_points, rv$borders_polygon)
+  req(rv$inputpts_points, rv$borders_polygon, input$samplesize_map)
   # Change the colour scale when filters or variable are changed
   rv$pal <- colourPal(
     rv$inputpts_points[sid3 <= input$samplesize_map & filter == FALSE,],
