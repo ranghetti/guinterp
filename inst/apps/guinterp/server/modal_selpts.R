@@ -59,7 +59,7 @@ observeEvent(input$selpts, ignoreInit = TRUE, {
 
   shiny::showModal(shiny::modalDialog(
     size = "l",
-    mapedit::selectModUI(selpts_ns_name),
+    mapedit::selectModUI(selpts_ns_name, height = "650px"),
     shiny::div(
       style = "margin-top:15px;text-align:center;",
       shiny::radioButtons(
