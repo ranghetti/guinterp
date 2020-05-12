@@ -45,7 +45,7 @@ shiny::observeEvent(rv$fit_vgm_launchgui, ignoreInit = TRUE, ignoreNULL = TRUE, 
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:30pt;",
-              ht("_variogram_psill", i18n)
+              ht("_variogram_sill", i18n)
             ),
             shiny::div(
               style = "display:inline-block;position:relative;width:calc(100% - 30pt - 13px);padding-left:10px;margin-bottom:-5px;",

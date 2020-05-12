@@ -133,7 +133,7 @@ _modeltype_sph,Spheroidal,Sferoidale
 _modeltype_gau,Gaussian,Gaussiano
 _modeltype_wav,Wavelength,Wavelength
 _variogram_param_label,Variogram parameters,Parametri del variogramma
-_variogram_psill,pSill,<em>pSill</em>
+_variogram_sill,Sill,<em>Sill</em>
 _variogram_range,Range,<em>Range</em>
 _variogram_nugget,Nugget,<em>Nugget</em>
 _autofit_vgm,Optimise,Ottimizza
