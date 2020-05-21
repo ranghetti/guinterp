@@ -24,6 +24,8 @@ Imports:
  gstat,
  jsonlite,
  leaflet,
+ mapedit,
+ leafpm,
  magrittr,
  methods,
  parallel,
