@@ -19,7 +19,6 @@
 #' @importFrom methods as
 #' @importFrom stars st_dimensions write_stars
 #' @importFrom sf st_crop st_union st_buffer st_crs st_transform
-#' @export
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 

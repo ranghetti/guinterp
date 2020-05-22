@@ -3,7 +3,6 @@
 #'  is writable
 #' @param path `string` fullpath to a folder
 #' @rdname path_check
-#' @export
 #' @author Luigi Ranghetti, phD (2019)
 #' @importFrom shiny renderUI span renderText
 #'
@@ -35,7 +34,6 @@ path_check <- function(path) {
 #'  has a correct grid
 #' @param path `string` fullpath to a raster
 #' @rdname raster_check
-#' @export
 #' @author Luigi Ranghetti, phD (2019)
 #' @importFrom shiny renderUI span renderText
 #' @importFrom stars read_stars

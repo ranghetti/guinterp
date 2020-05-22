@@ -43,7 +43,6 @@
 #' @importFrom shinyWidgets updateProgressBar
 #' @importFrom stars read_stars
 #' @importFrom stats var
-#' @export
 #' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 

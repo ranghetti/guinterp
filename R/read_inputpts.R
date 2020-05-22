@@ -12,7 +12,6 @@
 #' @importFrom stringr str_pad
 #' @importFrom dplyr select rename mutate filter
 #' @importFrom shinyWidgets updateProgressBar
-#' @export
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 

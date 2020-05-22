@@ -6,7 +6,6 @@
 #' @description `st_crs_utm` gives the UTM zone of an sf object
 #' @param x TODO
 #' @importFrom sf st_union st_centroid st_transform st_coordinates
-#' @export
 #' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 st_crs_utm <- function(x) {
@@ -24,7 +23,6 @@ st_crs_utm <- function(x) {
 #' @description `st_crs_utm_from_lonlat` gives the UTM zone of a couple of geographic coordinates
 #' @param lon TODO
 #' @param lat TODO
-#' @export
 st_crs_utm_from_lonlat <- function(lon, lat = 45) {
   st_crs2(paste0(
     floor((lon + 180) / 6) + 1,     # UTM band
@@ -37,7 +35,6 @@ st_crs_utm_from_lonlat <- function(lon, lat = 45) {
 #' @rdname st_crs_utm
 #' @description `st_transform_utm` transforms an sf object in the proper UTM zone
 #' @importFrom sf st_transform
-#' @export
 st_transform_utm <- function(x) {
   st_transform(x, st_crs_utm(x))
 }

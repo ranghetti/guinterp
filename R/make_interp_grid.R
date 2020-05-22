@@ -7,7 +7,6 @@
 #' @param border `numeric (1)` TODO extent of border (in crs units)
 #' @importFrom sf st_crs st_transform
 #' @importFrom stars st_as_stars st_set_dimensions
-#' @export
 #' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 

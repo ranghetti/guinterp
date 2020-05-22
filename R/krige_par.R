@@ -14,7 +14,6 @@
 #' @importFrom methods is
 #' @importFrom sf st_centroid st_coordinates st_as_sf
 #' @importFrom stars st_rasterize
-#' @export
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
 #' @note Based on https://gis.stackexchange.com/questions/237672/how-to-achieve-parallel-kriging-in-r-to-speed-up-the-process
 #' @note License: GPL 3.0

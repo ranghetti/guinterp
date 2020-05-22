@@ -1,6 +1,7 @@
 #' @title Retrieve coordinate reference system from sf or sfc object
 #' @name st_crs2
-#' @description This function is a wrapper for [sf::st_crs], unless
+#' @description This function, forked from `sen2r::st_crs2()`,
+#'  is a wrapper for [sf::st_crs], unless
 #'  threating numeric `character` strings as integers, and
 #'  accepting also UTM timezones, paths of spatial files and paths of
 #'  text files containing WKT like .prj (see details) .
@@ -25,9 +26,12 @@
 #' @return An object of class \link{crs} of length 2.
 #' @details See [sf::st_crs] for details.
 #' @importFrom sf gdal_crs st_crs
-#' @importFrom stringr str_pad
-#' @export
 #' @author Luigi Ranghetti, phD (2019) \email{luigi@@ranghetti.info}
+#' @references L. Ranghetti, M. Boschetti, F. Nutini, L. Busetto (2020).
+#'  "sen2r": An R toolbox for automatically downloading and preprocessing
+#'  Sentinel-2 satellite data. _Computers & Geosciences_, 139, 104473. DOI:
+#'  \href{https://doi.org/10.1016/j.cageo.2020.104473}{10.1016/j.cageo.2020.104473},
+#'  URL: \url{http://sen2r.ranghetti.info/}.
 #' @note License: GPL 3.0
 #' @examples
 #' ## CRS from EPSG
@@ -74,7 +78,6 @@
 st_crs2 <- function(x, ...) UseMethod("st_crs2")
 
 ## character: several cases (see)
-#' @export
 st_crs2.character <- function(x, ...) {
 
   ## case 1: EPSG code / UTM zone
@@ -82,7 +85,7 @@ st_crs2.character <- function(x, ...) {
     # x: UTM zone North -> integer EPSG
     as.integer(paste0(
       "326",
-      str_pad(
+      str_pad2(
         gsub("^(([0-5]?[0-9])|60)[Nn]?$", "\\1", x),
         2, "left", "0"
       )
@@ -91,7 +94,7 @@ st_crs2.character <- function(x, ...) {
     # x: UTM zone South -> integer EPSG
     as.integer(paste0(
       "327",
-      str_pad(
+      str_pad2(
         gsub("^(([0-5]?[0-9])|60)[Ss]$", "\\1", x),
         2, "left", "0"
       )
@@ -115,23 +118,11 @@ st_crs2.character <- function(x, ...) {
   ## case 2: PROJ.4
   if (grepl("^\\+[a-z]+\\=", x)) {
     # x: PROJ.4 -> character PROJ.4 with warning
-    gdal_version <- tryCatch(
-      package_version(gsub(
-        "^.*GDAL ([0-9\\.]+)[^0-9].*$", "\\1",
-        system(paste0(load_binpaths("gdal")$gdalinfo," --version"), intern = TRUE)
-      )), # checking GDAL >=3 instead than PROJ >= 6 for simplicity
-      error = function(e) {3} # in case of errors, return the warning
-    )
-    warning(paste0(
+    print_message(
+      type = "warning",
       "Using PROJ.4 strings is deprecated with PROJ >= 6 ",
-      "(see https://www.r-spatial.org/r/2020/03/17/wkt.html)",
-      if (gdal_version >= 3) {
-        paste0(
-          "and with PROJ >= 6 ",
-          "(see http://rgdal.r-forge.r-project.org/articles/PROJ6_GDAL3.html)."
-        )
-      } else {"."}
-    ))
+      "(see https://www.r-spatial.org/r/2020/03/17/wkt.html)."
+    )
     return(sf::st_crs(x, ...))
   }
 
@@ -175,13 +166,10 @@ st_crs2.character <- function(x, ...) {
 }
 
 ## integer or numeric (EPGS / UTM zone): threat as character
-#' @export
 st_crs2.integer <- function(x, ...) {st_crs2.character(as.character(x), ...)}
-#' @export
 st_crs2.numeric <- function(x, ...) {st_crs2.character(as.character(x), ...)}
 
 ## classes already managed by st_crs()
-#' @export
 st_crs2.default <- function(x, ...) {
   if (missing(x)) {sf::st_crs(NA)} else {sf::st_crs(x, ...)}
 }

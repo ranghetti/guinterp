@@ -15,7 +15,6 @@
 #' @importFrom methods is
 #' @importFrom stats sd
 #' @importFrom sf st_crs st_transform st_contains st_sfc st_polygon
-#' @export
 #' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 
@@ -205,7 +204,6 @@ filter_pts <- function(
 #' @description `filter_pts_reset` resets all filter values to FALSE (altering the original dataframe).
 #' @param filters TODO
 #' @import data.table
-#' @export
 
 filter_pts_reset <- function(indata, filters = NA) {
   outdata <- indata # no effect
@@ -225,7 +223,6 @@ filter_pts_reset <- function(indata, filters = NA) {
 #' @description `filter_pts_resample` resets sampling order (altering the original dataframe).
 #' @import data.table
 #' @importFrom data.table setkey
-#' @export
 
 filter_pts_resample <- function(indata) {
   outdata <- indata # no effect
