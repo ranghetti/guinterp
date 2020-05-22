@@ -31,7 +31,8 @@ st_crs2(x, ...)
 An object of class \link{crs} of length 2.
 }
 \description{
-This function is a wrapper for [sf::st_crs], unless
+This function, forked from `sen2r::st_crs2()`,
+ is a wrapper for [sf::st_crs], unless
  threating numeric `character` strings as integers, and
  accepting also UTM timezones, paths of spatial files and paths of
  text files containing WKT like .prj (see details) .
@@ -82,6 +83,13 @@ st_crs2("+init=epsg:32609") # this makes use of the EPSG code
 st_crs2("+proj=utm +zone=9 +datum=WGS84 +units=m +no_defs")
 st_crs2(raster::raster(raster_path)) # st_crs(raster) uses the PROJ.4 as input
 }
+}
+\references{
+L. Ranghetti, M. Boschetti, F. Nutini, L. Busetto (2020).
+ "sen2r": An R toolbox for automatically downloading and preprocessing
+ Sentinel-2 satellite data. _Computers & Geosciences_, 139, 104473. DOI:
+ \href{https://doi.org/10.1016/j.cageo.2020.104473}{10.1016/j.cageo.2020.104473},
+ URL: \url{http://sen2r.ranghetti.info/}.
 }
 \author{
 Luigi Ranghetti, phD (2019) \email{luigi@ranghetti.info}

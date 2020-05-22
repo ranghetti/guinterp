@@ -2,23 +2,26 @@
 % Please edit documentation in R/guinterp.R
 \name{guinterp}
 \alias{guinterp}
-\title{Main GUI for app gestione dati}
+\title{Launch GUInterp}
 \usage{
 guinterp(language = "en")
 }
 \arguments{
-\item{language}{"en" or "it" currently implemented
-(default is to retrieve it from system settings)}
+\item{language}{Interface language (currently only English -- `"en"` --
+and Italian -- `"it"` -- were implemented).
+Default is to retrieve it from system settings.}
 }
 \value{
-OUTPUT_DESCRIPTION
+NULL (the function is called for its side effect)
 }
 \description{
-FUNCTION_DESCRIPTION
+Open the GUInterp graphical interface
 }
-\details{
-DETAILS
+\examples{
+\dontrun{
+guinterp()
+}
 }
 \author{
-Luigi Ranghetti, phD (2019) <ranghetti.l@irea.cnr.it>
+Luigi Ranghetti, phD (2020) <ranghetti.l@irea.cnr.it>
 }

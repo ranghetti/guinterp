@@ -1,0 +1,23 @@
+title: "GUInterp: a Shiny GUI for spatial interpolation"
+template:
+  params:
+    bootswatch: journal
+reference:
+  - title: GUIinterp
+    desc: ~
+    contents:
+      - '`guinterp`'
+navbar:
+  type: inverse
+  left: []
+  right:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: "\u2000Reference"
+      icon: fa-file-code
+      href: reference/index.html
+    - text: "\u2000Changelog"
+      icon: fa-newspaper
+      href: news/index.html
+    - icon: fa-github fa-lg
+      href: https://github.com/ranghetti/guinterp/
