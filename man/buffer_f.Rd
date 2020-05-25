@@ -2,7 +2,7 @@
 % Please edit documentation in R/buffer_f.R
 \name{buffer_f}
 \alias{buffer_f}
-\title{Buffer points in XY space}
+\title{Buffer points in \code{XY} space}
 \usage{
 buffer_f(foo, buffer, reps)
 }
@@ -17,13 +17,14 @@ buffer_f(foo, buffer, reps)
 Returns the original data table with buffered points removed.
 
 Runs numerous iterations, as the random point selection can result in more/fewer output points.
-
-1. Randomly select a single point
-2. Remove points within 50km of that point
-3. Randomly select of the remaining points
+\enumerate{
+\item Randomly select a single point
+\item Remove points within 50km of that point
+\item Randomly select of the remaining points
+}
 }
 \note{
-Taken from https://davidrroberts.wordpress.com/2015/09/25/spatial-buffering-of-points-in-r-while-retaining-maximum-sample-size/
+Taken from \url{https://davidrroberts.wordpress.com/2015/09/25/spatial-buffering-of-points-in-r-while-retaining-maximum-sample-size/}
 }
 \author{
 David R. Roberts (2015)

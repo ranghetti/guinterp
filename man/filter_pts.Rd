@@ -26,32 +26,32 @@ filter_pts_resample(indata)
 \arguments{
 \item{indata}{TODO}
 
-\item{metric}{one between f_rangev, f_rangey, f_zscorey, f_rbiasy, f_rangeq, f_pos, f_editmap, f_selpts}
+\item{metric}{one between \code{f_rangev}, \code{f_rangey}, \code{f_zscorey}, \code{f_rbiasy}, \code{f_rangeq}, \code{f_pos}, \code{f_editmap}, \code{f_selpts}}
 
 \item{value}{value or values to apply (depending on metric)}
 
-\item{inlayer}{optional: sf of fields (see also `id_fieldname`)}
+\item{inlayer}{optional: \code{sf} of fields (see also \code{id_fieldname})}
 
-\item{id_fieldname}{optional: name of the `inlayer` field containing unique ID of fields (default: "idfield")}
+\item{id_fieldname}{optional: name of the \code{inlayer} field containing unique ID of fields (default: \code{"idfield"})}
 
-\item{byfield}{if FALSE (default), consider data as a unique field; if TRUE, iterate each filter on field `id_fieldname`}
+\item{byfield}{if FALSE (default), consider data as a unique field; if TRUE, iterate each filter on field \code{id_fieldname}}
 
-\item{reverse}{if TRUE, the filter is applied reversed (this makes sense only for `f_editmap` and `f_selpts`). default is FALSE.}
+\item{reverse}{if TRUE, the filter is applied reversed (this makes sense only for \code{f_editmap} and \code{f_selpts}). default is FALSE.}
 
 \item{samplesize}{maximum size of the sample of the original data to work with (default: 100000; if NA: all the points)}
 
-\item{sid}{character: name of the ID field to be used (`"uid"`, `"sid1"`, `"sid2"`, `"sid3"` or `"sid4"`)}
+\item{sid}{character: name of the ID field to be used (\code{"uid"}, \code{"sid1"}, \code{"sid2"}, \code{"sid3"} or \code{"sid4"})}
 
 \item{par1}{additional parameter for filtering (now used only for area to filter / not to filter NA values)}
 
 \item{filters}{TODO}
 }
 \description{
-`filter_pts` updates filter values (altering the original dataframe).
+\code{filter_pts} updates filter values (altering the original dataframe).
 
-`filter_pts_reset` resets all filter values to FALSE (altering the original dataframe).
+\code{filter_pts_reset} resets all filter values to FALSE (altering the original dataframe).
 
-`filter_pts_resample` resets sampling order (altering the original dataframe).
+\code{filter_pts_resample} resets sampling order (altering the original dataframe).
 }
 \note{
 License: GPL 3.0

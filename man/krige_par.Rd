@@ -36,7 +36,7 @@ krige_par(
 TODO
 }
 \note{
-Based on https://gis.stackexchange.com/questions/237672/how-to-achieve-parallel-kriging-in-r-to-speed-up-the-process
+Based on \url{https://gis.stackexchange.com/questions/237672/how-to-achieve-parallel-kriging-in-r-to-speed-up-the-process}
 
 License: GPL 3.0
 }

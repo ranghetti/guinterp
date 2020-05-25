@@ -33,7 +33,7 @@ observeEvent(c(input$semiauto_range, input$semiauto_autorange), {
 observe({
   shiny::req(rv$inputpts_sf, input$interp_sampling)
   indata_sel <- rv$inputpts_sf[rv$inputpts_sf$sid<=input$interp_sampling,]
-  rv$v.man <- gstat::vgm(psill=input$sill, model=input$model, range=input$range, nugget=input$nugget)
+  rv$v.man <- gstat::vgm(psill=input$sill-input$nugget, model=input$model, range=input$range, nugget=input$nugget)
   v_formula <- if (length(unique(indata_sel$idfield)) > 1) {selvar ~ idfield} else {selvar ~ 1}
   rv$v <- gstat::variogram(v_formula, indata_sel, cutoff=input$vgm_cutoff)
   # rv$autofit_vgm <- sample(1E6, 1)
@@ -67,7 +67,7 @@ observeEvent(rv$autofit_vgm, {
       ht("_err_autofit_vgm_2", i18n)
     )})
   }
-  updateNumericInput(session, "sill", value=signif(v.auto[,"psill"],3)[2])
+  updateNumericInput(session, "sill", value=sum(signif(v.auto[,"psill"],3)))
   updateNumericInput(session, "nugget", value=signif(v.auto[,"psill"],3)[1])
   updateNumericInput(session, "range", value=signif(v.auto[2,3],3))
 })

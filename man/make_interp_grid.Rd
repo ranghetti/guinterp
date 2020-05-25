@@ -15,13 +15,13 @@ make_interp_grid(
 \arguments{
 \item{indata_sf}{TODO all input points}
 
-\item{outres}{`numeric (1)` TODO spatial resolution of output raster (in crs unit)}
+\item{outres}{\code{numeric (1)} TODO spatial resolution of output raster (in CRS unit)}
 
-\item{outcrs}{`crs` output crs}
+\item{outcrs}{\code{crs} output CRS}
 
-\item{offset}{`numeric (2)` offset from (0,0) in outcrs projection}
+\item{offset}{\code{numeric (2)} offset from (0,0) in \code{outcrs} projection}
 
-\item{border}{`numeric (1)` TODO extent of border (in crs units)}
+\item{border}{\code{numeric (1)} TODO extent of border (in CRS units)}
 }
 \description{
 TODO

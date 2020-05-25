@@ -8,7 +8,7 @@ Status](https://travis-ci.com/ranghetti/guinterp.svg?branch=master)](https://tra
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![Contributor
-Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](http://guinterp.ranghetti.info/.github/CODE-OF-CONDUCT.html)
+Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](.github/CODE-OF-CONDUCT.md)
 
 # GUInterp: a Shiny GUI for spatial interpolation
 
@@ -94,5 +94,5 @@ Shiny GUI to support spatial interpolation”**. *European R users meeting
 ## Contributing
 
 This project is released with a [Contributor Code of
-Conduct](http://guinterp.ranghetti.info/.github/CODE-OF-CONDUCT.html).
-By participating in this project you agree to abide by its terms.
+Conduct](.github/CODE-OF-CONDUCT.md). By participating in this project
+you agree to abide by its terms.

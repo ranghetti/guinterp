@@ -1,9 +1,8 @@
 #' @title path_check
 #' @description accessory functions to check that a directory exists and
-#'  is writable
-#' @param path `string` fullpath to a folder
+#'  is writeable
+#' @param path `string` full path to a folder
 #' @rdname path_check
-#' @export
 #' @author Luigi Ranghetti, phD (2019)
 #' @importFrom shiny renderUI span renderText
 #'
@@ -33,9 +32,8 @@ path_check <- function(path) {
 #' @title raster_check
 #' @description accessory functions to check that a raster exists and
 #'  has a correct grid
-#' @param path `string` fullpath to a raster
+#' @param path `string` full path to a raster
 #' @rdname raster_check
-#' @export
 #' @author Luigi Ranghetti, phD (2019)
 #' @importFrom shiny renderUI span renderText
 #' @importFrom stars read_stars

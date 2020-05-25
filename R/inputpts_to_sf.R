@@ -1,4 +1,4 @@
-#' @title Make sf from filtered data
+#' @title Make `sf` from filtered data
 #' @description TODO
 #' @param indata TODO
 #' @param outcrs `CRS` output CRS
@@ -6,7 +6,6 @@
 #' @param sid character: name of the ID field to be used (`"uid"`, `"sid1"`, `"sid2"`, `"sid3"` or `"sid4"`)
 #' @importFrom sf st_as_sf st_crs st_transform
 #' @import data.table
-#' @export
 #' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 

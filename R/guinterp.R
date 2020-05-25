@@ -1,13 +1,15 @@
-#' @title Main GUI for app gestione dati
-#' @description FUNCTION_DESCRIPTION
-#' @param language "en" or "it" currently implemented
-#'  (default is to retrieve it from system settings)
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @rdname guinterp
+#' @title Launch GUInterp
+#' @description Open the GUInterp graphical interface
+#' @param language Interface language (currently only English -- `"en"` --
+#'  and Italian -- `"it"` -- were implemented).
+#'  Default is to retrieve it from system settings.
+#' @return NULL (the function is called for its side effect)
 #' @export
-#' @author Luigi Ranghetti, phD (2019) <ranghetti.l@irea.cnr.it>
+#' @author Luigi Ranghetti, phD (2020) \email{luigi@@ranghetti.info}
 #' @importFrom shiny shinyOptions runApp
+#' @examples \dontrun{
+#' guinterp()
+#' }
 guinterp <- function(language = "en")  {
 
   # set language

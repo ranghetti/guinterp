@@ -2,18 +2,18 @@
 % Please edit documentation in R/inputpts_to_sf.R
 \name{inputpts_to_sf}
 \alias{inputpts_to_sf}
-\title{Make sf from filtered data}
+\title{Make \code{sf} from filtered data}
 \usage{
 inputpts_to_sf(indata, outcrs = 3857, all = FALSE, sid = "sid3")
 }
 \arguments{
 \item{indata}{TODO}
 
-\item{outcrs}{`CRS` output CRS}
+\item{outcrs}{\code{CRS} output CRS}
 
 \item{all}{logical (TRUE for all points, FALSE for only filtered ones)}
 
-\item{sid}{character: name of the ID field to be used (`"uid"`, `"sid1"`, `"sid2"`, `"sid3"` or `"sid4"`)}
+\item{sid}{character: name of the ID field to be used (\code{"uid"}, \code{"sid1"}, \code{"sid2"}, \code{"sid3"} or \code{"sid4"})}
 }
 \description{
 TODO

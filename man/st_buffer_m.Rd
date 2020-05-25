@@ -2,7 +2,7 @@
 % Please edit documentation in R/st_buffer_m.R
 \name{st_buffer_m}
 \alias{st_buffer_m}
-\title{Buffer latlon polygons in metres}
+\title{Buffer longitude-latitude polygons in metres}
 \usage{
 st_buffer_m(x, dist)
 }
@@ -15,7 +15,7 @@ st_buffer_m(x, dist)
 TODO
 }
 \note{
-Modified from https://gis.stackexchange.com/questions/121489/1km-circles-around-lat-long-points-in-many-places-in-world
+Modified from \url{https://gis.stackexchange.com/questions/121489/1km-circles-around-lat-long-points-in-many-places-in-world}
 
 License: GPL 3.0
 }

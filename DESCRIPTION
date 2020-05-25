@@ -1,7 +1,7 @@
 Package: guinterp
 Type: Package
 Title: A Shiny GUI for spatial interpolation
-Version: 0.2.4
+Version: 0.2.5
 Authors@R: c(person("Luigi", "Ranghetti", 
                     email = "luigi@ranghetti.info", 
                     role = c("aut", "cre"), 
@@ -14,6 +14,10 @@ Description: This package provides a Shiny GUI designed to simplify
  operations needed to interpolate points, i.e. filtering points, 
  creating the semivariogram and doing the kriging.
 License: GPL-3 + file LICENSE
+Encoding: UTF-8
+URL: http://guinterp.ranghetti.info, https://github.com/ranghetti/guinterp
+BugReports: https://github.com/ranghetti/guinterp/issues
+Depends: R (>= 3.5.0)
 Imports: 
  data.table,
  doParallel,
@@ -24,6 +28,8 @@ Imports:
  gstat,
  jsonlite,
  leaflet,
+ mapedit,
+ leafpm,
  magrittr,
  methods,
  parallel,
@@ -39,7 +45,9 @@ Imports:
  stars,
  stats,
  stringr
-Encoding: UTF-8
-URL: https://github.com/ranghetti/guinterp
-BugReports: https://github.com/ranghetti/guinterp/issues
+Suggests:
+ spelling
+VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
+Language: en-GB

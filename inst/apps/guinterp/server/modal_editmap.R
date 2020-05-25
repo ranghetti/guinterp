@@ -52,7 +52,7 @@ observeEvent(input$editmap, ignoreInit = TRUE, {
 
   shiny::showModal(shiny::modalDialog(
     size = "l",
-    mapedit::editModUI(editmap_ns_name),
+    mapedit::editModUI(editmap_ns_name, height = "650px"),
     shiny::div(
       style = "margin-top:15px;text-align:center;",
       shiny::radioButtons(
