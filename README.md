@@ -1,11 +1,4 @@
 
-  - [GUInterp: a Shiny GUI for spatial
-    interpolation](#guinterp-a-shiny-gui-for-spatial-interpolation)
-      - [Installation](#installation)
-      - [Usage](#usage)
-      - [Credits](#credits)
-      - [Contributing](#contributing)
-
 <!-- IMPORTANT: do NOT edit README.Rmd! Edit index.Rmd instead, -->
 
 <!-- and generate README.Rmd using utils/code/create_README.sh  -->

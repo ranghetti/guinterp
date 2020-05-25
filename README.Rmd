@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 # GUInterp: a Shiny GUI for spatial interpolation
 
 GUInterp is a Graphical User Interface (GUI) supporting the spatial interpolation of points data.
-The purpose of the GUI is to provide graphical tools to perform the steps
+The purpose of the GUI is to provide graphical tools to perform the steps 
 commonly required to interpolate points data within defined borders:
 filtering outliers,
 defining a suitable variogram (in case of Kriging interpolation),

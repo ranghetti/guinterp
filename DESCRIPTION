@@ -1,7 +1,7 @@
 Package: guinterp
 Type: Package
 Title: A Shiny GUI for spatial interpolation
-Version: 0.2.4
+Version: 0.2.5
 Authors@R: c(person("Luigi", "Ranghetti", 
                     email = "luigi@ranghetti.info", 
                     role = c("aut", "cre"), 
