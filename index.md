@@ -62,7 +62,7 @@ are loaded, they can be treated as separate objects during
 interpolation.
 
 After loading files, the main GUI appears. In the left column, data can
-visualised thanks to a histogram and a map; both of them hightlight
+visualised thanks to a histogram and a map; both of them highlight
 filtered vs. non-filtered points. The right column incudes parameter
 selectors, organised in four boxes:
 

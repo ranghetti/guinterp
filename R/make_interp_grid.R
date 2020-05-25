@@ -2,7 +2,7 @@
 #' @description TODO
 #' @param indata_sf TODO all input points
 #' @param outres `numeric (1)` TODO spatial resolution of output raster (in CRS unit)
-#' @param outcrs `crs` output crs
+#' @param outcrs `crs` output CRS
 #' @param offset `numeric (2)` offset from (0,0) in `outcrs` projection
 #' @param border `numeric (1)` TODO extent of border (in CRS units)
 #' @importFrom sf st_crs st_transform

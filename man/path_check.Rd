@@ -7,11 +7,11 @@
 path_check(path)
 }
 \arguments{
-\item{path}{`string` full path to a folder}
+\item{path}{\code{string} full path to a folder}
 }
 \description{
 accessory functions to check that a directory exists and
- is writable
+is writeable
 }
 \author{
 Luigi Ranghetti, phD (2019)

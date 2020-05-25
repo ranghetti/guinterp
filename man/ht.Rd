@@ -20,21 +20,21 @@ ph(...)
 \item{...}{Elements to be pasted.}
 }
 \value{
-`t()` and `ht()`: if `x` is a 1-length character, an `HTML` object;
- if `x` is a vector with length > 1, a list of `HTML` objects;
- if `x` is a list of vectors, a list of objects.
+\code{t()} and \code{ht()}: if \code{x} is a 1-length character, an \code{HTML} object;
+if \code{x} is a vector with length > 1, a list of \code{HTML} objects;
+if \code{x} is a list of vectors, a list of objects.
 
- `ph()`: an `HTML` element.
+\code{ph()}: an \code{HTML} element.
 }
 \description{
-Internal functions used to convert  elements to `HTML`.
+Internal functions used to convert  elements to \code{HTML}.
 
- `t()` is converts [list of] character vectors to `HTML`.
+\code{t()} is converts \link{list of} character vectors to \code{HTML}.
 
- `ht()` converts a vector of translation labels to a list of `HTML`
- translated entities.
+\code{ht()} converts a vector of translation labels to a list of \code{HTML}
+translated entities.
 
- `ph()` pastes `HTML` entities.
+\code{ph()} pastes \code{HTML} entities.
 }
 \note{
 License: GPL 3.0

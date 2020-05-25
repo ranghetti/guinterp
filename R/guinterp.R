@@ -5,7 +5,7 @@
 #'  Default is to retrieve it from system settings.
 #' @return NULL (the function is called for its side effect)
 #' @export
-#' @author Luigi Ranghetti, phD (2020) <ranghetti.l@irea.cnr.it>
+#' @author Luigi Ranghetti, phD (2020) \email{luigi@@ranghetti.info}
 #' @importFrom shiny shinyOptions runApp
 #' @examples \dontrun{
 #' guinterp()
