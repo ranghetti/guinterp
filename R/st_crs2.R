@@ -75,101 +75,104 @@
 #' }
 
 
-st_crs2 <- function(x, ...) UseMethod("st_crs2")
+st_crs2 <- function(x, ...) {
 
-## character: several cases (see)
-st_crs2.character <- function(x, ...) {
+  ## integer or numeric (EPGS / UTM zone): treat as character
+  if (inherits(x, c("integer", "numeric"))) {
+    x <- as.character(x)
+  }
 
-  ## case 1: EPSG code / UTM zone
-  x_epsg <- if (grepl("^(([0-5]?[0-9])|60)[Nn]?$", x)) {
-    # x: UTM zone North -> integer EPSG
-    as.integer(paste0(
-      "326",
-      str_pad2(
-        gsub("^(([0-5]?[0-9])|60)[Nn]?$", "\\1", x),
-        2, "left", "0"
+  ## character: several cases (see)
+  if (inherits(x, "character")) {
+
+    ## case 1: EPSG code / UTM zone
+    x_epsg <- if (grepl("^(([0-5]?[0-9])|60)[Nn]?$", x)) {
+      # x: UTM zone North -> integer EPSG
+      as.integer(paste0(
+        "326",
+        str_pad2(
+          gsub("^(([0-5]?[0-9])|60)[Nn]?$", "\\1", x),
+          2, "left", "0"
+        )
+      ))
+    } else if (grepl("^(([0-5]?[0-9])|60)[Ss]$", x)) {
+      # x: UTM zone South -> integer EPSG
+      as.integer(paste0(
+        "327",
+        str_pad2(
+          gsub("^(([0-5]?[0-9])|60)[Ss]$", "\\1", x),
+          2, "left", "0"
+        )
+      ))
+    } else if (grepl("^[0-9]+$", x)) {
+      # x: EPSG (integer, numeric or character) -> integer EPSG
+      as.integer(x)
+    } else if (grepl("^[Ee][Pp][Ss][Gg]\\:[0-9]+$", x)) {
+      # x: EPSG (in the form "EPSG:xxx") -> integer EPSG
+      as.integer(gsub("^[Ee][Pp][Ss][Gg]\\:([0-9]+)$", "\\1", x))
+    } else if (grepl("^\\+init\\=epsg:[0-9]+$", tolower(x))) {
+      # x: PROJ.4 with only EPSG -> integer EPSG
+      as.integer(gsub("^\\+init\\=epsg:([0-9]+)$", "\\1", tolower(x)))
+    } else {
+      NULL
+    }
+    if (!is.null(x_epsg)) {
+      return(sf::st_crs(x_epsg, ...))
+    }
+
+    ## case 2: PROJ.4
+    if (grepl("^\\+[a-z]+\\=", x)) {
+      # x: PROJ.4 -> character PROJ.4 with warning
+      print_message(
+        type = "warning",
+        "Using PROJ.4 strings is deprecated with PROJ >= 6 ",
+        "(see https://www.r-spatial.org/r/2020/03/17/wkt.html)."
       )
-    ))
-  } else if (grepl("^(([0-5]?[0-9])|60)[Ss]$", x)) {
-    # x: UTM zone South -> integer EPSG
-    as.integer(paste0(
-      "327",
-      str_pad2(
-        gsub("^(([0-5]?[0-9])|60)[Ss]$", "\\1", x),
-        2, "left", "0"
-      )
-    ))
-  } else if (grepl("^[0-9]+$", x)) {
-    # x: EPSG (integer, numeric or character) -> integer EPSG
-    as.integer(x)
-  } else if (grepl("^[Ee][Pp][Ss][Gg]\\:[0-9]+$", x)) {
-    # x: EPSG (in the form "EPSG:xxx") -> integer EPSG
-    as.integer(gsub("^[Ee][Pp][Ss][Gg]\\:([0-9]+)$", "\\1", x))
-  } else if (grepl("^\\+init\\=epsg:[0-9]+$", tolower(x))) {
-    # x: PROJ.4 with only EPSG -> integer EPSG
-    as.integer(gsub("^\\+init\\=epsg:([0-9]+)$", "\\1", tolower(x)))
-  } else {
-    NULL
-  }
-  if (!is.null(x_epsg)) {
-    return(sf::st_crs(x_epsg, ...))
-  }
+      return(sf::st_crs(x, ...))
+    }
 
-  ## case 2: PROJ.4
-  if (grepl("^\\+[a-z]+\\=", x)) {
-    # x: PROJ.4 -> character PROJ.4 with warning
-    print_message(
-      type = "warning",
-      "Using PROJ.4 strings is deprecated with PROJ >= 6 ",
-      "(see https://www.r-spatial.org/r/2020/03/17/wkt.html)."
-    )
-    return(sf::st_crs(x, ...))
-  }
-
-  ## case 3: file path
-  if (file.exists(as.character(x))) {
-    # x: file path -> spatial file or WKT
-    x2 <- tryCatch(
-      # x: path of a vector file -> sf
-      st_read(x, quiet = TRUE),
-      warning = function(w) {
-        if (grepl("no simple feature geometries present\\: returning a data\\.frame", w)) {
-          # x: path of a tabular file -> x (st_crs will return the proper error)
-          x
-        } else {st_read(x, quiet = TRUE)}
-      },
-      error = function(e) {tryCatch(
-        # x: path of a text file with WKT -> crs
-        suppressWarnings(sf::st_crs(readLines(x))),
-        error = function(e) {tryCatch(
-          # x: path of a raster file -> stars proxy
-          gdal_crs(x),
-          error = function(e) {
-            # x: path of a non supported file -> x (st_crs will return the proper error)
+    ## case 3: file path
+    if (file.exists(as.character(x))) {
+      # x: file path -> spatial file or WKT
+      x2 <- tryCatch(
+        # x: path of a vector file -> sf
+        st_read(x, quiet = TRUE),
+        warning = function(w) {
+          if (grepl("no simple feature geometries present\\: returning a data\\.frame", w)) {
+            # x: path of a tabular file -> x (st_crs will return the proper error)
             x
-          }
+          } else {st_read(x, quiet = TRUE)}
+        },
+        error = function(e) {tryCatch(
+          # x: path of a text file with WKT -> crs
+          suppressWarnings(sf::st_crs(readLines(x))),
+          error = function(e) {tryCatch(
+            # x: path of a raster file -> stars proxy
+            gdal_crs(x),
+            error = function(e) {
+              # x: path of a non supported file -> x (st_crs will return the proper error)
+              x
+            }
+          )}
         )}
-      )}
-    )
-    return(sf::st_crs(x2, ...))
+      )
+      return(sf::st_crs(x2, ...))
+    }
+
+    ## case 4: WKT and other characters
+    if (grepl("^((PROJCR?S)|(GEOGCR?S))\\[.+\\]$", x)) {
+      # x: WKT string -> crs
+      return(sf::st_crs(x, ...))
+    }
+
+    ## any other case: pass to st_crs as is
+    sf::st_crs(x, ...)
+
+  } else {
+
+    ## classes already managed by st_crs()
+    if (missing(x)) {sf::st_crs(NA)} else {sf::st_crs(x, ...)}
+
   }
 
-  ## case 4: WKT and other characters
-  if (grepl("^((PROJCR?S)|(GEOGCR?S))\\[.+\\]$", x)) {
-    # x: WKT string -> crs
-    return(sf::st_crs(x, ...))
-  }
-
-  ## any other case: pass to st_crs as is
-  sf::st_crs(x, ...)
-
-}
-
-## integer or numeric (EPGS / UTM zone): treat as character
-st_crs2.integer <- function(x, ...) {st_crs2.character(as.character(x), ...)}
-st_crs2.numeric <- function(x, ...) {st_crs2.character(as.character(x), ...)}
-
-## classes already managed by st_crs()
-st_crs2.default <- function(x, ...) {
-  if (missing(x)) {sf::st_crs(NA)} else {sf::st_crs(x, ...)}
 }
