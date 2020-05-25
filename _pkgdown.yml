@@ -1,4 +1,4 @@
-title: "GUInterp: a Shiny GUI for spatial interpolation"
+title: "GUInterp: a Shiny GUI for Spatial Interpolation"
 template:
   params:
     bootswatch: journal

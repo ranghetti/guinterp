@@ -10,7 +10,7 @@ v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/
 [![Contributor
 Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](.github/CODE-OF-CONDUCT.md)
 
-# GUInterp: a Shiny GUI for spatial interpolation
+# GUInterp: a Shiny GUI for Spatial Interpolation
 
 GUInterp is a Graphical User Interface (GUI) supporting the spatial
 interpolation of points data. The purpose of the GUI is to provide
