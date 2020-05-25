@@ -74,7 +74,7 @@ The right column incudes parameter selectors, organised in four boxes:
 - **Output format** allows defining the output raster grid;
 - **Interpolation settings** allows choosing the interpolation method
     (IDW or Kriging) and, in this case, defining the semivariogram model
-    with another interactive interface;
+    with another interactive interface; 
 - **Processing settings** includes fine-tuning settings to speed-up interpolation.
 
 

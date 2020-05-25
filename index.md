@@ -78,7 +78,7 @@ version 3](https://www.gnu.org/licenses/gpl-3.0.html) (GPL‑3).
 To cite this package, please use the following entry:
 
 L. Ranghetti and L. Busetto (2020). **GUInterp: a Shiny GUI to support
-spatial interpolation**. R package version 0.2.5. DOI:
+spatial interpolation**. R package version 0.2.6. DOI:
 [10.5281/zenodo.3843327](https://dx.doi.org/10.5281/zenodo.3843327).
 URL: <http://guinterp.ranghetti.info/>.
 
@@ -87,7 +87,7 @@ URL: <http://guinterp.ranghetti.info/>.
   title  = {GUInterp: a Shiny GUI for Spatial Interpolation},
   author = {Ranghetti, Luigi and Busetto, Lorenzo},
   year   = {2020},
-  note   = {R package version 0.2.5},
+  note   = {R package version 0.2.6},
   doi    = {10.5281/zenodo.3843327},
   url    = {http://guinterp.ranghetti.info/},
 }
