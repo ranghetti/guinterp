@@ -1,4 +1,4 @@
-#' @title Buffer latlon polygons in metres
+#' @title Buffer longitude-latitude polygons in metres
 #' @description TODO
 #' @param x TODO
 #' @param dist TODO

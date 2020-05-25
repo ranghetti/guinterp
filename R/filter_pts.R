@@ -1,10 +1,10 @@
 #' @title Update filter values
 #' @description `filter_pts` updates filter values (altering the original dataframe).
 #' @param indata TODO
-#' @param metric one between f_rangev, f_rangey, f_zscorey, f_rbiasy, f_rangeq, f_pos, f_editmap, f_selpts
+#' @param metric one between `f_rangev`, `f_rangey`, `f_zscorey`, `f_rbiasy`, `f_rangeq`, `f_pos`, `f_editmap`, `f_selpts`
 #' @param value value or values to apply (depending on metric)
-#' @param inlayer optional: sf of fields (see also `id_fieldname`)
-#' @param id_fieldname optional: name of the `inlayer` field containing unique ID of fields (default: "idfield")
+#' @param inlayer optional: `sf` of fields (see also `id_fieldname`)
+#' @param id_fieldname optional: name of the `inlayer` field containing unique ID of fields (default: `"idfield"`)
 #' @param byfield if FALSE (default), consider data as a unique field; if TRUE, iterate each filter on field `id_fieldname`
 #' @param reverse if TRUE, the filter is applied reversed (this makes sense only for `f_editmap` and `f_selpts`). default is FALSE.
 #' @param samplesize maximum size of the sample of the original data to work with (default: 100000; if NA: all the points)

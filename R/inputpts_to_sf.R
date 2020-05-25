@@ -1,4 +1,4 @@
-#' @title Make sf from filtered data
+#' @title Make `sf` from filtered data
 #' @description TODO
 #' @param indata TODO
 #' @param outcrs `CRS` output CRS

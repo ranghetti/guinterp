@@ -2,7 +2,7 @@
 % Please edit documentation in R/st_buffer_m.R
 \name{st_buffer_m}
 \alias{st_buffer_m}
-\title{Buffer latlon polygons in metres}
+\title{Buffer longitude-latitude polygons in metres}
 \usage{
 st_buffer_m(x, dist)
 }

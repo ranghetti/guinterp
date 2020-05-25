@@ -1,4 +1,4 @@
-#' @title Buffer points in XY space
+#' @title Buffer points in `XY` space
 #' @description Returns the original data table with buffered points removed.
 #'
 #' Runs numerous iterations, as the random point selection can result in more/fewer output points.
@@ -14,7 +14,7 @@
 #' @author David R. Roberts (2015)
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
 #' @export
-#' @note Taken from https://davidrroberts.wordpress.com/2015/09/25/spatial-buffering-of-points-in-r-while-retaining-maximum-sample-size/
+#' @note Taken from \url{https://davidrroberts.wordpress.com/2015/09/25/spatial-buffering-of-points-in-r-while-retaining-maximum-sample-size/}
 
 buffer_f <- function(foo, buffer, reps){
 

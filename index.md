@@ -58,7 +58,7 @@ Once opened, the GUI allows user to import a points dataset and an
 optional polygon file of borders (alternatively, the bounding box of
 points is used). Points data must contain the variable to be
 interpolated (a selector allows selecting it). In case multiple polygons
-are loaded, they can be threated as separate objects during
+are loaded, they can be treated as separate objects during
 interpolation.
 
 After loading files, the main GUI appears. In the left column, data can

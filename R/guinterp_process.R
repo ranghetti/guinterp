@@ -5,10 +5,10 @@
 #' @param inlayer SpatialPolygonsDataFrame of fields (see also `id_fieldname`)
 #' @param filtered logical: is `inputpts` already filtered? If TRUE (default),
 #'  no additional filter is applied; if FALSE, a standard automatic filter is applied.
-#' @param id_fieldname optional: name of the `inlayer` field containing unique ID of fields (default: "idfield")
+#' @param id_fieldname optional: name of the `inlayer` field containing unique ID of fields (default: `"idfield"`)
 #' @param interp_dir directory where rasters of single polygons are stores (default: temporary directory)
 #' @param out_path path of the output merged raster (default: temporary directory)
-#' @param interp_method interpolation method ("krige" or "idw")
+#' @param interp_method interpolation method (`"krige"` or `"idw"`)
 #' @param smooth logical: should rasters be smoothed after interpolation?
 #' @param interp_res output raster resolution (numeric, in metres)
 #' @param out_crs optional: CRS of output raster (default: CRS of inputpts)

@@ -26,13 +26,13 @@ filter_pts_resample(indata)
 \arguments{
 \item{indata}{TODO}
 
-\item{metric}{one between f_rangev, f_rangey, f_zscorey, f_rbiasy, f_rangeq, f_pos, f_editmap, f_selpts}
+\item{metric}{one between `f_rangev`, `f_rangey`, `f_zscorey`, `f_rbiasy`, `f_rangeq`, `f_pos`, `f_editmap`, `f_selpts`}
 
 \item{value}{value or values to apply (depending on metric)}
 
-\item{inlayer}{optional: sf of fields (see also `id_fieldname`)}
+\item{inlayer}{optional: `sf` of fields (see also `id_fieldname`)}
 
-\item{id_fieldname}{optional: name of the `inlayer` field containing unique ID of fields (default: "idfield")}
+\item{id_fieldname}{optional: name of the `inlayer` field containing unique ID of fields (default: `"idfield"`)}
 
 \item{byfield}{if FALSE (default), consider data as a unique field; if TRUE, iterate each filter on field `id_fieldname`}
 

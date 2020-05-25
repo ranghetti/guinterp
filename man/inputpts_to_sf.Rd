@@ -2,7 +2,7 @@
 % Please edit documentation in R/inputpts_to_sf.R
 \name{inputpts_to_sf}
 \alias{inputpts_to_sf}
-\title{Make sf from filtered data}
+\title{Make `sf` from filtered data}
 \usage{
 inputpts_to_sf(indata, outcrs = 3857, all = FALSE, sid = "sid3")
 }

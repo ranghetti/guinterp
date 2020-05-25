@@ -20,14 +20,16 @@ st_transform_utm(x)
 \item{lat}{TODO}
 }
 \description{
-`st_crs_utm` gives the UTM zone of an sf object
+`st_crs_utm` gives the UTM zone of an `sf` object
 
 `st_crs_utm_from_lonlat` gives the UTM zone of a couple of geographic coordinates
 
-`st_transform_utm` transforms an sf object in the proper UTM zone
+`st_transform_utm` transforms an `sf` object in the proper UTM zone
 }
 \note{
 License: GPL 3.0
+
+ See also \url{https://stackoverflow.com/questions/40132542/get-a-cartesian-projection-accurate-around-a-lat-lng-pair}.
 }
 \author{
 Luigi Ranghetti, phD (2019) \email{ranghetti.l@irea.cnr.it}

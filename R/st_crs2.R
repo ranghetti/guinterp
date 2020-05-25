@@ -1,23 +1,23 @@
-#' @title Retrieve coordinate reference system from sf or sfc object
+#' @title Retrieve coordinate reference system from `sf` or `sfc` object
 #' @name st_crs2
 #' @description This function, forked from `sen2r::st_crs2()`,
 #'  is a wrapper for [sf::st_crs], unless
-#'  threating numeric `character` strings as integers, and
-#'  accepting also UTM timezones, paths of spatial files and paths of
-#'  text files containing WKT like .prj (see details) .
+#'  treating numeric `character` strings as integers, and
+#'  accepting also UTM time zones, paths of spatial files and paths of
+#'  text files containing WKT like `.prj` (see details) .
 #' @param x numeric, character, or object of class \link{sf} or \link{sfc}, being:
 #'  - EPSG code: numeric (e.g. `32632`) or character (in the form
 #'      `"32632"` or `"EPSG:32632"`);
 #'  - UTM zone: numeric (e.g. `32`, interpreted as 32 North) or character
 #'      (e.g. `"32"` or `"32N"` for zone 32 North, `"32S"` for 32 South);
 #'  - WKT test: passed as character string or as path of a text file
-#'      containing it (e.g. the path of a .prj file);
+#'      containing it (e.g. the path of a `.prj` file);
 #'  - PROJ.4 string, passed as character (e.g.
 #'      `"+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs"`
 #'      (**NOTE**: this representation is deprecated with PROJ >= 6
-#'      -- see http://rgdal.r-forge.r-project.org/articles/PROJ6_GDAL3.html --
+#'      -- see \url{http://rgdal.r-forge.r-project.org/articles/PROJ6_GDAL3.html} --
 #'      so a warning is returned using it, unless the string contains only
-#'      the epsg code -- e.g. `"+init=epsg:32632"`, in which case the EPSG
+#'      the EPSG code -- e.g. `"+init=epsg:32632"`, in which case the EPSG
 #'      code is taken);
 #'  - path of a spatial file (managed by [sf::st_read] or [stars::read_stars]),
 #'      passed as character string of length 1;
@@ -165,7 +165,7 @@ st_crs2.character <- function(x, ...) {
 
 }
 
-## integer or numeric (EPGS / UTM zone): threat as character
+## integer or numeric (EPGS / UTM zone): treat as character
 st_crs2.integer <- function(x, ...) {st_crs2.character(as.character(x), ...)}
 st_crs2.numeric <- function(x, ...) {st_crs2.character(as.character(x), ...)}
 

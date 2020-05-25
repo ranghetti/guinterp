@@ -2,7 +2,7 @@
 % Please edit documentation in R/buffer_f.R
 \name{buffer_f}
 \alias{buffer_f}
-\title{Buffer points in XY space}
+\title{Buffer points in `XY` space}
 \usage{
 buffer_f(foo, buffer, reps)
 }
@@ -23,7 +23,7 @@ Runs numerous iterations, as the random point selection can result in more/fewer
 3. Randomly select of the remaining points
 }
 \note{
-Taken from https://davidrroberts.wordpress.com/2015/09/25/spatial-buffering-of-points-in-r-while-retaining-maximum-sample-size/
+Taken from \url{https://davidrroberts.wordpress.com/2015/09/25/spatial-buffering-of-points-in-r-while-retaining-maximum-sample-size/}
 }
 \author{
 David R. Roberts (2015)

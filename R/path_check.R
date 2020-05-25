@@ -1,7 +1,7 @@
 #' @title path_check
 #' @description accessory functions to check that a directory exists and
 #'  is writable
-#' @param path `string` fullpath to a folder
+#' @param path `string` full path to a folder
 #' @rdname path_check
 #' @author Luigi Ranghetti, phD (2019)
 #' @importFrom shiny renderUI span renderText

@@ -7,7 +7,7 @@
 path_check(path)
 }
 \arguments{
-\item{path}{`string` fullpath to a folder}
+\item{path}{`string` full path to a folder}
 }
 \description{
 accessory functions to check that a directory exists and

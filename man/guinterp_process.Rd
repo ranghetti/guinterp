@@ -37,13 +37,13 @@ guinterp_process(
 \item{filtered}{logical: is `inputpts` already filtered? If TRUE (default),
 no additional filter is applied; if FALSE, a standard automatic filter is applied.}
 
-\item{id_fieldname}{optional: name of the `inlayer` field containing unique ID of fields (default: "idfield")}
+\item{id_fieldname}{optional: name of the `inlayer` field containing unique ID of fields (default: `"idfield"`)}
 
 \item{interp_dir}{directory where rasters of single polygons are stores (default: temporary directory)}
 
 \item{out_path}{path of the output merged raster (default: temporary directory)}
 
-\item{interp_method}{interpolation method ("krige" or "idw")}
+\item{interp_method}{interpolation method (`"krige"` or `"idw"`)}
 
 \item{smooth}{logical: should rasters be smoothed after interpolation?}
 

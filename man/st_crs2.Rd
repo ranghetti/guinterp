@@ -2,7 +2,7 @@
 % Please edit documentation in R/st_crs2.R
 \name{st_crs2}
 \alias{st_crs2}
-\title{Retrieve coordinate reference system from sf or sfc object}
+\title{Retrieve coordinate reference system from `sf` or `sfc` object}
 \usage{
 st_crs2(x, ...)
 }
@@ -13,13 +13,13 @@ st_crs2(x, ...)
 - UTM zone: numeric (e.g. `32`, interpreted as 32 North) or character
     (e.g. `"32"` or `"32N"` for zone 32 North, `"32S"` for 32 South);
 - WKT test: passed as character string or as path of a text file
-    containing it (e.g. the path of a .prj file);
+    containing it (e.g. the path of a `.prj` file);
 - PROJ.4 string, passed as character (e.g.
     `"+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs"`
     (**NOTE**: this representation is deprecated with PROJ >= 6
-    -- see http://rgdal.r-forge.r-project.org/articles/PROJ6_GDAL3.html --
+    -- see \url{http://rgdal.r-forge.r-project.org/articles/PROJ6_GDAL3.html} --
     so a warning is returned using it, unless the string contains only
-    the epsg code -- e.g. `"+init=epsg:32632"`, in which case the EPSG
+    the EPSG code -- e.g. `"+init=epsg:32632"`, in which case the EPSG
     code is taken);
 - path of a spatial file (managed by [sf::st_read] or [stars::read_stars]),
     passed as character string of length 1;
@@ -33,9 +33,9 @@ An object of class \link{crs} of length 2.
 \description{
 This function, forked from `sen2r::st_crs2()`,
  is a wrapper for [sf::st_crs], unless
- threating numeric `character` strings as integers, and
- accepting also UTM timezones, paths of spatial files and paths of
- text files containing WKT like .prj (see details) .
+ treating numeric `character` strings as integers, and
+ accepting also UTM time zones, paths of spatial files and paths of
+ text files containing WKT like `.prj` (see details) .
 }
 \details{
 See [sf::st_crs] for details.
