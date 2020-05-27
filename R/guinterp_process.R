@@ -2,7 +2,7 @@
 #' @description This function calls other functions of the library to perform
 #'  interpolation over different fields.
 #' @param inputpts TODO
-#' @param inlayer SpatialPolygonsDataFrame of fields (see also `id_fieldname`)
+#' @param inlayer `SpatialPolygonsDataFrame` of fields (see also `id_fieldname`)
 #' @param filtered logical: is `inputpts` already filtered? If TRUE (default),
 #'  no additional filter is applied; if FALSE, a standard automatic filter is applied.
 #' @param id_fieldname optional: name of the `inlayer` field containing unique ID of fields (default: `"idfield"`)
@@ -11,8 +11,8 @@
 #' @param interp_method interpolation method (`"krige"` or `"idw"`)
 #' @param smooth logical: should rasters be smoothed after interpolation?
 #' @param interp_res output raster resolution (numeric, in metres)
-#' @param out_crs optional: CRS of output raster (default: CRS of inputpts)
-#' @param grid_offset optional: grid offset from point (0,0) in out_crs (2-length numeric)
+#' @param out_crs optional: CRS of output raster (default: CRS of `inputpts`)
+#' @param grid_offset optional: grid offset from point (0,0) in `out_crs` (2-length numeric)
 #' @param samplesize maximum size of the sample of the original data to work with (default: 10000; if NA: all the points)
 #' @param samplescheme sampling scheme within geometries (`"random"`, `"strat_npts"` or `"strat_area"`)
 #' @param buffer_radius numeric: buffer (default: 15) to be applied internally to field borders.

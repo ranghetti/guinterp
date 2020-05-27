@@ -2,43 +2,45 @@
 % Please edit documentation in R/st_crs2.R
 \name{st_crs2}
 \alias{st_crs2}
-\title{Retrieve coordinate reference system from `sf` or `sfc` object}
+\title{Retrieve coordinate reference system from \code{sf} or \code{sfc} object}
 \usage{
 st_crs2(x, ...)
 }
 \arguments{
-\item{x}{numeric, character, or object of class \link{sf} or \link{sfc}, being:
-- EPSG code: numeric (e.g. `32632`) or character (in the form
-    `"32632"` or `"EPSG:32632"`);
-- UTM zone: numeric (e.g. `32`, interpreted as 32 North) or character
-    (e.g. `"32"` or `"32N"` for zone 32 North, `"32S"` for 32 South);
-- WKT test: passed as character string or as path of a text file
-    containing it (e.g. the path of a `.prj` file);
-- PROJ.4 string, passed as character (e.g.
-    `"+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs"`
-    (**NOTE**: this representation is deprecated with PROJ >= 6
-    -- see \url{http://rgdal.r-forge.r-project.org/articles/PROJ6_GDAL3.html} --
-    so a warning is returned using it, unless the string contains only
-    the EPSG code -- e.g. `"+init=epsg:32632"`, in which case the EPSG
-    code is taken);
-- path of a spatial file (managed by [sf::st_read] or [stars::read_stars]),
-    passed as character string of length 1;
-- spatial file of class \link{sf} or \link{sfc}.}
+\item{x}{numeric, character, or object of class \code{sf} or \code{sfc}, being:
+\itemize{
+\item EPSG code: numeric (e.g. \code{32632}) or character (in the form
+\code{"32632"} or \code{"EPSG:32632"});
+\item UTM zone: numeric (e.g. \code{32}, interpreted as 32 North) or character
+(e.g. \code{"32"} or \code{"32N"} for zone 32 North, \code{"32S"} for 32 South);
+\item WKT test: passed as character string or as path of a text file
+containing it (e.g. the path of a \code{.prj} file);
+\item PROJ.4 string, passed as character (e.g.
+\code{"+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs"}
+(\strong{NOTE}: this representation is deprecated with PROJ >= 6
+-- see \url{http://rgdal.r-forge.r-project.org/articles/PROJ6_GDAL3.html} --
+so a warning is returned using it, unless the string contains only
+the EPSG code -- e.g. \code{"+init=epsg:32632"}, in which case the EPSG
+code is taken);
+\item path of a spatial file (managed by \code{sf::st_read()} or \code{stars::read_stars()}),
+passed as character string of length 1;
+\item spatial file of class \code{sf} or \code{sfc}.
+}}
 
-\item{...}{other parameters passed to [sf::st_crs].}
+\item{...}{other parameters passed to \code{sf::st_crs()}.}
 }
 \value{
-An object of class \link{crs} of length 2.
+An object of class \code{crs} of length 2.
 }
 \description{
-This function, forked from `sen2r::st_crs2()`,
- is a wrapper for [sf::st_crs], unless
- treating numeric `character` strings as integers, and
- accepting also UTM time zones, paths of spatial files and paths of
- text files containing WKT like `.prj` (see details) .
+This function, forked from \code{sen2r::st_crs2()},
+is a wrapper for \code{sf::st_crs()}, unless
+treating numeric \code{character} strings as integers, and
+accepting also UTM time zones, paths of spatial files and paths of
+text files containing WKT like \code{.prj} (see details) .
 }
 \details{
-See [sf::st_crs] for details.
+See \code{sf::st_crs()} for details.
 }
 \note{
 License: GPL 3.0
@@ -86,10 +88,10 @@ st_crs2(raster::raster(raster_path)) # st_crs(raster) uses the PROJ.4 as input
 }
 \references{
 L. Ranghetti, M. Boschetti, F. Nutini, L. Busetto (2020).
- "sen2r": An R toolbox for automatically downloading and preprocessing
- Sentinel-2 satellite data. _Computers & Geosciences_, 139, 104473. DOI:
- \href{https://doi.org/10.1016/j.cageo.2020.104473}{10.1016/j.cageo.2020.104473},
- URL: \url{http://sen2r.ranghetti.info/}.
+"sen2r": An R toolbox for automatically downloading and preprocessing
+Sentinel-2 satellite data. \emph{Computers & Geosciences}, 139, 104473. DOI:
+\url{https://doi.org/10.1016/j.cageo.2020.104473},
+URL: \url{http://sen2r.ranghetti.info/}.
 }
 \author{
 Luigi Ranghetti, phD (2019) \email{luigi@ranghetti.info}

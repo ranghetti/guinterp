@@ -4,7 +4,6 @@ CNR
 CRS
 EPSG
 eRum
-GDAL
 GUInterp
 IDW
 IREA
@@ -12,6 +11,6 @@ Nutini
 phD
 PROJ
 semivariogram
+sen
 variograms
-WGS
 WKT

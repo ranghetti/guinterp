@@ -10,7 +10,7 @@
 # Version 0.2.4 (pre-release)
 
 - Add summary statistics below histogram
-- Manage statistics / map samplesizes separately
+- Manage statistics / map sample sizes separately
 
 
 # Version 0.2.3 (pre-release)

@@ -7,8 +7,8 @@
 guinterp(language = "en")
 }
 \arguments{
-\item{language}{Interface language (currently only English -- `"en"` --
-and Italian -- `"it"` -- were implemented).
+\item{language}{Interface language (currently only English -- \code{"en"} --
+and Italian -- \code{"it"} -- were implemented).
 Default is to retrieve it from system settings.}
 }
 \value{
@@ -23,5 +23,5 @@ guinterp()
 }
 }
 \author{
-Luigi Ranghetti, phD (2020) <ranghetti.l@irea.cnr.it>
+Luigi Ranghetti, phD (2020) \email{luigi@ranghetti.info}
 }

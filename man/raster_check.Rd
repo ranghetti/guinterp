@@ -7,11 +7,11 @@
 raster_check(path)
 }
 \arguments{
-\item{path}{`string` fullpath to a raster}
+\item{path}{\code{string} full path to a raster}
 }
 \description{
 accessory functions to check that a raster exists and
- has a correct grid
+has a correct grid
 }
 \author{
 Luigi Ranghetti, phD (2019)

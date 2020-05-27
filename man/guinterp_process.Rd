@@ -32,40 +32,40 @@ guinterp_process(
 \arguments{
 \item{inputpts}{TODO}
 
-\item{inlayer}{SpatialPolygonsDataFrame of fields (see also `id_fieldname`)}
+\item{inlayer}{\code{SpatialPolygonsDataFrame} of fields (see also \code{id_fieldname})}
 
-\item{filtered}{logical: is `inputpts` already filtered? If TRUE (default),
+\item{filtered}{logical: is \code{inputpts} already filtered? If TRUE (default),
 no additional filter is applied; if FALSE, a standard automatic filter is applied.}
 
-\item{id_fieldname}{optional: name of the `inlayer` field containing unique ID of fields (default: `"idfield"`)}
+\item{id_fieldname}{optional: name of the \code{inlayer} field containing unique ID of fields (default: \code{"idfield"})}
 
 \item{interp_dir}{directory where rasters of single polygons are stores (default: temporary directory)}
 
 \item{out_path}{path of the output merged raster (default: temporary directory)}
 
-\item{interp_method}{interpolation method (`"krige"` or `"idw"`)}
+\item{interp_method}{interpolation method (\code{"krige"} or \code{"idw"})}
 
 \item{smooth}{logical: should rasters be smoothed after interpolation?}
 
 \item{interp_res}{output raster resolution (numeric, in metres)}
 
-\item{out_crs}{optional: CRS of output raster (default: CRS of inputpts)}
+\item{out_crs}{optional: CRS of output raster (default: CRS of \code{inputpts})}
 
-\item{grid_offset}{optional: grid offset from point (0,0) in out_crs (2-length numeric)}
+\item{grid_offset}{optional: grid offset from point (0,0) in \code{out_crs} (2-length numeric)}
 
 \item{samplesize}{maximum size of the sample of the original data to work with (default: 10000; if NA: all the points)}
 
-\item{samplescheme}{sampling scheme within geometries (`"random"`, `"strat_npts"` or `"strat_area"`)}
+\item{samplescheme}{sampling scheme within geometries (\code{"random"}, \code{"strat_npts"} or \code{"strat_area"})}
 
 \item{buffer_radius}{numeric: buffer (default: 15) to be applied internally to field borders.}
 
 \item{parallel}{(optional) Logical or integer: if TRUE (default), interpolation
 is executed using multiple cores in order to speed up the execution.
 The number of cores is automatically determined; specifying it is also
-possible (e.g. `parallel = 4`).
+possible (e.g. \code{parallel = 4}).
 If FALSE, the interpolation is forced to run with a single core.}
 
-\item{vgm}{named list of variograms (names must correspond to values of field `id_fieldname`).
+\item{vgm}{named list of variograms (names must correspond to values of field \code{id_fieldname}).
 If NA (default), they are automatically computed.}
 
 \item{v_nmax}{TODO.}
@@ -84,7 +84,7 @@ single field rasters.}
 }
 \description{
 This function calls other functions of the library to perform
- interpolation over different fields.
+interpolation over different fields.
 }
 \note{
 License: GPL 3.0

@@ -5,7 +5,7 @@
 #' @importFrom sf st_as_sf st_buffer st_crs st_transform st_is_longlat
 #' @export
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
-#' @note Modified from https://gis.stackexchange.com/questions/121489/1km-circles-around-lat-long-points-in-many-places-in-world
+#' @note Modified from \url{https://gis.stackexchange.com/questions/121489/1km-circles-around-lat-long-points-in-many-places-in-world}
 #' @note License: GPL 3.0
 
 st_buffer_m <- function(x, dist) {

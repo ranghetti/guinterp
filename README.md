@@ -1,11 +1,4 @@
 
-  - [GUInterp: a Shiny GUI for spatial
-    interpolation](#guinterp-a-shiny-gui-for-spatial-interpolation)
-      - [Installation](#installation)
-      - [Usage](#usage)
-      - [Credits](#credits)
-      - [Contributing](#contributing)
-
 <!-- IMPORTANT: do NOT edit README.Rmd! Edit index.Rmd instead, -->
 
 <!-- and generate README.Rmd using utils/code/create_README.sh  -->
@@ -17,7 +10,7 @@ v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/
 [![Contributor
 Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](http://guinterp.ranghetti.info/.github/CODE-OF-CONDUCT.html)
 
-# GUInterp: a Shiny GUI for spatial interpolation
+# GUInterp: a Shiny GUI for Spatial Interpolation
 
 GUInterp is a Graphical User Interface (GUI) supporting the spatial
 interpolation of points data. The purpose of the GUI is to provide
@@ -62,7 +55,7 @@ are loaded, they can be treated as separate objects during
 interpolation.
 
 After loading files, the main GUI appears. In the left column, data can
-visualised thanks to a histogram and a map; both of them hightlight
+visualised thanks to a histogram and a map; both of them highlight
 filtered vs. non-filtered points. The right column incudes parameter
 selectors, organised in four boxes:
 
