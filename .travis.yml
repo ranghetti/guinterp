@@ -14,7 +14,6 @@ addons:
       - libudunits2-dev
 
 before_install:
-  - sudo apt-get -qq update
   - Rscript -e 'install.packages("remotes")'
   - Rscript -e 'remotes::install_github("r-spatial/lwgeom", ref = "467dc314a0bda011e806a8b56c8dcc153f63527c")'
 
