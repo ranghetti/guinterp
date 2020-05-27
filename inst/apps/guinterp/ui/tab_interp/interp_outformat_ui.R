@@ -17,7 +17,7 @@ shiny::div(
         shiny::numericInput(
           'interp_res',
           ht("_interp_res", i18n),
-          value = 5, min = 0.01, max = 100, step = 1
+          value = 5, min = 0, max = 100, step = 1
         )
       ),
       shiny::column(

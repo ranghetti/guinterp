@@ -1,6 +1,7 @@
 # Open modal dialog to load the polygon file of borders
 
 observeEvent(input$button_load_borders, {
+
   showModal(modalDialog(
     title = ht("_modal_loadborders_title", i18n),
     size = "m",
@@ -103,6 +104,17 @@ observeEvent(input$button_load_borders, {
       modalButton(ph("\u2000",ht("_Cancel", i18n)), icon = icon("ban"))
     )
   ))
+
+  ## Demo mode
+  if (getShinyOption("demo_mode") == TRUE) {
+    shinyjs::disable("borderpath_textin")
+    shinyjs::disable("borderpath")
+    shiny::updateTextInput(
+      session, "borderpath_textin",
+      value = system.file("data", package = "guinterp")
+    )
+  }
+
 })
 
 

@@ -52,6 +52,19 @@ observeEvent(rv$outcrs_validated, {
 })
 
 
+## Mimimum output size
+observeEvent(input$interp_res, {
+  req(inherits(input$interp_res, c("integer","numeric")))
+  if (all(
+    getShinyOption("demo_mode") == TRUE,
+    input$interp_res <= 25
+  )) {
+    updateNumericInput(session, "interp_res", value = 25)
+  } else if (input$interp_res <=0) {
+    updateNumericInput(session, "interp_res", value = 0.01)
+  }
+})
+
 ## Define output grid basing on manual definition of res. and CR, or on the ref raster
 observeEvent(c(input$outgrid_type, input$interp_res, rv$outcrs_validated, input$path_refraster_textin), {
   if (input$outgrid_type == "custom") {

@@ -1,6 +1,7 @@
 # Open modal dialog to load the point file of inputpts
 
 observeEvent(input$button_load_inputpts, {
+
   showModal(modalDialog(
     title = ht("_modal_loadinputpts_title", i18n),
     size = "m",
@@ -94,6 +95,17 @@ observeEvent(input$button_load_inputpts, {
       modalButton(ph("\u2000",ht("_Cancel", i18n)), icon = icon("ban"))
     )
   ))
+
+  ## Demo mode
+    if (getShinyOption("demo_mode") == TRUE) {
+      shinyjs::disable("inputptspath_textin")
+      shinyjs::disable("inputptspath")
+      shiny::updateTextInput(
+        session, "inputptspath_textin",
+        value = system.file("data", package = "guinterp")
+      )
+    }
+
 })
 
 

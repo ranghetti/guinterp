@@ -3,6 +3,8 @@
 #' @param language Interface language (currently only English -- `"en"` --
 #'  and Italian -- `"it"` -- were implemented).
 #'  Default is to retrieve it from system settings.
+#' @param demo If TRUE, only internal example data can be used
+#'  (default is FALSE).
 #' @return NULL (the function is called for its side effect)
 #' @export
 #' @author Luigi Ranghetti, phD (2020) \email{luigi@@ranghetti.info}
@@ -10,7 +12,10 @@
 #' @examples \dontrun{
 #' guinterp()
 #' }
-guinterp <- function(language = "en")  {
+guinterp <- function(
+  language = "en",
+  demo = FALSE
+)  {
 
   # set language
   if (all(
@@ -23,7 +28,7 @@ guinterp <- function(language = "en")  {
   # run
   if (interactive()) {
     options(device.ask.default = FALSE)
-    shinyOptions(ui_lang = language)
+    shinyOptions(ui_lang = language, demo_mode = demo)
     return(runApp(
       system.file("apps/guinterp", package = "guinterp"),
       display.mode = "normal",
