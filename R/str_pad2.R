@@ -16,18 +16,7 @@
 #'  \url{https://doi.org/10.1016/j.cageo.2020.104473},
 #'  URL: \url{http://sen2r.ranghetti.info/}.
 #' @note License: GPL 3.0
-#' @examples
-#' rbind(
-#'   str_pad2("hadley", 30, "left"),
-#'   str_pad2("hadley", 30, "right"),
-#'   str_pad2("hadley", 30, "both")
-#' )
-#'
-#' # All arguments are vectorised except side
-#' str_pad2(c("a", "abc", "abcdef"), 10)
-#'
-#' # Longer strings are returned unchanged
-#' str_pad2("hadley", 3)
+
 str_pad2 <- function (string, width, side = c("left", "right", "both"), pad = " ") {
   side <- match.arg(side)
   if (length(width)>1) {

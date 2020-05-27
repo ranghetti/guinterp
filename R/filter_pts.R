@@ -31,6 +31,11 @@ filter_pts <- function(
   par1 = NA
 ) {
 
+  # to avoid NOTE on check
+  lon <- lat <- idfield <- speed <- f_rangev <- selvar <- f_rangey <-
+    f_zscorey <- f_rbiasy <- quantile <- f_rangeq <- f_pos <- f_editmap <-
+    uid <- f_selpts <- NULL
+
   # Check samplesize
   if (is.na(samplesize)) {samplesize <- Inf}
 
@@ -206,6 +211,9 @@ filter_pts <- function(
 #' @import data.table
 
 filter_pts_reset <- function(indata, filters = NA) {
+  # to avoid NOTE on check
+  sid4 <- f_rangev <- f_rangey <- f_zscorey <- f_rangeq <- f_pos <-
+    f_editmap <- f_rbiasy <- f_selpts <- NULL
   outdata <- indata # no effect
   if (is.na(filters)) { # if NA, reset all; otherwise, only specified filters
     outdata[,c("f_rangev","f_rangey","f_zscorey","f_rbiasy","f_rangeq","f_pos","f_editmap","f_selpts","filter") := as.list(rep(FALSE,9))]
@@ -225,6 +233,9 @@ filter_pts_reset <- function(indata, filters = NA) {
 #' @importFrom data.table setkey
 
 filter_pts_resample <- function(indata) {
+  # to avoid NOTE on check
+  sid1 <- fid <- idfield <- sid2 <- divnum3 <- area <- sid3 <- divnum4 <-
+    sid4 <- f_rbiasy <- f_selpts <- NULL
   outdata <- indata # no effect
   outdata[,sid1 := sample(nrow(outdata))]
   outdata[,fid := frankv(sid1), by = idfield]

@@ -28,19 +28,6 @@ but without depending on package \code{stringi}.
 \note{
 License: GPL 3.0
 }
-\examples{
-rbind(
-  str_pad2("hadley", 30, "left"),
-  str_pad2("hadley", 30, "right"),
-  str_pad2("hadley", 30, "both")
-)
-
-# All arguments are vectorised except side
-str_pad2(c("a", "abc", "abcdef"), 10)
-
-# Longer strings are returned unchanged
-str_pad2("hadley", 3)
-}
 \references{
 L. Ranghetti, M. Boschetti, F. Nutini, L. Busetto (2020).
 "sen2r": An R toolbox for automatically downloading and preprocessing

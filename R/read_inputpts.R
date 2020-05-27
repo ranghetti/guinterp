@@ -9,7 +9,7 @@
 #' @importFrom data.table data.table fread rbindlist setkey
 #' @importFrom sf st_read st_geometry st_transform st_coordinates st_join
 #' @importFrom jsonlite fromJSON
-#' @importFrom stringr str_pad
+#' @importFrom magrittr "%>%"
 #' @importFrom dplyr select rename mutate filter
 #' @importFrom shinyWidgets updateProgressBar
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
@@ -35,6 +35,9 @@ read_inputpts <- function(
     # } else {
     #   borders
     # }
+
+  # to avoid NOTE on check
+  id_geom <- selvar <- area <- idfield <- sid3 <- NULL
 
   # error if rawdata_sf does not include varname
   if (is.null(input[[varname]])) {

@@ -12,8 +12,9 @@
 #' @importFrom gstat idw krige
 #' @importFrom stats as.formula
 #' @importFrom methods is
-#' @importFrom sf st_centroid st_coordinates st_as_sf
+#' @importFrom sf st_centroid st_coordinates st_as_sf st_set_crs st_crs
 #' @importFrom stars st_rasterize
+#' @importFrom magrittr "%>%"
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
 #' @note Based on \url{https://gis.stackexchange.com/questions/237672/how-to-achieve-parallel-kriging-in-r-to-speed-up-the-process}
 #' @note License: GPL 3.0
@@ -66,7 +67,7 @@ krige_par <- function(
     st_crs(newdata)$epsg == st_crs(locations)$epsg,
     st_crs(newdata) != st_crs(locations)
   )) {
-    st_crs(newdata) <- st_crs(locations)
+    newdata <- st_set_crs(newdata, st_crs(locations))
   }
 
   # run singlecore if n_cores==1, multicore elsewhere

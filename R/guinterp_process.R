@@ -43,6 +43,7 @@
 #' @importFrom shinyWidgets updateProgressBar
 #' @importFrom stars read_stars
 #' @importFrom stats var
+#' @importFrom magrittr "%>%"
 #' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 
@@ -71,6 +72,9 @@ guinterp_process <- function(
   .shiny_session = NULL,
   .shiny_pbar_id = NULL
 ) {
+
+  # to avoid NOTE on check
+  lat <- lon <- id_geom <- area_tot <- f <- i <- NULL
 
   ## Check if all expected outputs already exists
   out_names <- file.path(

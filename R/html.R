@@ -3,13 +3,14 @@
 #' @title Convert to HTML entities
 #' @description Internal functions used to convert  elements to `HTML`.
 #'
-#'  `t()` is converts [list of] character vectors to `HTML`.
+#'  `t()` is converts a list of character vectors to `HTML`.
 #'
 #'  `ht()` converts a vector of translation labels to a list of `HTML`
 #'  translated entities.
 #'
 #'  `ph()` pastes `HTML` entities.
 #' @param x Character vector or list
+#' @param t Character vector or list
 #' @importFrom shiny HTML
 #' @return
 #'  `t()` and `ht()`: if `x` is a 1-length character, an `HTML` object;
@@ -38,7 +39,6 @@ h <- function(t) {
 #' @name ht
 #' @rdname ht
 #' @param i18n Object containing translations
-#' @export
 ht <- function(x, i18n) {
   if (length(x) == 1) {
     h(i18n$t(x))
@@ -52,5 +52,4 @@ ht <- function(x, i18n) {
 #' @rdname ht
 #' @importFrom shiny HTML
 #' @param ... Elements to be pasted.
-#' @export
 ph <- function(...) {HTML(paste0(...))}

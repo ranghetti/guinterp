@@ -4,6 +4,7 @@
 #' @description `st_crs_utm` gives the UTM zone of an `sf` object
 #' @param x TODO
 #' @importFrom sf st_union st_centroid st_transform st_coordinates
+#' @importFrom magrittr "%>%"
 #' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 #'

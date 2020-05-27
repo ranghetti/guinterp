@@ -43,9 +43,9 @@ Imports:
  shinyWidgets,
  shiny.i18n,
  stars,
- stats,
- stringr
+ stats
 Suggests:
+ knitr,
  spelling
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

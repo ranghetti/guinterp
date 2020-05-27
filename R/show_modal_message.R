@@ -8,6 +8,7 @@
 #' @param easyClose TODO
 #' @param footer TODO
 #' @importFrom shiny div hr icon modalDialog p showModal
+#' @importFrom magrittr "%>%"
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 
