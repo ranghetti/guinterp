@@ -1,5 +1,8 @@
 # Open modal dialog to load the polygon file of borders
 
+output$demo_mode <- renderText(getShinyOption("demo_mode") == TRUE)
+shiny::outputOptions(output, "path_refraster_isvalid", suspendWhenHidden = FALSE)
+
 observeEvent(input$button_load_borders, {
 
   showModal(modalDialog(
@@ -17,26 +20,36 @@ observeEvent(input$button_load_borders, {
       condition = "input.border_type == 'files'",
       div(
         div(
+          id = "borderpath_line",
           style="vertical-align:top;",
-            shiny::div(
-              style = "display:inline-block;vertical-align:top;width:85pt;padding-top:8px;",
-              shiny::strong(ht("_borderpath_label", i18n))
-            ),
-            shiny::div(
-              style = "display:inline-block;vertical-align:top;width:calc(100% - 85pt - 50pt - 15px - 10pt - 10px);",
-              shiny::textInput("borderpath_textin", NULL, "", width = "100%")
-            ),
-            shiny::div(
-              style = "display:inline-block;vertical-align:top;width:50pt;",
-              shinyFiles::shinyDirButton(
-                "borderpath", ht("_borderpath_button", i18n),
-                ht("_borderpath_sfb", i18n)
-              )
-            ),
-            shiny::div(
-              style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
-              shiny::htmlOutput("borderpath_errormess")
+          shiny::div(
+            style = "display:inline-block;vertical-align:top;width:85pt;padding-top:8px;",
+            shiny::strong(ht("_borderpath_label", i18n))
+          ),
+          shiny::div(
+            style = "display:inline-block;vertical-align:top;width:calc(100% - 85pt - 50pt - 15px - 10pt - 10px);",
+            shiny::textInput("borderpath_textin", NULL, "", width = "100%")
+          ),
+          shiny::div(
+            style = "display:inline-block;vertical-align:top;width:50pt;",
+            shinyFiles::shinyDirButton(
+              "borderpath", ht("_borderpath_button", i18n),
+              ht("_borderpath_sfb", i18n)
             )
+          ),
+          shiny::div(
+            style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
+            shiny::htmlOutput("borderpath_errormess")
+          ),
+          shiny::conditionalPanel(
+            condition = "output.demo_mode == 'TRUE'",
+            shinyBS::bsTooltip(
+              "borderpath_line",
+              ht("_inputpath_demo_info", i18n),
+              "top",
+              options = list(container = "body")
+            )
+          )
         ),
         fluidRow(
           column(

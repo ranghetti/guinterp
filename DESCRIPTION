@@ -41,6 +41,7 @@ Imports:
  shinyFiles,
  shinyjs,
  shinyWidgets,
+ shinyBS,
  shiny.i18n,
  stars,
  stats

@@ -4,12 +4,15 @@
 \alias{guinterp}
 \title{Launch GUInterp}
 \usage{
-guinterp(language = "en")
+guinterp(language = "en", demo = FALSE)
 }
 \arguments{
 \item{language}{Interface language (currently only English -- \code{"en"} --
 and Italian -- \code{"it"} -- were implemented).
 Default is to retrieve it from system settings.}
+
+\item{demo}{If TRUE, only internal example data can be used
+(default is FALSE).}
 }
 \value{
 NULL (the function is called for its side effect)

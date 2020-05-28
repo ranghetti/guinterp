@@ -7,6 +7,7 @@ observeEvent(input$button_load_inputpts, {
     size = "m",
 
     div(
+      id = "inputptspath_line",
       style="vertical-align:top;",
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:85pt;padding-top:8px;",
@@ -26,6 +27,15 @@ observeEvent(input$button_load_inputpts, {
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
         shiny::htmlOutput("inputptspath_errormess")
+      ),
+      shiny::conditionalPanel(
+        condition = "output.demo_mode == 'TRUE'",
+        shinyBS::bsTooltip(
+          "inputptspath_line",
+          ht("_inputpath_demo_info", i18n),
+          "bottom",
+          options = list(container = "body")
+        )
       )
     ),
     fluidRow(

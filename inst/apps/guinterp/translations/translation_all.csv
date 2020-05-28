@@ -67,6 +67,7 @@ _outgrid_type,Output grid,Griglia di output
 _outgrid_type_custom,Manually set resolution and projection,Definisci risoluzione e proiezione
 _outgrid_type_ref,Set from an existing raster,Scegli da un raster esistente
 _interp_res,Resolution (m),Risoluzione (m)
+_interpres_demo_info,It is not possible to set a resolution < 25 m in demo mode,Non &#232; possibile impostare una risoluzione < 25 m in modalit&#224; demo
 _out_proj,Coordinate Reference System,Sistema di riferimento
 _refraster,Reference raster:,Raster di riferimento:
 _path_refraster_sel,Select the source raster of the CRS,Seleziona il raster da cui ottenere la griglia di riferimento
@@ -166,3 +167,4 @@ _1q,1st Qu.,1° quartile
 _3q,3rd Qu.,3° quartile
 _max,Max.,Massimo
 _demomode_disabled,disabled in demo mode,funzione disabilitata in modo demo
+_inputpath_demo_info,It is not possible to set the input directory in demo mode (only example files listed below can be used).,Non &#232; possibile impostare la cartella di input in modalit&#224; demo (possono essere usati solo i file di esempio elencati sotto).
