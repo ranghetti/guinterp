@@ -112,7 +112,7 @@ observeEvent(input$button_load_inputpts, {
       shinyjs::disable("inputptspath")
       shiny::updateTextInput(
         session, "inputptspath_textin",
-        value = system.file("data", package = "guinterp")
+        value = system.file("ex_data", package = "guinterp")
       )
     }
 

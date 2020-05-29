@@ -124,7 +124,7 @@ observeEvent(input$button_load_borders, {
     shinyjs::disable("borderpath")
     shiny::updateTextInput(
       session, "borderpath_textin",
-      value = system.file("data", package = "guinterp")
+      value = system.file("ex_data", package = "guinterp")
     )
   }
 
