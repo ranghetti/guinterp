@@ -8,3 +8,5 @@
 ^\.github$
 ^index\.R?md$
 ^utils$
+^app\.R$
+^rsconnect$

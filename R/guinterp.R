@@ -33,7 +33,7 @@ guinterp <- function(
   })
 
   # run
-  if (interactive()) {
+  # if (interactive()) {
     options(device.ask.default = FALSE)
     shinyOptions(ui_lang = language, demo_mode = demo)
     return(shinyApp(
@@ -44,8 +44,8 @@ guinterp <- function(
         launch.browser = TRUE
       )
     ))
-  } else {
-    stop("The function must be run from an interactive R session.")
-  }
+  # } else {
+  #   stop("The function must be run from an interactive R session.")
+  # }
 
 }
