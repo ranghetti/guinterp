@@ -271,7 +271,7 @@ observeEvent(input$load_extent_borders, {
     },
     error = function(e) {
       shinyWidgets::sendSweetAlert(
-        session, title = ht("_invalid_file", i18n),
+        session, title = i18n$t("_invalid_file"),
         text = shiny::span(gsub(
           "\\%f", basename(rv$borders_path),
           ht("_borders_polygon_raw_invalid_message", i18n)

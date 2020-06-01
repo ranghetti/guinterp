@@ -8,7 +8,7 @@
 #' @return NULL (the function is called for its side effect)
 #' @export
 #' @author Luigi Ranghetti, phD (2020) \email{luigi@@ranghetti.info}
-#' @importFrom shiny shinyOptions runApp
+#' @importFrom shiny shinyOptions runApp onStop shinyApp
 #' @examples \dontrun{
 #' guinterp()
 #' }
@@ -25,14 +25,24 @@ guinterp <- function(
     language <- "it"
   }
 
+  jscode <- "shinyjs.closeWindow = function() { open(location, '_self').close(); }"
+
+  # clean up on exit
+  shiny::onStop(function() {
+    cat("Session stopped\n")
+  })
+
   # run
   if (interactive()) {
     options(device.ask.default = FALSE)
     shinyOptions(ui_lang = language, demo_mode = demo)
-    return(runApp(
-      system.file("apps/guinterp", package = "guinterp"),
-      display.mode = "normal",
-      launch.browser = TRUE
+    return(shinyApp(
+      ui = guinterp_ui,
+      server = guinterp_server,
+      options = list(
+        display.mode = "normal",
+        launch.browser = TRUE
+      )
     ))
   } else {
     stop("The function must be run from an interactive R session.")

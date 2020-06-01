@@ -1,7 +1,36 @@
-
-server_guinterp <- function(input, output, session) {
+#' @param input,output,session Internal parameters for {shiny}.
+#'     DO NOT REMOVE.
+#' @importFrom shiny reactive observeEvent renderUI sliderInput req actionLink
+#'  renderText updateTextInput updateNumericInput modalDialog showModal fluidRow
+#'  column isolate div strong icon div p HTML span sliderInput renderPlot
+#'  removeModal updateSelectInput outputOptions conditionalPanel wellPanel
+#'  tagList observe
+#' @importFrom shinydashboard box updateTabItems
+#' @importFrom shinyFiles getVolumes shinyFileSave parseSavePath shinyDirChoose
+#'  parseDirPath parseFilePaths shinyDirButton
+#' @importFrom shinyWidgets switchInput progressBar updateRadioGroupButtons
+#'  sendSweetAlert pickerInput
+#' @importFrom shinyjs hide show enable disable disabled delay
+#' @import shiny.i18n
+#' @importFrom sf st_crs st_sf st_transform st_crs st_bbox st_geometry st_read
+#'  st_polygon st_cast st_zm st_as_sfc
+#' @importFrom ggplot2 ggplot geom_histogram scale_fill_manual scale_y_continuous
+#'  xlab ylab geom_vline aes
+#' @importFrom magrittr "%>%"
+#' @importFrom leaflet addCircleMarkers addLegend leaflet addPolygons fitBounds
+#'  addLayersControl showGroup hideGroup renderLeaflet leafletProxy removeMarker
+#'  addRasterImage clearImages addTiles colorBin labelOptions layersControlOptions
+#' @importFrom jsonlite fromJSON toJSON
+#' @import data.table
+#' @importFrom DT renderDT datatable dataTableOutput
+#' @noRd
+guinterp_server <- function( input, output, session ) {
 
   rv <- reactiveValues()
+
+  # read dictionary
+  i18n <- shiny.i18n::Translator$new(translation_csvs_path = system.file("apps/guinterp/translations", package="guinterp"))
+  i18n$set_translation_language(getShinyOption("ui_lang", "en"))
 
   # get server volumes
   volumes <- c("Home"=path.expand("~"), shinyFiles::getVolumes()())
@@ -102,5 +131,4 @@ server_guinterp <- function(input, output, session) {
     local=TRUE
   )$value
 
-
-} # end of server function
+}

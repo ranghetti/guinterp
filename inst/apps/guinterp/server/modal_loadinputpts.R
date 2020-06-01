@@ -308,7 +308,7 @@ observeEvent(input$load_inputpts, {
       },
       error = function(e) {
         shinyWidgets::sendSweetAlert(
-          session, title = ht("_invalid_file", i18n),
+          session, title = i18n$t("_invalid_file"),
           text = shiny::span(gsub(
             "\\%f", basename(rv$inputpts_path),
             ht("_inputpts_sp_invalid_message", i18n)
@@ -330,7 +330,7 @@ observeEvent(input$load_inputpts, {
       },
       error = function(e) {
         shinyWidgets::sendSweetAlert(
-          session, title = ht("_invalid_file", i18n),
+          session, title = i18n$t("_invalid_file"),
           text = shiny::span(gsub(
             "\\%f", basename(rv$inputpts_path),
             ht("_inputpts_table_invalid_message", i18n)

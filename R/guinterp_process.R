@@ -139,9 +139,11 @@ guinterp_process <- function(
     st_buffer(max_pt_dist) %>%
     group_by(id_geom, area_tot) %>%
     summarise() %>%
-    st_buffer(-max_pt_dist)
-  covered_poly$area_pt <- st_area(covered_poly)
-  covered_poly$perc_cov <- covered_poly$area_pt/covered_poly$area_tot
+    st_buffer(-max_pt_dist) %>%
+    st_as_sf() %>%
+    mutate(area_pt = st_area(.)) %>%
+    mutate(perc_cov = area_pt/area_tot)
+
   if (length(which_nafield) != 0) {
     inputpts_sf <- inputpts_sf[inputpts_sf$idfield %in% unique(covered_poly$id_geom), ]
   }

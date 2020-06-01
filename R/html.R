@@ -40,11 +40,21 @@ h <- function(t) {
 #' @rdname ht
 #' @param i18n Object containing translations
 ht <- function(x, i18n) {
+
+  # read dictionary
+  if (missing(i18n)) {
+    i18n <- suppressWarnings(
+      shiny.i18n::Translator$new(translation_csvs_path = system.file("apps/guinterp/translations", package="guinterp"))
+    )
+    i18n$set_translation_language(getShinyOption("ui_lang", "en"))
+  }
+
   if (length(x) == 1) {
     h(i18n$t(x))
   } else {
     lapply(x, function(y) {h(i18n$t(y))})
   }
+
 }
 
 

@@ -313,7 +313,7 @@ observeEvent(input$downloadFilters, {
 
     shinyWidgets::sendSweetAlert(
       session,
-      title = shiny::span(ht("_downloadFilters_success", i18n)),
+      title = i18n$t("_downloadFilters_success"),
       text = shiny::span(ht("_downloadFilters_message", i18n)),
       type = "success", btn_labels = "Ok"
     )
@@ -359,7 +359,7 @@ observeEvent(rv$importFilters, {
 
   shinyWidgets::sendSweetAlert(
     session,
-    title = shiny::span(ht("_importFilters_success", i18n)),
+    title = i18n$t("_importFilters_success"),
     text = shiny::span(ht("_importFilters_message", i18n)),
     type = "success", btn_labels = "Ok"
   )

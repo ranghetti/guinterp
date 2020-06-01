@@ -5,7 +5,7 @@ shiny::div(
   shiny::div(
     style="vertical-align:center;",
     shiny::span(
-      shiny::strong(ph(ht("_maxptdist", i18n),"\u2000")),
+      shiny::strong(ph(ht("_maxptdist"),"\u2000")),
       actionLink("help_maxptdist", icon("question-circle")),
       "\u00a0"
     )
@@ -18,7 +18,7 @@ shiny::div(
     style="display:inline-block;vertical-align:middle;width:50pt;",
     shinyWidgets::switchInput(
       "maxptdist_onoff", value = TRUE,
-      size = "small", onLabel = ht("_Yes", i18n), offLabel = ht("_No", i18n)
+      size = "small", onLabel = ht("_Yes"), offLabel = ht("_No")
     )
   ),
   shiny::div(
@@ -29,10 +29,10 @@ shiny::div(
   shiny::radioButtons(
     'interp_method',
     shiny::span(
-      ph(ht("_interp_method", i18n),"\u2000"),
+      ph(ht("_interp_method"),"\u2000"),
       actionLink("help_interp_method", icon("question-circle"))
     ),
-    choiceNames = ht(c("_interp_method_krige", "_interp_method_idw"), i18n),
+    choiceNames = ht(c("_interp_method_krige", "_interp_method_idw")),
     choiceValues = c("krige", "idw"),
     selected = "krige"
   ),
@@ -47,17 +47,17 @@ shiny::div(
         shiny::radioButtons(
           'auto_vgm',
           shiny::span(
-            ph(ht("_auto_vgm", i18n),"\u2000"),
+            ph(ht("_auto_vgm"),"\u2000"),
             actionLink("help_auto_vgm", icon("question-circle"))
           ),
-          choiceNames = ht(c("_auto_vgm_auto", "_auto_vgm_semiauto", "_auto_vgm_manual"), i18n),
+          choiceNames = ht(c("_auto_vgm_auto", "_auto_vgm_semiauto", "_auto_vgm_manual")),
           choiceValues = c("auto", "semiauto", "manual"),
           selected = "auto"
         )
       ),
       shiny::div(
         style = "display:inline-block;position:relative;vertical-align:top;margin-top:40px;margin-left:-20px;",
-        actionButton("fit_vgm_button", ph("\u2004",ht("_fit_vgm_button", i18n)), icon = shiny::icon("cog"))
+        actionButton("fit_vgm_button", ph("\u2004",ht("_fit_vgm_button")), icon = shiny::icon("cog"))
       )
     )
   ),
@@ -65,7 +65,7 @@ shiny::div(
   shiny::checkboxInput(
     "focal_onoff",
     shiny::span(
-      ph(ht("_focal_onoff", i18n),"\u2000"),
+      ph(ht("_focal_onoff"),"\u2000"),
       actionLink("help_focal", icon("question-circle"))
     ),
     value = TRUE

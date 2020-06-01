@@ -11,7 +11,7 @@ shiny::div(
           style = "margin-top:10px;padding-left:15px;",
           shiny::span(
             style="display:inline-block",
-            shiny::strong(ht("_load_borders", i18n))
+            shiny::strong(ht("_load_borders"))
           ),
           shiny::span(
             style="display:inline-block",
@@ -20,7 +20,7 @@ shiny::div(
         ),
         actionButton(
           "button_load_borders",
-          label = ph("\u2000",ht("_Load", i18n)),
+          label = ph("\u2000",ht("_Load")),
           class = "darkbutton",
           icon=icon("upload")
         )
@@ -30,7 +30,7 @@ shiny::div(
           style = "margin-top:10px;padding-left:15px;",
           shiny::span(
             style="display:inline-block",
-            shiny::strong(ht("_load_inputpts", i18n))
+            shiny::strong(ht("_load_inputpts"))
           ),
           shiny::span(
             style="display:inline-block",
@@ -39,7 +39,7 @@ shiny::div(
         ),
         shinyjs::disabled(actionButton(
           "button_load_inputpts",
-          label = ph("\u2000",ht("_Load", i18n)),
+          label = ph("\u2000",ht("_Load")),
           class = "darkbutton",
           icon=icon("upload")
         ))
@@ -54,7 +54,7 @@ shiny::div(
         style = "margin-top:20px;margin-bottom:50px;",
         actionButton(
           "interp_button",
-          label = ph("\u2000",ht("_interp_button", i18n)),
+          label = ph("\u2000",ht("_interp_button")),
           class = "darkbutton",
           icon=icon("cogs")
         )
@@ -63,7 +63,7 @@ shiny::div(
         style = "margin-top:20px;",
         actionButton(
           "close_interp_button",
-          label = ph("\u2000",ht("_Close", i18n)),
+          label = ph("\u2000",ht("_Close")),
           class = "darkbutton",
           icon=icon("window-close")
         )
@@ -75,7 +75,7 @@ shiny::div(
     style = "margin-top:20px;",
     actionButton(
       "close_app_button",
-      label = ph("\u2000",ht("_close_app_button", i18n)),
+      label = ph("\u2000",ht("_close_app_button")),
       class = "darkbutton",
       icon=icon("sign-out-alt")
     )
