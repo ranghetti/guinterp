@@ -6,7 +6,7 @@ reference:
   - title: GUIinterp
     desc: ~
     contents:
-      - '`guinterp`'
+      - guinterp
 navbar:
   type: inverse
   left: []
