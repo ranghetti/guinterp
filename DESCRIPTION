@@ -46,6 +46,7 @@ Imports:
  stars,
  stats
 Suggests:
+ rmarkdown,
  knitr,
  spelling
 VignetteBuilder: knitr

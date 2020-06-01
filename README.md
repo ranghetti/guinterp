@@ -1,6 +1,5 @@
 
 <!-- IMPORTANT: do NOT edit README.Rmd! Edit index.Rmd instead, -->
-
 <!-- and generate README.Rmd using utils/code/create_README.sh  -->
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3843327.svg)](https://doi.org/10.5281/zenodo.3843327)
