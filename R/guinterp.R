@@ -35,8 +35,8 @@ guinterp <- function(
   # run
   options(device.ask.default = FALSE)
   shinyOptions(
-    ui_lang = "en",
-    demo_mode = TRUE
+    ui_lang = language,
+    demo_mode = demo
   )
   return(shinyApp(
     ui = guinterp_ui,
