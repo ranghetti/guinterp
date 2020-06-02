@@ -21,6 +21,7 @@ shiny::div(
       ph(ht("_outraster")," \u00a0")
     ),
     shiny::div(
+      id = "path_outraster_line",
       shiny::div(
         style="display:inline-block;vertical-align:top;width:70pt;",
         shinyFiles::shinySaveButton(
@@ -39,6 +40,15 @@ shiny::div(
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
         shiny::htmlOutput("path_outraster_errormess")
+      )
+    ),
+    shiny::conditionalPanel(
+      condition = "output.demo_mode == 'TRUE'",
+      shinyBS::bsTooltip(
+        "path_outraster_line",
+        ht("_path_outraster_demo_info"),
+        "bottom",
+        options = list(container = "body")
       )
     )
   ),

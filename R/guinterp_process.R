@@ -140,6 +140,7 @@ guinterp_process <- function(
     group_by(id_geom, area_tot) %>%
     summarise() %>%
     st_buffer(-max_pt_dist) %>%
+    as.data.frame() %>%
     st_as_sf() %>%
     mutate(area_pt = st_area(.)) %>%
     mutate(perc_cov = area_pt/area_tot)
