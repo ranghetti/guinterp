@@ -19,5 +19,12 @@ navbar:
     - text: "\u2000Changelog"
       icon: fa-newspaper
       href: news/index.html
+    - text: "\u2000Demo"
+      icon: fa-desktop
+      href: https://ranghetti.shinyapps.io/guinterp/
     - icon: fa-github fa-lg
       href: https://github.com/ranghetti/guinterp/
+home:
+  links:
+  - text: Try GUInterp
+    href: https://ranghetti.shinyapps.io/guinterp/
