@@ -21,6 +21,7 @@
 #'  addLayersControl showGroup hideGroup renderLeaflet leafletProxy removeMarker
 #'  addRasterImage clearImages addTiles colorBin labelOptions layersControlOptions
 #' @importFrom jsonlite fromJSON toJSON
+#' @importFrom shinyBS bsTooltip
 #' @import data.table
 #' @importFrom DT renderDT datatable dataTableOutput
 #' @noRd
