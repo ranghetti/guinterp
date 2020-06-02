@@ -29,8 +29,11 @@ guinterp_server <- function( input, output, session ) {
   rv <- reactiveValues()
 
   # read dictionary
-  i18n <- shiny.i18n::Translator$new(translation_csvs_path = system.file("apps/guinterp/translations", package="guinterp"))
+  i18n <- shiny.i18n::Translator$new(translation_csvs_path = system.file("app/translations", package="guinterp"))
   i18n$set_translation_language(getShinyOption("ui_lang", "en"))
+
+  # add path for images
+  addResourcePath( 'img', system.file('app/img', package = 'guinterp') )
 
   # get server volumes
   volumes <- c("Home"=path.expand("~"), shinyFiles::getVolumes()())
@@ -55,79 +58,79 @@ guinterp_server <- function( input, output, session ) {
 
   #### Filter selectors ####
   source(
-    system.file("apps/guinterp/server/interp_filters.R", package="guinterp"),
+    system.file("app/server/interp_filters.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Interpolation options selectors ####
   source(
-    system.file("apps/guinterp/server/interp_options.R", package="guinterp"),
+    system.file("app/server/interp_options.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Oputput format options ####
   source(
-    system.file("apps/guinterp/server/interp_outformat.R", package="guinterp"),
+    system.file("app/server/interp_outformat.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Processing options selectors ####
   source(
-    system.file("apps/guinterp/server/interp_proc.R", package="guinterp"),
+    system.file("app/server/interp_proc.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Tab: Input ####
   source(
-    system.file("apps/guinterp/server/tab_input.R", package="guinterp"),
+    system.file("app/server/tab_input.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Update histogram ####
   source(
-    system.file("apps/guinterp/server/update_interp_histogram.R", package="guinterp"),
+    system.file("app/server/update_interp_histogram.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Update map ####
   source(
-    system.file("apps/guinterp/server/update_interp_map.R", package="guinterp"),
+    system.file("app/server/update_interp_map.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Modal dialog for edit map ####
   source(
-    system.file("apps/guinterp/server/modal_editmap.R", package="guinterp"),
+    system.file("app/server/modal_editmap.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Modal dialog for select points ####
   source(
-    system.file("apps/guinterp/server/modal_selpts.R", package="guinterp"),
+    system.file("app/server/modal_selpts.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Modal dialog for variogram ####
   source(
-    system.file("apps/guinterp/server/modal_variogram.R", package="guinterp"),
+    system.file("app/server/modal_variogram.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Launch interpolation ####
   source(
-    system.file("apps/guinterp/server/launch_interpolation.R", package="guinterp"),
+    system.file("app/server/launch_interpolation.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Reset app ####
   source(
-    system.file("apps/guinterp/server/close_interp.R", package="guinterp"),
+    system.file("app/server/close_interp.R", package="guinterp"),
     local=TRUE
   )$value
 
   #### Help dialogs ####
   source(
-    system.file("apps/guinterp/server/helpers.R", package="guinterp"),
+    system.file("app/server/helpers.R", package="guinterp"),
     local=TRUE
   )$value
 

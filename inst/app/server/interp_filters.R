@@ -15,14 +15,14 @@ observeEvent(c(input$filter_buttons), {
     # Default filter
     show_modal_message(shiny::p("Filtraggio dei punti in corso..."))
     # Load json with default filters
-    if (system.file("apps/guinterp/ancillary/default_filters.json", package="guinterp")=="") {
+    if (system.file("app/ancillary/default_filters.json", package="guinterp")=="") {
       file.copy(
-        system.file("apps/guinterp/ancillary/default_pkg_filters.json", package="guinterp"),
-        file.path(system.file("apps/guinterp/ancillary", package="guinterp"), "default_filters.json")
+        system.file("app/ancillary/default_pkg_filters.json", package="guinterp"),
+        file.path(system.file("app/ancillary", package="guinterp"), "default_filters.json")
       )
     }
     def_filters <- jsonlite::fromJSON(
-      system.file("apps/guinterp/ancillary/default_filters.json", package="guinterp")
+      system.file("app/ancillary/default_filters.json", package="guinterp")
     )
     # Apply filters
     filtered_ptsdata <- tryCatch({
@@ -369,14 +369,14 @@ observeEvent(rv$importFilters, {
 observeEvent(rv$interp_onoff, {
   req(rv$interp_onoff)
   # server-side button
-  if (system.file("apps/guinterp/ancillary/default_filters.json", package="guinterp")=="") {
+  if (system.file("app/ancillary/default_filters.json", package="guinterp")=="") {
     file.copy(
-      system.file("apps/guinterp/ancillary/default_pkg_filters.json", package="guinterp"),
-      file.path(system.file("apps/guinterp/ancillary", package="guinterp"), "default_filters.json")
+      system.file("app/ancillary/default_pkg_filters.json", package="guinterp"),
+      file.path(system.file("app/ancillary", package="guinterp"), "default_filters.json")
     )
   }
   def_filters <- jsonlite::fromJSON(
-    system.file("apps/guinterp/ancillary/default_filters.json", package="guinterp")
+    system.file("app/ancillary/default_filters.json", package="guinterp")
   )
 
   rv$inputpts_points <- filter_pts_reset(rv$inputpts_points)
@@ -425,7 +425,7 @@ observeEvent(input$setdefaultFilters, {
   write(
     jsonlite::toJSON(filterdef_list, pretty = TRUE),
     file.path(
-      system.file("apps/guinterp/ancillary", package="guinterp"),
+      system.file("app/ancillary", package="guinterp"),
       "default_filters.json"
     )
   )
