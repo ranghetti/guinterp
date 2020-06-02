@@ -17,7 +17,8 @@ _Auto,Auto,Auto
 _Man,Man,Man
 _Filename,Filename,Nome file
 _Filetype,File type,Tipo di file
-_gui_title,Point data interpolator,Interpolatore dati puntiformi
+_gui_title,Point data interpolator&#8193;,Interpolatore dati puntiformi&#8193;
+_gui_title_demo,Demo mode&#8193;&#8212;&#8193;,Modalit&#224; demo&#8193;&#8212;&#8193;
 _load_borders,Polygon vector file,Vettoriale dei poligoni
 _load_inputpts,Points to be interpolated,Punti da interpolare
 _interp_button,Interpolate,Interpola

@@ -20,8 +20,21 @@ guinterp_ui <- function(request) {
       skin = "red",
       shinydashboard::dashboardHeader(
         title = "GUInterp",
+
+
+        tags$li(class ="dropdown",
+                conditionalPanel(
+          condition = "output.demo_mode == 'TRUE'",
+          tags$h3(
+            style = "font-style:italic;color:white;margin:0;padding-top:12px;padding-bottom:12px;",
+            ht("_gui_title_demo")
+          )
+                )
+        ),
+
+
         tags$li(class ="dropdown", tags$h3(
-          style = "color:white;margin:0;padding-top:12px;padding-bottom:12px;padding-left:50px;padding-right:50px;",
+          style = "color:white;margin:0;padding-top:12px;padding-bottom:12px;",
           ht("_gui_title")
         )),
         tags$li(class ="dropdown", tags$a(

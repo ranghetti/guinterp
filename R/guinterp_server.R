@@ -52,6 +52,10 @@ guinterp_server <- function( input, output, session ) {
   output$interp_onoff <- shiny::reactive(rv$interp_onoff)
   shiny::outputOptions(output, "interp_onoff", suspendWhenHidden = FALSE)
 
+  # demo mode
+  output$demo_mode <- renderText(getShinyOption("demo_mode") == TRUE)
+  shiny::outputOptions(output, "demo_mode", suspendWhenHidden = FALSE)
+
   # Disable filter tab
   shinyjs::hide(selector = "#tabs li a[data-value=tab_filter]")
 
