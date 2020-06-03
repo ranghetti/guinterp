@@ -17,7 +17,8 @@ _Auto,Auto,Auto
 _Man,Man,Man
 _Filename,Filename,Nome file
 _Filetype,File type,Tipo di file
-_gui_title,Point data interpolator,Interpolatore dati puntiformi
+_gui_title,Point data interpolator&#8193;,Interpolatore dati puntiformi&#8193;
+_gui_title_demo,Demo mode&#8193;&#8212;&#8193;,Modalit&#224; demo&#8193;&#8212;&#8193;
 _load_borders,Polygon vector file,Vettoriale dei poligoni
 _load_inputpts,Points to be interpolated,Punti da interpolare
 _interp_button,Interpolate,Interpola
@@ -168,3 +169,4 @@ _3q,3rd Qu.,3° quartile
 _max,Max.,Massimo
 _demomode_disabled,disabled in demo mode,funzione disabilitata in modo demo
 _inputpath_demo_info,It is not possible to set the input directory in demo mode (only example files listed below can be used).,Non &#232; possibile impostare la cartella di input in modalit&#224; demo (possono essere usati solo i file di esempio elencati sotto).
+_path_outraster_demo_info,It is not possible to export the output raster in demo.,Non &#232; possibile salvare il raster di output in modalit&#224; demo.

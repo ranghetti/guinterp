@@ -1,5 +1,5 @@
 remotes::install_github("ranghetti/guinterp", ref = "develop")
-rsconnect::appDependencies(system.file("apps/guinterp", package="guinterp"))
+rsconnect::appDependencies(system.file("app", package="guinterp"))
 # devtools::load_all(".")
 rsconnect::deployApp(
   # system.file(package="guinterp"),

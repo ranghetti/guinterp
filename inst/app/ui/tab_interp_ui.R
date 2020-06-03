@@ -61,7 +61,7 @@ shiny::div(
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",
-            source(system.file("apps/guinterp/ui/tab_interp/interp_filters_ui.R", package="guinterp"), local = TRUE)$value
+            source(system.file("app/ui/tab_interp/interp_filters_ui.R", package="guinterp"), local = TRUE)$value
           ),
           shinydashboard::box(
             width = NULL,
@@ -69,7 +69,7 @@ shiny::div(
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",
-            source(system.file("apps/guinterp/ui/tab_interp/interp_outformat_ui.R", package="guinterp"), local = TRUE)$value
+            source(system.file("app/ui/tab_interp/interp_outformat_ui.R", package="guinterp"), local = TRUE)$value
           ),
           shinydashboard::box(
             width = NULL,
@@ -77,7 +77,7 @@ shiny::div(
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",
-            source(system.file("apps/guinterp/ui/tab_interp/interp_options_ui.R", package="guinterp"), local = TRUE)$value
+            source(system.file("app/ui/tab_interp/interp_options_ui.R", package="guinterp"), local = TRUE)$value
           ),
           shinydashboard::box(
             width = NULL,
@@ -85,7 +85,7 @@ shiny::div(
             solidHeader = TRUE,
             collapsible = TRUE,
             status = "danger",
-            source(system.file("apps/guinterp/ui/tab_interp/interp_proc_ui.R", package="guinterp"), local = TRUE)$value
+            source(system.file("app/ui/tab_interp/interp_proc_ui.R", package="guinterp"), local = TRUE)$value
           )
         )
       )

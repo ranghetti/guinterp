@@ -1,8 +1,5 @@
 # Open modal dialog to load the polygon file of borders
 
-output$demo_mode <- renderText(getShinyOption("demo_mode") == TRUE)
-shiny::outputOptions(output, "path_refraster_isvalid", suspendWhenHidden = FALSE)
-
 observeEvent(input$button_load_borders, {
 
   showModal(modalDialog(

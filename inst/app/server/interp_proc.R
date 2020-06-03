@@ -25,6 +25,13 @@ observeEvent(input$path_outraster_textin, {
   }
 })
 
+## Demo mode
+if (getShinyOption("demo_mode") == TRUE) {
+  shinyjs::disable("path_outraster_textin")
+  shinyjs::disable("path_outraster_sel")
+}
+
+
 # Error messages
 shiny::observeEvent(input$path_outraster_textin, {
   output$path_outraster_errormess <- path_check(dirname(input$path_outraster_textin))

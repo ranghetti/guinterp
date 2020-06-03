@@ -12,10 +12,10 @@ observeEvent(c(rv$vectfile_path, rv$vectfields_path, input$rawformat), {
 
 #### Load borders and points ####
 source(
-  system.file("apps/guinterp/server/modal_loadinputpts.R", package="guinterp"),
+  system.file("app/server/modal_loadinputpts.R", package="guinterp"),
   local=TRUE
 )$value
 source(
-  system.file("apps/guinterp/server/modal_loadborders.R", package="guinterp"),
+  system.file("app/server/modal_loadborders.R", package="guinterp"),
   local=TRUE
 )$value

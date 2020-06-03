@@ -20,19 +20,35 @@ guinterp_ui <- function(request) {
       skin = "red",
       shinydashboard::dashboardHeader(
         title = "GUInterp",
+        tags$li(
+          class ="dropdown",
+          conditionalPanel(
+            condition = "output.demo_mode == 'TRUE'",
+            tags$h3(
+              style = "font-style:italic;color:white;margin:0;padding-top:12px;padding-bottom:12px;",
+              ht("_gui_title_demo")
+            )
+          )
+        ),
         tags$li(class ="dropdown", tags$h3(
-          style = "color:white;margin:0;padding-top:12px;padding-bottom:12px;padding-left:50px;padding-right:50px;",
+          style = "color:white;margin:0;padding-top:12px;padding-bottom:12px;",
           ht("_gui_title")
         )),
         tags$li(class ="dropdown", tags$a(
+          href="http://guinterp.ranghetti.info",
+          shiny::icon("book"),
+          style="margin:0;padding-top:11px;padding-bottom:11px;padding-left:10px;padding-right:10px;font-size:30px;",
+          target="_blank"
+        )),
+        tags$li(class ="dropdown", tags$a(
           href="https://github.com/ranghetti/guinterp",
-          tags$img(src="github_logo.png"),
-          style="margin:0;padding-top:2px;padding-bottom:2px;padding-left:10px;padding-right:10px;",
+          shiny::icon("github"),
+          style="margin:0;padding-top:11px;padding-bottom:11px;padding-left:10px;padding-right:10px;font-size:30px;",
           target="_blank"
         )),
         tags$li(class ="dropdown", tags$a(
           href="http://www.irea.cnr.it",
-          tags$img(src="irea_logo.png"),
+          tags$img(src="img/irea_logo.png"),
           style="margin:0;padding-top:2px;padding-bottom:2px;padding-left:10px;padding-right:10px;",
           target="_blank"
         ))
@@ -67,7 +83,7 @@ guinterp_ui <- function(request) {
 
           ### Bar with inputs and commands
           source(
-            system.file("apps/guinterp/ui/tab_input_ui.R", package="guinterp"),
+            system.file("app/ui/tab_input_ui.R", package="guinterp"),
             local=TRUE
           )$value
 
@@ -82,7 +98,7 @@ guinterp_ui <- function(request) {
           shinydashboard::tabItem(
             tabName = "tab_interp",
             source(
-              system.file("apps/guinterp/ui/tab_interp_ui.R", package="guinterp"),
+              system.file("app/ui/tab_interp_ui.R", package="guinterp"),
               local=TRUE
             )$value
           )
