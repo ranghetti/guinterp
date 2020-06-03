@@ -1,3 +1,13 @@
+# Version 0.3.0
+
+- Package was "stabilised" to be correctly exported on different systems
+    (`guinterp_ui()` and `guinterp_server()` are now internal functions,
+    so that functions used by them are correctly imported).
+- A demo mode was added (in demo mode the user cannot load only two example files,
+    the minimum resolution is 25m and the output raster can not be exported).
+- An English demo app was built at \url{https://ranghetti.shinyapps.io/guinterp/}
+    and linked to the online documentation.
+
 
 # Version 0.2.5 (pre-release)
 

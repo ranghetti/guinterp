@@ -1,3 +1,6 @@
+
+# Before running this, rebase branch "shinyapps" on "develop"
+
 # remotes::install_github("ranghetti/guinterp", ref = "develop")
 remotes::install_github("r-spatial/lwgeom", ref = "467dc314a0bda011e806a8b56c8dcc153f63527c")
 devtools::load_all(".") # local branch shinyapps
