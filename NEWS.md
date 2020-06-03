@@ -5,7 +5,7 @@
     so that functions used by them are correctly imported).
 - A demo mode was added (in demo mode the user cannot load only two example files,
     the minimum resolution is 25m and the output raster can not be exported).
-- An English demo app was built at \url{https://ranghetti.shinyapps.io/guinterp/}
+- An English demo app was built at https://ranghetti.shinyapps.io/guinterp/
     and linked to the online documentation.
 
 
