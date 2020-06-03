@@ -43,7 +43,7 @@ guinterp()
 
 <p style="text-align:center;">
 
-<a href="https://raw.githubusercontent.com/ranghetti/guinterp/devel/man/figures/guinterp-0.png" target="_blank">
+<a href="https://raw.githubusercontent.com/ranghetti/guinterp/master/man/figures/guinterp-0.png" target="_blank">
 <img src="man/figures/guinterp-0_small.png"> </a>
 
 </p>
