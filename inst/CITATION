@@ -1,0 +1,22 @@
+citHeader(paste(
+  "GUInterp is being developed by Luigi Ranghetti and Lorenzo Busetto (IREA-CNR),",
+  "and it is released under the GNU General Public License version 3 (GPL‑3).",
+  "To cite package 'GUInterp' in scientific works use:"
+))
+
+citEntry(
+  entry        = "Manual",
+  title        = "GUInterp: a Shiny GUI for Spatial Interpolation",
+  author       = "Luigi Ranghetti and Lorenzo Busetto",
+  year         = "2020",
+  note         = "R package version 0.2.6",
+  doi          = "10.5281/zenodo.3843327",
+  url          = "http://guinterp.ranghetti.info/",
+  textVersion  = paste(
+    "L. Ranghetti and L. Busetto (2020).",
+    "GUInterp: a Shiny GUI to support spatial interpolation.",
+    "R package version 0.2.6,",
+    "DOI: 10.5281/zenodo.3843327,",
+    "URL: http://guinterp.ranghetti.info/."
+  )
+)

@@ -1,6 +1,7 @@
 # Open modal dialog to load the polygon file of borders
 
 observeEvent(input$button_load_borders, {
+
   showModal(modalDialog(
     title = ht("_modal_loadborders_title", i18n),
     size = "m",
@@ -16,26 +17,36 @@ observeEvent(input$button_load_borders, {
       condition = "input.border_type == 'files'",
       div(
         div(
+          id = "borderpath_line",
           style="vertical-align:top;",
-            shiny::div(
-              style = "display:inline-block;vertical-align:top;width:85pt;padding-top:8px;",
-              shiny::strong(ht("_borderpath_label", i18n))
-            ),
-            shiny::div(
-              style = "display:inline-block;vertical-align:top;width:calc(100% - 85pt - 50pt - 15px - 10pt - 10px);",
-              shiny::textInput("borderpath_textin", NULL, "", width = "100%")
-            ),
-            shiny::div(
-              style = "display:inline-block;vertical-align:top;width:50pt;",
-              shinyFiles::shinyDirButton(
-                "borderpath", ht("_borderpath_button", i18n),
-                ht("_borderpath_sfb", i18n)
-              )
-            ),
-            shiny::div(
-              style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
-              shiny::htmlOutput("borderpath_errormess")
+          shiny::div(
+            style = "display:inline-block;vertical-align:top;width:85pt;padding-top:8px;",
+            shiny::strong(ht("_borderpath_label", i18n))
+          ),
+          shiny::div(
+            style = "display:inline-block;vertical-align:top;width:calc(100% - 85pt - 50pt - 15px - 10pt - 10px);",
+            shiny::textInput("borderpath_textin", NULL, "", width = "100%")
+          ),
+          shiny::div(
+            style = "display:inline-block;vertical-align:top;width:50pt;",
+            shinyFiles::shinyDirButton(
+              "borderpath", ht("_borderpath_button", i18n),
+              ht("_borderpath_sfb", i18n)
             )
+          ),
+          shiny::div(
+            style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
+            shiny::htmlOutput("borderpath_errormess")
+          )
+        ),
+        shiny::conditionalPanel(
+          condition = "output.demo_mode == 'TRUE'",
+          shinyBS::bsTooltip(
+            "borderpath_line",
+            ht("_inputpath_demo_info", i18n),
+            "top",
+            options = list(container = "body")
+          )
         ),
         fluidRow(
           column(
@@ -103,6 +114,17 @@ observeEvent(input$button_load_borders, {
       modalButton(ph("\u2000",ht("_Cancel", i18n)), icon = icon("ban"))
     )
   ))
+
+  ## Demo mode
+  if (getShinyOption("demo_mode") == TRUE) {
+    shinyjs::disable("borderpath_textin")
+    shinyjs::disable("borderpath")
+    shiny::updateTextInput(
+      session, "borderpath_textin",
+      value = system.file("ex_data", package = "guinterp")
+    )
+  }
+
 })
 
 
@@ -246,7 +268,7 @@ observeEvent(input$load_extent_borders, {
     },
     error = function(e) {
       shinyWidgets::sendSweetAlert(
-        session, title = ht("_invalid_file", i18n),
+        session, title = i18n$t("_invalid_file"),
         text = shiny::span(gsub(
           "\\%f", basename(rv$borders_path),
           ht("_borders_polygon_raw_invalid_message", i18n)

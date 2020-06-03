@@ -45,47 +45,6 @@ See \code{sf::st_crs()} for details.
 \note{
 License: GPL 3.0
 }
-\examples{
-## CRS from EPSG
-st_crs2(32609)
-st_crs2("EPSG:32609")
-
-## CRS from UTM zone
-st_crs2(9)
-st_crs2("09")
-st_crs2("9N")
-st_crs2("09S")
-
-## CRS from WKT (string or path)
-(wkt_32n <- sf::st_as_text(sf::st_crs(32609)))
-st_crs2(wkt_32n)
-writeLines(wkt_32n, wkt_32n_path <- tempfile())
-st_crs2(wkt_32n_path)
-
-## CRS from spatial file path
-raster_path <- system.file(
-  "extdata/out/S2A2A_20190723_022_Barbellino_BOA_10.tif",
-  package="sen2r"
-)
-vector_path <- system.file(
-  "extdata/vector/barbellino.geojson",
-  package="sen2r"
-)
-st_crs2(raster_path)
-st_crs2(vector_path)
-
-## CRS from spatial files
-st_crs2(stars::read_stars(raster_path))
-st_crs2(sf::read_sf(vector_path))
-
-\donttest{
-## CRS from PROJ.4 string
-# (avoid using this with PROJ >= 6!)
-st_crs2("+init=epsg:32609") # this makes use of the EPSG code
-st_crs2("+proj=utm +zone=9 +datum=WGS84 +units=m +no_defs")
-st_crs2(raster::raster(raster_path)) # st_crs(raster) uses the PROJ.4 as input
-}
-}
 \references{
 L. Ranghetti, M. Boschetti, F. Nutini, L. Busetto (2020).
 "sen2r": An R toolbox for automatically downloading and preprocessing

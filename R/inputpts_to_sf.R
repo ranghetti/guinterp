@@ -10,6 +10,8 @@
 #' @note License: GPL 3.0
 
 inputpts_to_sf <- function(indata, outcrs = 3857, all = FALSE, sid = "sid3") {
+  # to avoid NOTE on check
+  uid <- idfield <- selvar <- lon <- lat <- NULL
   if (!is(outcrs,"crs")) {
     outcrs <- st_crs2(outcrs)
   }

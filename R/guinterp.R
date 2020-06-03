@@ -3,14 +3,19 @@
 #' @param language Interface language (currently only English -- `"en"` --
 #'  and Italian -- `"it"` -- were implemented).
 #'  Default is to retrieve it from system settings.
+#' @param demo If TRUE, only internal example data can be used
+#'  (default is FALSE).
 #' @return NULL (the function is called for its side effect)
 #' @export
 #' @author Luigi Ranghetti, phD (2020) \email{luigi@@ranghetti.info}
-#' @importFrom shiny shinyOptions runApp
+#' @importFrom shiny shinyOptions runApp onStop shinyApp
 #' @examples \dontrun{
 #' guinterp()
 #' }
-guinterp <- function(language = "en")  {
+guinterp <- function(
+  language = "en",
+  demo = FALSE
+)  {
 
   # set language
   if (all(
@@ -20,17 +25,26 @@ guinterp <- function(language = "en")  {
     language <- "it"
   }
 
+  jscode <- "shinyjs.closeWindow = function() { open(location, '_self').close(); }"
+
+  # clean up on exit
+  shiny::onStop(function() {
+    cat("Session stopped\n")
+  })
+
   # run
-  if (interactive()) {
-    options(device.ask.default = FALSE)
-    shinyOptions(ui_lang = language)
-    return(runApp(
-      system.file("apps/guinterp", package = "guinterp"),
+  options(device.ask.default = FALSE)
+  shinyOptions(
+    ui_lang = language,
+    demo_mode = demo
+  )
+  return(shinyApp(
+    ui = guinterp_ui,
+    server = guinterp_server,
+    options = list(
       display.mode = "normal",
       launch.browser = TRUE
-    ))
-  } else {
-    stop("The function must be run from an interactive R session.")
-  }
+    )
+  ))
 
 }

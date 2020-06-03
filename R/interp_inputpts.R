@@ -15,10 +15,10 @@
 #' @param nmax argument of `krige()` and `idw()`
 #' @param maxdist argument of `krige()` and `idw()`
 #' @importFrom raster focal focalWeight raster
-#' @importFrom stringr str_pad
 #' @importFrom methods as
 #' @importFrom stars st_dimensions write_stars
-#' @importFrom sf st_crop st_union st_buffer st_crs st_transform
+#' @importFrom magrittr "%>%"
+#' @importFrom sf st_crop st_union st_buffer st_crs st_transform st_set_crs
 #' @author Luigi Ranghetti, phD (2018) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 
@@ -95,7 +95,7 @@ interp_inputpts <- function(
   # export raster
   if (is.na(outname)) {
     if (is.na(sel_idfield)) {
-      outname <- paste0('polygon_',str_pad(sample(1E4,1),4,"left","0"),'.tif')
+      outname <- paste0('polygon_',str_pad2(sample(1E4,1),4,"left","0"),'.tif')
     } else {
       outname <- paste0("polygon_",sel_idfield,".tif")
     }
@@ -124,8 +124,7 @@ interp_inputpts <- function(
       raster_crop_pred_r,
       w=focalWeight(raster_crop_pred_r, sel_focal_d, sel_focal_type),
       na.rm=TRUE
-    ) %>% st_as_stars()
-    st_crs(sel_focal_raster_pred) <- st_crs(raster_crop_pred)
+    ) %>% st_as_stars() %>% st_set_crs(st_crs(raster_crop_pred))
 
     # cut on borders ("buffer" value plus half of raster resolution, to cut pixels of border)
     crop_focal_raster_pred <- st_crop(

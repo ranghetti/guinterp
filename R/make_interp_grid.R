@@ -5,8 +5,9 @@
 #' @param outcrs `crs` output CRS
 #' @param offset `numeric (2)` offset from (0,0) in `outcrs` projection
 #' @param border `numeric (1)` TODO extent of border (in CRS units)
-#' @importFrom sf st_crs st_transform
+#' @importFrom sf st_crs st_transform st_set_crs
 #' @importFrom stars st_as_stars st_set_dimensions
+#' @importFrom magrittr "%>%"
 #' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 

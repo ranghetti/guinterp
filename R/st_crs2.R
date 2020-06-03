@@ -33,143 +33,105 @@
 #'  \url{https://doi.org/10.1016/j.cageo.2020.104473},
 #'  URL: \url{http://sen2r.ranghetti.info/}.
 #' @note License: GPL 3.0
-#' @examples
-#' ## CRS from EPSG
-#' st_crs2(32609)
-#' st_crs2("EPSG:32609")
-#'
-#' ## CRS from UTM zone
-#' st_crs2(9)
-#' st_crs2("09")
-#' st_crs2("9N")
-#' st_crs2("09S")
-#'
-#' ## CRS from WKT (string or path)
-#' (wkt_32n <- sf::st_as_text(sf::st_crs(32609)))
-#' st_crs2(wkt_32n)
-#' writeLines(wkt_32n, wkt_32n_path <- tempfile())
-#' st_crs2(wkt_32n_path)
-#'
-#' ## CRS from spatial file path
-#' raster_path <- system.file(
-#'   "extdata/out/S2A2A_20190723_022_Barbellino_BOA_10.tif",
-#'   package="sen2r"
-#' )
-#' vector_path <- system.file(
-#'   "extdata/vector/barbellino.geojson",
-#'   package="sen2r"
-#' )
-#' st_crs2(raster_path)
-#' st_crs2(vector_path)
-#'
-#' ## CRS from spatial files
-#' st_crs2(stars::read_stars(raster_path))
-#' st_crs2(sf::read_sf(vector_path))
-#'
-#' \donttest{
-#' ## CRS from PROJ.4 string
-#' # (avoid using this with PROJ >= 6!)
-#' st_crs2("+init=epsg:32609") # this makes use of the EPSG code
-#' st_crs2("+proj=utm +zone=9 +datum=WGS84 +units=m +no_defs")
-#' st_crs2(raster::raster(raster_path)) # st_crs(raster) uses the PROJ.4 as input
-#' }
 
 
-st_crs2 <- function(x, ...) UseMethod("st_crs2")
+st_crs2 <- function(x, ...) {
 
-## character: several cases (see)
-st_crs2.character <- function(x, ...) {
-
-  ## case 1: EPSG code / UTM zone
-  x_epsg <- if (grepl("^(([0-5]?[0-9])|60)[Nn]?$", x)) {
-    # x: UTM zone North -> integer EPSG
-    as.integer(paste0(
-      "326",
-      str_pad2(
-        gsub("^(([0-5]?[0-9])|60)[Nn]?$", "\\1", x),
-        2, "left", "0"
-      )
-    ))
-  } else if (grepl("^(([0-5]?[0-9])|60)[Ss]$", x)) {
-    # x: UTM zone South -> integer EPSG
-    as.integer(paste0(
-      "327",
-      str_pad2(
-        gsub("^(([0-5]?[0-9])|60)[Ss]$", "\\1", x),
-        2, "left", "0"
-      )
-    ))
-  } else if (grepl("^[0-9]+$", x)) {
-    # x: EPSG (integer, numeric or character) -> integer EPSG
-    as.integer(x)
-  } else if (grepl("^[Ee][Pp][Ss][Gg]\\:[0-9]+$", x)) {
-    # x: EPSG (in the form "EPSG:xxx") -> integer EPSG
-    as.integer(gsub("^[Ee][Pp][Ss][Gg]\\:([0-9]+)$", "\\1", x))
-  } else if (grepl("^\\+init\\=epsg:[0-9]+$", tolower(x))) {
-    # x: PROJ.4 with only EPSG -> integer EPSG
-    as.integer(gsub("^\\+init\\=epsg:([0-9]+)$", "\\1", tolower(x)))
-  } else {
-    NULL
-  }
-  if (!is.null(x_epsg)) {
-    return(sf::st_crs(x_epsg, ...))
+  ## integer or numeric (EPGS / UTM zone): treat as character
+  if (inherits(x, c("integer", "numeric"))) {
+    x <- as.character(x)
   }
 
-  ## case 2: PROJ.4
-  if (grepl("^\\+[a-z]+\\=", x)) {
-    # x: PROJ.4 -> character PROJ.4 with warning
-    print_message(
-      type = "warning",
-      "Using PROJ.4 strings is deprecated with PROJ >= 6 ",
-      "(see https://www.r-spatial.org/r/2020/03/17/wkt.html)."
-    )
-    return(sf::st_crs(x, ...))
-  }
+  ## character: several cases (see)
+  if (inherits(x, "character")) {
 
-  ## case 3: file path
-  if (file.exists(as.character(x))) {
-    # x: file path -> spatial file or WKT
-    x2 <- tryCatch(
-      # x: path of a vector file -> sf
-      st_read(x, quiet = TRUE),
-      warning = function(w) {
-        if (grepl("no simple feature geometries present\\: returning a data\\.frame", w)) {
-          # x: path of a tabular file -> x (st_crs will return the proper error)
-          x
-        } else {st_read(x, quiet = TRUE)}
-      },
-      error = function(e) {tryCatch(
-        # x: path of a text file with WKT -> crs
-        suppressWarnings(sf::st_crs(readLines(x))),
-        error = function(e) {tryCatch(
-          # x: path of a raster file -> stars proxy
-          gdal_crs(x),
-          error = function(e) {
-            # x: path of a non supported file -> x (st_crs will return the proper error)
+    ## case 1: EPSG code / UTM zone
+    x_epsg <- if (grepl("^(([0-5]?[0-9])|60)[Nn]?$", x)) {
+      # x: UTM zone North -> integer EPSG
+      as.integer(paste0(
+        "326",
+        str_pad2(
+          gsub("^(([0-5]?[0-9])|60)[Nn]?$", "\\1", x),
+          2, "left", "0"
+        )
+      ))
+    } else if (grepl("^(([0-5]?[0-9])|60)[Ss]$", x)) {
+      # x: UTM zone South -> integer EPSG
+      as.integer(paste0(
+        "327",
+        str_pad2(
+          gsub("^(([0-5]?[0-9])|60)[Ss]$", "\\1", x),
+          2, "left", "0"
+        )
+      ))
+    } else if (grepl("^[0-9]+$", x)) {
+      # x: EPSG (integer, numeric or character) -> integer EPSG
+      as.integer(x)
+    } else if (grepl("^[Ee][Pp][Ss][Gg]\\:[0-9]+$", x)) {
+      # x: EPSG (in the form "EPSG:xxx") -> integer EPSG
+      as.integer(gsub("^[Ee][Pp][Ss][Gg]\\:([0-9]+)$", "\\1", x))
+    } else if (grepl("^\\+init\\=epsg:[0-9]+$", tolower(x))) {
+      # x: PROJ.4 with only EPSG -> integer EPSG
+      as.integer(gsub("^\\+init\\=epsg:([0-9]+)$", "\\1", tolower(x)))
+    } else {
+      NULL
+    }
+    if (!is.null(x_epsg)) {
+      return(sf::st_crs(x_epsg, ...))
+    }
+
+    ## case 2: PROJ.4
+    if (grepl("^\\+[a-z]+\\=", x)) {
+      # x: PROJ.4 -> character PROJ.4 with warning
+      warning(paste0(
+        "Using PROJ.4 strings is deprecated with PROJ >= 6 ",
+        "(see https://www.r-spatial.org/r/2020/03/17/wkt.html)."
+      ))
+      return(sf::st_crs(x, ...))
+    }
+
+    ## case 3: file path
+    if (file.exists(as.character(x))) {
+      # x: file path -> spatial file or WKT
+      x2 <- tryCatch(
+        # x: path of a vector file -> sf
+        st_read(x, quiet = TRUE),
+        warning = function(w) {
+          if (grepl("no simple feature geometries present\\: returning a data\\.frame", w)) {
+            # x: path of a tabular file -> x (st_crs will return the proper error)
             x
-          }
+          } else {st_read(x, quiet = TRUE)}
+        },
+        error = function(e) {tryCatch(
+          # x: path of a text file with WKT -> crs
+          suppressWarnings(sf::st_crs(readLines(x))),
+          error = function(e) {tryCatch(
+            # x: path of a raster file -> stars proxy
+            gdal_crs(x),
+            error = function(e) {
+              # x: path of a non supported file -> x (st_crs will return the proper error)
+              x
+            }
+          )}
         )}
-      )}
-    )
-    return(sf::st_crs(x2, ...))
+      )
+      return(sf::st_crs(x2, ...))
+    }
+
+    ## case 4: WKT and other characters
+    if (grepl("^((PROJCR?S)|(GEOGCR?S))\\[.+\\]$", x)) {
+      # x: WKT string -> crs
+      return(sf::st_crs(x, ...))
+    }
+
+    ## any other case: pass to st_crs as is
+    sf::st_crs(x, ...)
+
+  } else {
+
+    ## classes already managed by st_crs()
+    if (missing(x)) {sf::st_crs(NA)} else {sf::st_crs(x, ...)}
+
   }
 
-  ## case 4: WKT and other characters
-  if (grepl("^((PROJCR?S)|(GEOGCR?S))\\[.+\\]$", x)) {
-    # x: WKT string -> crs
-    return(sf::st_crs(x, ...))
-  }
-
-  ## any other case: pass to st_crs as is
-  sf::st_crs(x, ...)
-
-}
-
-## integer or numeric (EPGS / UTM zone): treat as character
-st_crs2.integer <- function(x, ...) {st_crs2.character(as.character(x), ...)}
-st_crs2.numeric <- function(x, ...) {st_crs2.character(as.character(x), ...)}
-
-## classes already managed by st_crs()
-st_crs2.default <- function(x, ...) {
-  if (missing(x)) {sf::st_crs(NA)} else {sf::st_crs(x, ...)}
 }

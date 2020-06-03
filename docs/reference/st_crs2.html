@@ -76,7 +76,7 @@ text files containing WKT like .prj (see details) ." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GUInterp: a Shiny GUI for Spatial Interpolation</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.6</span>
       </span>
     </div>
 
@@ -103,6 +103,13 @@ text files containing WKT like .prj (see details) ." />
     <span class="fa fa-newspaper"></span>
      
      Changelog
+  </a>
+</li>
+<li>
+  <a href="https://ranghetti.shinyapps.io/guinterp/">
+    <span class="fa fa-desktop"></span>
+     
+     Demo
   </a>
 </li>
 <li>
@@ -186,31 +193,6 @@ Sentinel-2 satellite data. <em>Computers &amp; Geosciences</em>, 139, 104473. DO
 <a href='https://doi.org/10.1016/j.cageo.2020.104473'>https://doi.org/10.1016/j.cageo.2020.104473</a>,
 URL: <a href='http://sen2r.ranghetti.info/'>http://sen2r.ranghetti.info/</a>.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## CRS from EPSG</span>
-<span class='fu'>st_crs2</span>(<span class='fl'>32609</span>)</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2(32609): non trovo la funzione "st_crs2"</span></div><div class='input'><span class='fu'>st_crs2</span>(<span class='st'>"EPSG:32609"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2("EPSG:32609"): non trovo la funzione "st_crs2"</span></div><div class='input'>
-<span class='co'>## CRS from UTM zone</span>
-<span class='fu'>st_crs2</span>(<span class='fl'>9</span>)</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2(9): non trovo la funzione "st_crs2"</span></div><div class='input'><span class='fu'>st_crs2</span>(<span class='st'>"09"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2("09"): non trovo la funzione "st_crs2"</span></div><div class='input'><span class='fu'>st_crs2</span>(<span class='st'>"9N"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2("9N"): non trovo la funzione "st_crs2"</span></div><div class='input'><span class='fu'>st_crs2</span>(<span class='st'>"09S"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2("09S"): non trovo la funzione "st_crs2"</span></div><div class='input'>
-<span class='co'>## CRS from WKT (string or path)</span>
-(<span class='no'>wkt_32n</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_text.html'>st_as_text</a></span>(<span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_crs.html'>st_crs</a></span>(<span class='fl'>32609</span>)))</div><div class='output co'>#&gt; [1] "PROJCS[\"WGS 84 / UTM zone 9N\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",-129],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"32609\"]]"</div><div class='input'><span class='fu'>st_crs2</span>(<span class='no'>wkt_32n</span>)</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2(wkt_32n): non trovo la funzione "st_crs2"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span>(<span class='no'>wkt_32n</span>, <span class='no'>wkt_32n_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>())
-<span class='fu'>st_crs2</span>(<span class='no'>wkt_32n_path</span>)</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2(wkt_32n_path): non trovo la funzione "st_crs2"</span></div><div class='input'>
-<span class='co'>## CRS from spatial file path</span>
-<span class='no'>raster_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(
-  <span class='st'>"extdata/out/S2A2A_20190723_022_Barbellino_BOA_10.tif"</span>,
-  <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sen2r"</span>
-)
-<span class='no'>vector_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(
-  <span class='st'>"extdata/vector/barbellino.geojson"</span>,
-  <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sen2r"</span>
-)
-<span class='fu'>st_crs2</span>(<span class='no'>raster_path</span>)</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2(raster_path): non trovo la funzione "st_crs2"</span></div><div class='input'><span class='fu'>st_crs2</span>(<span class='no'>vector_path</span>)</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2(vector_path): non trovo la funzione "st_crs2"</span></div><div class='input'>
-<span class='co'>## CRS from spatial files</span>
-<span class='fu'>st_crs2</span>(<span class='kw pkg'>stars</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/stars/man/read_stars.html'>read_stars</a></span>(<span class='no'>raster_path</span>))</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2(stars::read_stars(raster_path)): non trovo la funzione "st_crs2"</span></div><div class='input'><span class='fu'>st_crs2</span>(<span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_read.html'>read_sf</a></span>(<span class='no'>vector_path</span>))</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2(sf::read_sf(vector_path)): non trovo la funzione "st_crs2"</span></div><div class='input'>
-<span class='co'># \donttest{</span>
-<span class='co'>## CRS from PROJ.4 string</span>
-<span class='co'># (avoid using this with PROJ &gt;= 6!)</span>
-<span class='fu'>st_crs2</span>(<span class='st'>"+init=epsg:32609"</span>) <span class='co'># this makes use of the EPSG code</span></div><div class='output co'>#&gt; <span class='error'>Error in st_crs2("+init=epsg:32609"): non trovo la funzione "st_crs2"</span></div><div class='input'><span class='fu'>st_crs2</span>(<span class='st'>"+proj=utm +zone=9 +datum=WGS84 +units=m +no_defs"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in st_crs2("+proj=utm +zone=9 +datum=WGS84 +units=m +no_defs"): non trovo la funzione "st_crs2"</span></div><div class='input'><span class='fu'>st_crs2</span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>raster_path</span>)) <span class='co'># st_crs(raster) uses the PROJ.4 as input</span></div><div class='output co'>#&gt; <span class='error'>Error in st_crs2(raster::raster(raster_path)): non trovo la funzione "st_crs2"</span></div><div class='input'># }
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

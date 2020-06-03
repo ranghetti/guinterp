@@ -76,7 +76,7 @@ but without depending on package stringi." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GUInterp: a Shiny GUI for Spatial Interpolation</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.6</span>
       </span>
     </div>
 
@@ -103,6 +103,13 @@ but without depending on package stringi." />
     <span class="fa fa-newspaper"></span>
      
      Changelog
+  </a>
+</li>
+<li>
+  <a href="https://ranghetti.shinyapps.io/guinterp/">
+    <span class="fa fa-desktop"></span>
+     
+     Demo
   </a>
 </li>
 <li>
@@ -174,16 +181,6 @@ Sentinel-2 satellite data. <em>Computers &amp; Geosciences</em>, 139, 104473. DO
 <a href='https://doi.org/10.1016/j.cageo.2020.104473'>https://doi.org/10.1016/j.cageo.2020.104473</a>,
 URL: <a href='http://sen2r.ranghetti.info/'>http://sen2r.ranghetti.info/</a>.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(
-  <span class='fu'>str_pad2</span>(<span class='st'>"hadley"</span>, <span class='fl'>30</span>, <span class='st'>"left"</span>),
-  <span class='fu'>str_pad2</span>(<span class='st'>"hadley"</span>, <span class='fl'>30</span>, <span class='st'>"right"</span>),
-  <span class='fu'>str_pad2</span>(<span class='st'>"hadley"</span>, <span class='fl'>30</span>, <span class='st'>"both"</span>)
-)</div><div class='output co'>#&gt; <span class='error'>Error in str_pad2("hadley", 30, "left"): non trovo la funzione "str_pad2"</span></div><div class='input'>
-<span class='co'># All arguments are vectorised except side</span>
-<span class='fu'>str_pad2</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"abc"</span>, <span class='st'>"abcdef"</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='error'>Error in str_pad2(c("a", "abc", "abcdef"), 10): non trovo la funzione "str_pad2"</span></div><div class='input'>
-<span class='co'># Longer strings are returned unchanged</span>
-<span class='fu'>str_pad2</span>(<span class='st'>"hadley"</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='error'>Error in str_pad2("hadley", 3): non trovo la funzione "str_pad2"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

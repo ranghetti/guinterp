@@ -90,7 +90,7 @@ observeEvent(rv$interp_canbelaunched, ignoreInit = TRUE, ignoreNULL = TRUE, {
   removeModal()
 
   shinyWidgets::sendSweetAlert(
-    session, title = ht("_interp_success_title", i18n),
+    session, title = i18n$t("_interp_success_title"),
     text = shiny::div(
       shiny::p(ht("_interp_success_message1", i18n)),
       if (input$outraster_savesingles) {

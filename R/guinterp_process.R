@@ -43,6 +43,7 @@
 #' @importFrom shinyWidgets updateProgressBar
 #' @importFrom stars read_stars
 #' @importFrom stats var
+#' @importFrom magrittr "%>%"
 #' @author Luigi Ranghetti, phD (2019) \email{ranghetti.l@@irea.cnr.it}
 #' @note License: GPL 3.0
 
@@ -71,6 +72,9 @@ guinterp_process <- function(
   .shiny_session = NULL,
   .shiny_pbar_id = NULL
 ) {
+
+  # to avoid NOTE on check
+  lat <- lon <- id_geom <- area_tot <- f <- i <- NULL
 
   ## Check if all expected outputs already exists
   out_names <- file.path(
@@ -135,9 +139,12 @@ guinterp_process <- function(
     st_buffer(max_pt_dist) %>%
     group_by(id_geom, area_tot) %>%
     summarise() %>%
-    st_buffer(-max_pt_dist)
-  covered_poly$area_pt <- st_area(covered_poly)
-  covered_poly$perc_cov <- covered_poly$area_pt/covered_poly$area_tot
+    st_buffer(-max_pt_dist) %>%
+    as.data.frame() %>%
+    st_as_sf() %>%
+    mutate(area_pt = st_area(.)) %>%
+    mutate(perc_cov = area_pt/area_tot)
+
   if (length(which_nafield) != 0) {
     inputpts_sf <- inputpts_sf[inputpts_sf$idfield %in% unique(covered_poly$id_geom), ]
   }

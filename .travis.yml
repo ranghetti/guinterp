@@ -1,15 +1,26 @@
 language: R
 sudo: required
-dist: bionic
+dist: trusty
 cache: packages
 
-apt_packages:
-  - libgdal-dev
-  - libproj-dev
-  - libudunits2-dev
+addons:
+  apt:
+    update: true
+    sources:
+      - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
+    packages:
+      - libgdal-dev
+      - libproj-dev
+      - libudunits2-dev
+
+r:
+  - release
+  - devel
+  - oldrel
 
 before_install:
-  - sudo apt-get -qq update
+  - Rscript -e 'install.packages("remotes")'
+  - Rscript -e 'remotes::install_github("r-spatial/lwgeom", ref = "467dc314a0bda011e806a8b56c8dcc153f63527c")'
 
 env:
   global:

@@ -4,3 +4,9 @@
 ^docs$
 ^pkgdown$
 ^README\.Rmd$
+^\.travis\.yml$
+^\.github$
+^index\.R?md$
+^utils$
+^app\.R$
+^rsconnect$

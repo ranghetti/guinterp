@@ -13,6 +13,8 @@ ht(x, i18n)
 ph(...)
 }
 \arguments{
+\item{t}{Character vector or list}
+
 \item{x}{Character vector or list}
 
 \item{i18n}{Object containing translations}
@@ -29,7 +31,7 @@ if \code{x} is a list of vectors, a list of objects.
 \description{
 Internal functions used to convert  elements to \code{HTML}.
 
-\code{t()} is converts \link{list of} character vectors to \code{HTML}.
+\code{t()} is converts a list of character vectors to \code{HTML}.
 
 \code{ht()} converts a vector of translation labels to a list of \code{HTML}
 translated entities.

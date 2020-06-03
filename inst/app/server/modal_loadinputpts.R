@@ -1,11 +1,13 @@
 # Open modal dialog to load the point file of inputpts
 
 observeEvent(input$button_load_inputpts, {
+
   showModal(modalDialog(
     title = ht("_modal_loadinputpts_title", i18n),
     size = "m",
 
     div(
+      id = "inputptspath_line",
       style="vertical-align:top;",
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:85pt;padding-top:8px;",
@@ -25,6 +27,15 @@ observeEvent(input$button_load_inputpts, {
       shiny::div(
         style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
         shiny::htmlOutput("inputptspath_errormess")
+      )
+    ),
+    shiny::conditionalPanel(
+      condition = "output.demo_mode == 'TRUE'",
+      shinyBS::bsTooltip(
+        "inputptspath_line",
+        ht("_inputpath_demo_info", i18n),
+        "bottom",
+        options = list(container = "body")
       )
     ),
     fluidRow(
@@ -94,6 +105,17 @@ observeEvent(input$button_load_inputpts, {
       modalButton(ph("\u2000",ht("_Cancel", i18n)), icon = icon("ban"))
     )
   ))
+
+  ## Demo mode
+    if (getShinyOption("demo_mode") == TRUE) {
+      shinyjs::disable("inputptspath_textin")
+      shinyjs::disable("inputptspath")
+      shiny::updateTextInput(
+        session, "inputptspath_textin",
+        value = system.file("ex_data", package = "guinterp")
+      )
+    }
+
 })
 
 
@@ -286,7 +308,7 @@ observeEvent(input$load_inputpts, {
       },
       error = function(e) {
         shinyWidgets::sendSweetAlert(
-          session, title = ht("_invalid_file", i18n),
+          session, title = i18n$t("_invalid_file"),
           text = shiny::span(gsub(
             "\\%f", basename(rv$inputpts_path),
             ht("_inputpts_sp_invalid_message", i18n)
@@ -308,7 +330,7 @@ observeEvent(input$load_inputpts, {
       },
       error = function(e) {
         shinyWidgets::sendSweetAlert(
-          session, title = ht("_invalid_file", i18n),
+          session, title = i18n$t("_invalid_file"),
           text = shiny::span(gsub(
             "\\%f", basename(rv$inputpts_path),
             ht("_inputpts_table_invalid_message", i18n)
