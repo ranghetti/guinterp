@@ -37,15 +37,15 @@ observeEvent(input$button_load_borders, {
           shiny::div(
             style = "display:inline-block;vertical-align:top;width:15px;margin-left:10pt;padding-top:8px;",
             shiny::htmlOutput("borderpath_errormess")
-          ),
-          shiny::conditionalPanel(
-            condition = "output.demo_mode == 'TRUE'",
-            shinyBS::bsTooltip(
-              "borderpath_line",
-              ht("_inputpath_demo_info", i18n),
-              "top",
-              options = list(container = "body")
-            )
+          )
+        ),
+        shiny::conditionalPanel(
+          condition = "output.demo_mode == 'TRUE'",
+          shinyBS::bsTooltip(
+            "borderpath_line",
+            ht("_inputpath_demo_info", i18n),
+            "top",
+            options = list(container = "body")
           )
         ),
         fluidRow(
