@@ -1,6 +1,7 @@
-remotes::install_github("ranghetti/guinterp", ref = "develop")
-rsconnect::appDependencies(system.file("app", package="guinterp"))
-# devtools::load_all(".")
+# remotes::install_github("ranghetti/guinterp", ref = "develop")
+remotes::install_github("r-spatial/lwgeom", ref = "467dc314a0bda011e806a8b56c8dcc153f63527c")
+devtools::load_all(".") # local branch shinyapps
+rsconnect::appDependencies(system.file(package="guinterp"))
 rsconnect::deployApp(
   # system.file(package="guinterp"),
   appName = "guinterp",
