@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Update filter values — filter_pts • GUInterp: a Shiny GUI for Spatial Interpolation</title>
+<title>Don't use — dontuse • GUInterp: a Shiny GUI for Spatial Interpolation</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Update filter values — filter_pts" />
-<meta property="og:description" content="filter_pts updates filter values (altering the original dataframe).
-filter_pts_reset resets all filter values to FALSE (altering the original dataframe).
-filter_pts_resample resets sampling order (altering the original dataframe)." />
+<meta property="og:title" content="Don't use — dontuse" />
+<meta property="og:description" content="Don't use this function." />
 
 
 
@@ -129,86 +127,24 @@ filter_pts_resample resets sampling order (altering the original dataframe)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Update filter values</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ranghetti/guinterp/blob/master/R/filter_pts.R'><code>R/filter_pts.R</code></a></small>
-    <div class="hidden name"><code>filter_pts.Rd</code></div>
+    <h1>Don't use</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ranghetti/guinterp/blob/master/R/dontuse.R'><code>R/dontuse.R</code></a></small>
+    <div class="hidden name"><code>dontuse.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>filter_pts</code> updates filter values (altering the original dataframe).</p>
-<p><code>filter_pts_reset</code> resets all filter values to FALSE (altering the original dataframe).</p>
-<p><code>filter_pts_resample</code> resets sampling order (altering the original dataframe).</p>
+    <p>Don't use this function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>filter_pts</span>(
-  <span class='no'>indata</span>,
-  <span class='no'>metric</span>,
-  <span class='no'>value</span>,
-  <span class='kw'>inlayer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>id_fieldname</span> <span class='kw'>=</span> <span class='st'>"idfield"</span>,
-  <span class='kw'>byfield</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>samplesize</span> <span class='kw'>=</span> <span class='fl'>1e+05</span>,
-  <span class='kw'>sid</span> <span class='kw'>=</span> <span class='st'>"sid3"</span>,
-  <span class='kw'>par1</span> <span class='kw'>=</span> <span class='fl'>NA</span>
-)
+    <pre class="usage"><span class='fu'>dontuse</span>()</pre>
 
-<span class='fu'>filter_pts_reset</span>(<span class='no'>indata</span>, <span class='kw'>filters</span> <span class='kw'>=</span> <span class='fl'>NA</span>)
 
-<span class='fu'>filter_pts_resample</span>(<span class='no'>indata</span>)</pre>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>indata</th>
-      <td><p>TODO</p></td>
-    </tr>
-    <tr>
-      <th>metric</th>
-      <td><p>one between <code>f_rangev</code>, <code>f_rangey</code>, <code>f_zscorey</code>, <code>f_rbiasy</code>, <code>f_rangeq</code>, <code>f_pos</code>, <code>f_editmap</code>, <code>f_selpts</code></p></td>
-    </tr>
-    <tr>
-      <th>value</th>
-      <td><p>value or values to apply (depending on metric)</p></td>
-    </tr>
-    <tr>
-      <th>inlayer</th>
-      <td><p>optional: <code>sf</code> of fields (see also <code>id_fieldname</code>)</p></td>
-    </tr>
-    <tr>
-      <th>id_fieldname</th>
-      <td><p>optional: name of the <code>inlayer</code> field containing unique ID of fields (default: <code>"idfield"</code>)</p></td>
-    </tr>
-    <tr>
-      <th>byfield</th>
-      <td><p>if FALSE (default), consider data as a unique field; if TRUE, iterate each filter on field <code>id_fieldname</code></p></td>
-    </tr>
-    <tr>
-      <th>reverse</th>
-      <td><p>if TRUE, the filter is applied reversed (this makes sense only for <code>f_editmap</code> and <code>f_selpts</code>). default is FALSE.</p></td>
-    </tr>
-    <tr>
-      <th>samplesize</th>
-      <td><p>maximum size of the sample of the original data to work with (default: 100000; if NA: all the points)</p></td>
-    </tr>
-    <tr>
-      <th>sid</th>
-      <td><p>character: name of the ID field to be used (<code>"uid"</code>, <code>"sid1"</code>, <code>"sid2"</code>, <code>"sid3"</code> or <code>"sid4"</code>)</p></td>
-    </tr>
-    <tr>
-      <th>par1</th>
-      <td><p>additional parameter for filtering (now used only for area to filter / not to filter NA values)</p></td>
-    </tr>
-    <tr>
-      <th>filters</th>
-      <td><p>TODO</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>License: GPL 3.0</p>
+    <p>This function simply call an <code>rgdal</code> function, so to be able to
+include package <code>rgdal</code> among imported dependencies.
+This is necessary since using <code>raster</code> without having <code>rgdal</code> installed
+causes troublings in R 4.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
