@@ -34,6 +34,7 @@ Imports:
  methods,
  parallel,
  raster,
+ rgdal,
  sf,
  shiny,
  shinycssloaders,
