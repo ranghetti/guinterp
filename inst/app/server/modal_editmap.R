@@ -47,7 +47,10 @@ observeEvent(input$editmap, ignoreInit = TRUE, {
     mapedit::editMod, editmap_ns_name, editmap_map,
     editor = "leafpm",
     record = TRUE,
-    editorOptions = list(toolbarOptions = leafpm::pmToolbarOptions(drawMarker = FALSE, drawPolyline = FALSE))
+    editorOptions = list(
+      toolbarOptions = leafpm::pmToolbarOptions(drawMarker = FALSE, drawPolyline = FALSE),
+      drawOptions = leafpm::pmDrawOptions(snappable = FALSE)
+    )
   )
 
   shiny::showModal(shiny::modalDialog(

@@ -34,6 +34,7 @@ guinterp <- function(
 
   # run
   options(device.ask.default = FALSE)
+  require(shinyBS) # required to show popup messages
   shinyOptions(
     ui_lang = language,
     demo_mode = demo

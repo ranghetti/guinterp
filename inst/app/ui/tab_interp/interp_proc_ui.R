@@ -16,12 +16,12 @@ shiny::div(
   ),
 
   shiny::div(
+    id = "path_outraster_line",
     shiny::div(
       style="display:inline-block;vertical-align:top;margin-bottom:5px;",
-      ph(ht("_outraster")," \u00a0")
+      ph(strong(ht("_outraster"))," \u00a0")
     ),
     shiny::div(
-      id = "path_outraster_line",
       shiny::div(
         style="display:inline-block;vertical-align:top;width:70pt;",
         shinyFiles::shinySaveButton(
@@ -42,18 +42,6 @@ shiny::div(
         shiny::htmlOutput("path_outraster_errormess")
       )
     ),
-    shiny::conditionalPanel(
-      condition = "output.demo_mode == 'TRUE'",
-      shinyBS::bsTooltip(
-        "path_outraster_line",
-        ht("_path_outraster_demo_info"),
-        "bottom",
-        options = list(container = "body")
-      )
-    )
-  ),
-
-  shiny::div(
     checkboxInput(
       "outraster_savesingles",
       ht("_outraster_savesingles"),
@@ -85,6 +73,16 @@ shiny::div(
           shiny::htmlOutput("path_outdir_errormess")
         )
       )
+    )
+  ),
+
+  shiny::conditionalPanel(
+    condition = "output.demo_mode == 'TRUE'",
+    shinyBS::bsTooltip(
+      "path_outraster_line",
+      ht("_path_outraster_demo_info"),
+      "bottom",
+      options = list(container = "body")
     )
   ),
 
