@@ -23,7 +23,7 @@
 #' @importFrom leafpm pmToolbarOptions pmDrawOptions
 #' @importFrom mapedit selectMod selectModUI editMod editModUI
 #' @importFrom jsonlite fromJSON toJSON
-#' @importFrom shinyBS bsTooltip
+#' @importFrom shinyBS addTooltip bsTooltip
 #' @import data.table
 #' @importFrom DT renderDT datatable dataTableOutput
 #' @noRd

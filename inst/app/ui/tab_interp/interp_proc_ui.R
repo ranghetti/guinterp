@@ -76,15 +76,9 @@ shiny::div(
     )
   ),
 
-  shiny::conditionalPanel(
-    condition = "output.demo_mode == 'TRUE'",
-    shinyBS::bsTooltip(
-      "path_outraster_line",
-      ht("_path_outraster_demo_info"),
-      "bottom",
-      options = list(container = "body")
-    )
-  ),
+  # leaving a bsTooltip call
+  # (for unknown reason, without it addTooltip does not work)
+  shinyBS::bsTooltip("fake", "Fake"),
 
   shiny::checkboxInput(
     "v_options_onoff",

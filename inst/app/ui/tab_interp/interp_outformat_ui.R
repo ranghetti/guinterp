@@ -18,17 +18,7 @@ shiny::div(
           'interp_res',
           ht("_interp_res"),
           value = 5, min = 0, max = 100, step = 1
-        ),
-        shiny::conditionalPanel(
-          condition = "output.demo_mode == 'TRUE'",
-          shinyBS::bsTooltip(
-            "interp_res",
-            ht("_interpres_demo_info"),
-            "left",
-            options = list(container = "body")
-          )
         )
-
       ),
       shiny::column(
         width = 7,

@@ -39,15 +39,6 @@ observeEvent(input$button_load_borders, {
             shiny::htmlOutput("borderpath_errormess")
           )
         ),
-        shiny::conditionalPanel(
-          condition = "output.demo_mode == 'TRUE'",
-          shinyBS::bsTooltip(
-            "borderpath_line",
-            ht("_inputpath_demo_info", i18n),
-            "top",
-            options = list(container = "body")
-          )
-        ),
         fluidRow(
           column(
             width = 8,
@@ -123,6 +114,13 @@ observeEvent(input$button_load_borders, {
       session, "borderpath_textin",
       value = system.file("ex_data", package = "guinterp")
     )
+    shinyBS::addTooltip(
+      session, "borderpath_line",
+      ht("_inputpath_demo_info", i18n),
+      placement = "top",
+      trigger = 'hover'
+    )
+
   }
 
 })
