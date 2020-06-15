@@ -20,6 +20,7 @@
 #' @importFrom leaflet addCircleMarkers addLegend leaflet addPolygons fitBounds
 #'  addLayersControl showGroup hideGroup renderLeaflet leafletProxy removeMarker
 #'  addRasterImage clearImages addTiles colorBin labelOptions layersControlOptions
+#'  colorFactor
 #' @importFrom leafpm pmToolbarOptions pmDrawOptions
 #' @importFrom mapedit selectMod selectModUI editMod editModUI
 #' @importFrom jsonlite fromJSON toJSON
