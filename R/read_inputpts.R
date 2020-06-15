@@ -56,7 +56,7 @@ read_inputpts <- function(
         st_join(borders)
     ) %>% filter(!is.na(id_geom))
   } else {
-    mutate(rawdata_sf, id_geom = 0)
+    mutate(rawdata_sf, id_geom = "all points")
   } %>%
     filter(!is.na(selvar)) # remove points with empty varname
 

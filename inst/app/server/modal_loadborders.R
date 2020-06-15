@@ -165,7 +165,7 @@ output$selector_uid <- renderUI({
     sapply(names(rv$borders_polygon_raw), function(x){
       !inherits(rv$borders_polygon_raw[[x]], "sfc")
     })
-    ]
+  ]
   conditionalPanel(
     condition = "input.select_uid_which == 'attr'",
     selectInput(
@@ -205,7 +205,7 @@ observeEvent(
         vect_list <-  if (!input$borders_showall) {
           vect_list_all[
             vect_ext %in% c("shp","gpkg","geojson","kml","gml","sqlite","tab")
-            ]
+          ]
         } else {vect_list_all}
 
         # TODO check that it contains multipolygons
@@ -294,7 +294,7 @@ observeEvent(input$save_extent_borders, {
         dplyr::transmute(id_geom = seq_len(nrow(rv$borders_polygon_raw)))
     } else if (input$select_uid_which == "no") {
       rv$borders_polygon_raw %>%
-        dplyr::transmute(id_geom = 0)
+        dplyr::transmute(id_geom = "all points")
     } %>%
       dplyr::group_by(id_geom) %>% dplyr::summarise() %>%
       sf::st_transform(4326)

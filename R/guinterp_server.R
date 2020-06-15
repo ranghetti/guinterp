@@ -4,7 +4,7 @@
 #'  renderText updateTextInput updateNumericInput modalDialog showModal fluidRow
 #'  column isolate div strong icon div p HTML span sliderInput renderPlot
 #'  removeModal updateSelectInput outputOptions conditionalPanel wellPanel
-#'  tagList observe
+#'  tagList observe updateSliderInput
 #' @importFrom shinydashboard box updateTabItems
 #' @importFrom shinyFiles getVolumes shinyFileSave parseSavePath shinyDirChoose
 #'  parseDirPath parseFilePaths shinyDirButton

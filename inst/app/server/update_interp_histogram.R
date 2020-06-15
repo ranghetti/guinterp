@@ -18,17 +18,7 @@ output$whichfield_ui <- shiny::renderUI({
     multiple = TRUE
   )
 })
-output$singlepolygon <- renderText({
-  req(rv$borders_polygon)
-  length(unique(rv$borders_polygon$id_geom)) > 1
-})
-shiny::outputOptions(output, "singlepolygon", suspendWhenHidden = FALSE)
-# observeEvent(rv$borders_polygon, {
-# browser()
-#   if (length(unique(rv$borders_polygon$id_geom)) <= 1) {
-#     shinyjs::hide("whichfield")
-#   }
-# })
+
 
 # Samplesize
 output$samplesize_stats_ui <- shiny::renderUI({
@@ -110,5 +100,3 @@ observeEvent(c(rv$change_interp, input$whichfield, input$samplesize_stats), {
   })
 
 })
-
-

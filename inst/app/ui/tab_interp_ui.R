@@ -22,10 +22,7 @@ shiny::div(
             shiny::fluidRow(
               shiny::column(
                 width = 5,
-                shiny::conditionalPanel(
-                  condition = "output.singlepolygon == 'TRUE'",
-                  shiny::uiOutput("whichfield_ui")
-                )
+                shiny::uiOutput("whichfield_ui")
               ),
               shiny::column(
                 width = 7,
