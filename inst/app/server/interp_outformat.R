@@ -45,7 +45,7 @@ observeEvent(rv$outcrs_validated, {
       st_as_sfc() %>%
       st_buffer_m(input$bbox_buffer) %>%
       st_bbox() %>% st_as_sfc() %>% sf::st_sf() %>%
-      dplyr::transmute(id_geom = 0) %>%
+      dplyr::transmute(id_geom = "all points") %>%
       dplyr::group_by(id_geom) %>% dplyr::summarise() %>%
       sf::st_transform(4326)
   }
