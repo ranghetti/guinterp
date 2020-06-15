@@ -4,7 +4,7 @@
 #'  renderText updateTextInput updateNumericInput modalDialog showModal fluidRow
 #'  column isolate div strong icon div p HTML span sliderInput renderPlot
 #'  removeModal updateSelectInput outputOptions conditionalPanel wellPanel
-#'  tagList observe
+#'  tagList observe updateSliderInput
 #' @importFrom shinydashboard box updateTabItems
 #' @importFrom shinyFiles getVolumes shinyFileSave parseSavePath shinyDirChoose
 #'  parseDirPath parseFilePaths shinyDirButton
@@ -20,8 +20,11 @@
 #' @importFrom leaflet addCircleMarkers addLegend leaflet addPolygons fitBounds
 #'  addLayersControl showGroup hideGroup renderLeaflet leafletProxy removeMarker
 #'  addRasterImage clearImages addTiles colorBin labelOptions layersControlOptions
+#'  colorFactor
+#' @importFrom leafpm pmToolbarOptions pmDrawOptions
+#' @importFrom mapedit selectMod selectModUI editMod editModUI
 #' @importFrom jsonlite fromJSON toJSON
-#' @importFrom shinyBS bsTooltip
+#' @importFrom shinyBS addTooltip bsTooltip
 #' @import data.table
 #' @importFrom DT renderDT datatable dataTableOutput
 #' @noRd

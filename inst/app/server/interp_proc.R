@@ -29,6 +29,13 @@ observeEvent(input$path_outraster_textin, {
 if (getShinyOption("demo_mode") == TRUE) {
   shinyjs::disable("path_outraster_textin")
   shinyjs::disable("path_outraster_sel")
+  shinyjs::disable("outraster_savesingles")
+  shinyBS::addTooltip(
+    session, "path_outraster_line",
+    ht("_path_outraster_demo_info", i18n),
+    placement = "bottom",
+    trigger = 'hover'
+  )
 }
 
 

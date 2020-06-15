@@ -23,10 +23,15 @@ output$whichfield_ui <- shiny::renderUI({
 # Samplesize
 output$samplesize_stats_ui <- shiny::renderUI({
   req(rv$inputpts_points)
+  inputpts_points_toview <- if (!is.null(input$whichfield)) {
+    rv$inputpts_points[idfield %in% input$whichfield,]
+  } else {
+    rv$inputpts_points
+  }
   shiny::sliderInput(
     inputId = "samplesize_stats", label = ht("_samplesize_stats", i18n),
-    min = 0, max = nrow(rv$inputpts_points[idfield %in% input$whichfield,]),
-    value = min(nrow(rv$inputpts_points[idfield %in% input$whichfield,]), 1E4)
+    min = 0, max = nrow(inputpts_points_toview),
+    value = min(nrow(inputpts_points_toview), 1E4)
   )
 })
 
@@ -35,7 +40,11 @@ output$samplesize_stats_ui <- shiny::renderUI({
 observeEvent(c(rv$change_interp, input$whichfield, input$samplesize_stats), {
 
   req(rv$inputpts_points, rv$borders_polygon, input$samplesize_stats)
-  inputpts_points_toview <- rv$inputpts_points[idfield %in% input$whichfield,]
+  inputpts_points_toview <- if (!is.null(input$whichfield)) {
+    rv$inputpts_points[idfield %in% input$whichfield,]
+  } else {
+    rv$inputpts_points
+  }
   inputpts_points_toview <- inputpts_points_toview[frank(sid3)<=input$samplesize_stats,]
 
   output$hist <- shiny::renderPlot({
@@ -91,5 +100,3 @@ observeEvent(c(rv$change_interp, input$whichfield, input$samplesize_stats), {
   })
 
 })
-
-

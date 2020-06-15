@@ -29,15 +29,6 @@ observeEvent(input$button_load_inputpts, {
         shiny::htmlOutput("inputptspath_errormess")
       )
     ),
-    shiny::conditionalPanel(
-      condition = "output.demo_mode == 'TRUE'",
-      shinyBS::bsTooltip(
-        "inputptspath_line",
-        ht("_inputpath_demo_info", i18n),
-        "bottom",
-        options = list(container = "body")
-      )
-    ),
     fluidRow(
       column(
         width = 8,
@@ -113,6 +104,12 @@ observeEvent(input$button_load_inputpts, {
       shiny::updateTextInput(
         session, "inputptspath_textin",
         value = system.file("ex_data", package = "guinterp")
+      )
+      shinyBS::addTooltip(
+        session, "inputptspath_line",
+        ht("_inputpath_demo_info", i18n),
+        placement = "bottom",
+        trigger = 'hover'
       )
     }
 

@@ -55,13 +55,26 @@ observeEvent(c(rv$inputpts_points, rv$borders_polygon), {
     addTiles("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
              group = i18n$t("_mapgroup_map")) %>%
     leaflet::addPolygons(
-      data         = rv$borders_polygon,
-      color        = "#bfbfbf", fill = NA, weight = 2.5,
-      label        = ~id_geom,
-      labelOptions = labelOptions(
-        textOnly  = TRUE, direction = 'top', #permanent  = TRUE,
-        style      = list("color" = "white", "font-weight" = "bold")
-      )
+      data = rv$borders_polygon,
+      color = "#bfbfbf", fill = NA, weight = 2.5,
+      label = ~id_geom,
+      labelOptions = if (length(unique(rv$borders_polygon$id_geom))>1) {
+        labelOptions(
+          textOnly = TRUE, direction = 'center',
+          permanent  = TRUE, textsize = "12px",
+          style = list(
+            "color" = "white", "font-weight" = "bold", "border" = "1px",
+            "border-style" = "solid", "border-color" = "white",
+            "background-color" = "rgba(0,0,0,.5)", "border-radius" = "5px"
+          )
+        )
+      } else {
+        labelOptions(
+          textOnly = TRUE, direction = 'center',
+          permanent  = FALSE, textsize = "6px",
+          style = list("color" = "white", "font-weight" = "bold")
+        )
+      }
     ) %>%
     leaflet::fitBounds(
       lng1 = min(rv$inputpts_points$lon),

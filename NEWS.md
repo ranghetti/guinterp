@@ -1,3 +1,9 @@
+# Version 0.3.1
+
+- Demo mode was improved ad corrected.
+- Bug fixing (using single border polygon).
+
+
 # Version 0.3.0
 
 - Package was "stabilised" to be correctly exported on different systems

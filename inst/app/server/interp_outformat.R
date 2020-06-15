@@ -45,7 +45,7 @@ observeEvent(rv$outcrs_validated, {
       st_as_sfc() %>%
       st_buffer_m(input$bbox_buffer) %>%
       st_bbox() %>% st_as_sfc() %>% sf::st_sf() %>%
-      dplyr::transmute(id_geom = 0) %>%
+      dplyr::transmute(id_geom = "all points") %>%
       dplyr::group_by(id_geom) %>% dplyr::summarise() %>%
       sf::st_transform(4326)
   }
@@ -60,6 +60,12 @@ observeEvent(input$interp_res, {
     input$interp_res <= 25
   )) {
     updateNumericInput(session, "interp_res", value = 25)
+    shinyBS::addTooltip(
+      session, "interp_res",
+      ht("_interpres_demo_info", i18n),
+      placement = "left",
+      trigger = 'hover'
+    )
   } else if (input$interp_res <=0) {
     updateNumericInput(session, "interp_res", value = 0.01)
   }
