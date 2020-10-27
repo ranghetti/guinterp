@@ -80,7 +80,7 @@ read_inputpts <- function(
     area = as.numeric(NA),
     selvar,
     f_rangev = FALSE, f_rangey = FALSE, f_zscorey = FALSE, f_rbiasy = FALSE,
-    f_rangeq = FALSE, f_pos = FALSE, f_editmap = FALSE, filter = FALSE
+    f_rangeq = FALSE, f_pos = FALSE, f_editmap = FALSE, f_selpts = FALSE, filter = FALSE
   )]
   outdata[,area := if (length(unique(idfield))>1) {as.numeric(st_area(borders))[match(idfield, as.character(borders$id_geom))]} else {1}]
   set.seed(24029) # to grant repetibility
