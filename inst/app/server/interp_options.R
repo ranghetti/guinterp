@@ -57,6 +57,16 @@ observeEvent(rv$autofit_vgm, {
   if (is(tryCatch(gstat::fit.variogram(rv$v, rv$v.man),warning=function(w){"warning"}), "variogramModel")) {
     output$err_autofit_vgm_1 <- renderUI({shiny::span(style="color:darkgreen;",shiny::icon("check"))})
     output$err_autofit_vgm_2 <- renderUI({""})
+  } else if (v.auto[2,3] < 0) {
+    v.auto <- suppressWarnings(gstat::fit.variogram(rv$v, rv$v.man, fit.ranges = FALSE))
+    output$err_autofit_vgm_1 <- renderUI({shiny::span(
+      style="color:red;",
+      shiny::icon("exclamation-triangle")
+    )})
+    output$err_autofit_vgm_2 <- renderUI({shiny::div(
+      style="color:red;",
+      ht("_err_autofit_vgm_3", i18n)
+    )})
   } else {
     output$err_autofit_vgm_1 <- renderUI({shiny::span(
       style="color:red;",

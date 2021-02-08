@@ -94,6 +94,7 @@ _samplescheme_strat_area,Stratified (area-weighted),Stratificato (pesato sulle a
 _samplescheme_strat_prop,Proportional,Proporzionale
 _interp_overwrite,Overwrite existing rasters?,Sovrascrivere i raster esistenti?
 _err_autofit_vgm_2,Points can not be univocally modelled; please manually check the output parameters.,I punti non sono modellabili univocamente: controllare manualmente i parametri generati.
+_err_autofit_vgm_3,Variogram range cannot be automatically modelled; please manually check the range value.,Il range non può essere determinato automaticamente: controllare manualmente tale valore.
 _pb_interp_message,Points are being interpolated&#44;<br/>please wait...,L'interpolazione dei dati &#232; in corso&#44;<br/>attendere prego...
 _pb_interp_title,Interpolating data,Interpolazione dati
 _interp_success_title,Interpolation completed,Interpolazione completata
