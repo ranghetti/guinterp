@@ -140,6 +140,7 @@ shiny::observeEvent(input$borderpath, ignoreNULL = TRUE, ignoreInit = TRUE, {
 
 # disable elements until vectors are loaded
 observeEvent(c(input$border_type, rv$borders_polygon_raw), ignoreInit = TRUE, ignoreNULL = FALSE, {
+  req(input$border_type)
   if (input$border_type == "files" & length(rv$borders_polygon_raw)==0) {
     shinyjs::disable("select_uid_which")
     shinyjs::disable("save_extent_borders")
@@ -282,6 +283,7 @@ observeEvent(input$load_extent_borders, {
 
 # confirm inputpts and activate filtering
 observeEvent(input$save_extent_borders, {
+  req(input$border_type)
 
   # assign id_geom and group by it
   if (input$border_type == "files") {
