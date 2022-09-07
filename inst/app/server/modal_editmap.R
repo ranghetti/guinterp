@@ -12,7 +12,7 @@ observeEvent(input$editmap, ignoreInit = TRUE, {
       data         = editmap_inputpts[sid3 <= input$samplesize_map & filter==TRUE,],
       layerId      = paste0("pts_",editmap_inputpts[sid3 <= input$samplesize_map & filter == TRUE, ]$uid),
       radius       = 3, stroke = FALSE, fillOpacity = 0.4, fillColor = "cyan",
-      label        = ~format(selvar, digits = 0,nsmall = 1),
+      label        = ~format(selvar, digits = 1, nsmall = 1),
       group        = i18n$t("_mapgroup_points"),
       labelOptions = labelOptions(style = list("background-color" = "#FFCCCC"))
     )
@@ -25,7 +25,7 @@ observeEvent(input$editmap, ignoreInit = TRUE, {
       layerId   = paste0("pts_", editmap_inputpts[sid3 <= input$samplesize_map & filter == FALSE,]$uid),
       radius    = 5, stroke = FALSE, fillOpacity = 0.65,
       fillColor = ~rv$pal(editmap_inputpts[sid3 <= input$samplesize_map & filter == FALSE,][[map_selvariable]]),
-      label     = ~format(selvar, digits = 0, nsmall = 1),
+      label     = ~format(selvar, digits = 1, nsmall = 1),
       group     = i18n$t("_mapgroup_points"),
       labelOptions = labelOptions(style = list("background-color" = "#CCFFCC"))
     )

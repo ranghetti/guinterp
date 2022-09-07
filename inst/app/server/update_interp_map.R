@@ -117,7 +117,7 @@ observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon, input$samp
         data         = rv$inputpts_points[sid3 <= input$samplesize_map & filter==TRUE,],
         layerId      = paste0("pts_",rv$inputpts_points[sid3 <= input$samplesize_map & filter == TRUE,]$uid),
         radius       = 3, stroke = FALSE, fillOpacity = 0.4, fillColor = "cyan",
-        label        = ~format(selvar, digits = 0,nsmall = 1),
+        label        = ~format(selvar, digits = 1, nsmall = 1),
         group        = i18n$t("_mapgroup_points"),
         labelOptions = labelOptions(style = list("background-color" = "#FFCCCC"))
       )
@@ -130,7 +130,7 @@ observeEvent(c(rv$change_interp, map_selvariable, rv$borders_polygon, input$samp
       layerId   = paste0("pts_", rv$inputpts_points[sid3 <= input$samplesize_map & filter == FALSE,]$uid),
       radius    = 5, stroke = FALSE, fillOpacity = 0.65,
       fillColor = ~rv$pal(rv$inputpts_points[sid3 <= input$samplesize_map & filter == FALSE,][[map_selvariable]]),
-      label     = ~format(selvar, digits = 0, nsmall = 1),
+      label     = ~format(selvar, digits = 1, nsmall = 1),
       group     = i18n$t("_mapgroup_points"),
       labelOptions = labelOptions(style = list("background-color" = "#CCFFCC"))
     ) %>%
