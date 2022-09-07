@@ -1,3 +1,22 @@
+# Version 0.3.4
+
+## Bug fix
+- Minor fix (`format(..., digits = 0)` now causes error, replacing with `digists = 1`)
+
+
+# Version 0.3.3
+
+## Bug fix
+- Minor fix (required after dependency updates)
+
+
+# Version 0.3.2
+
+## Bug fixes
+- Add exception if a negative variogram range is fitted
+- Another small fix
+
+
 # Version 0.3.1
 
 - Demo mode was improved ad corrected.
