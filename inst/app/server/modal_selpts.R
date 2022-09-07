@@ -19,7 +19,7 @@ observeEvent(input$selpts, ignoreInit = TRUE, {
       layerId      = paste0("pts_",selpts_inputpts[sid3 < Inf & filter == TRUE, ]$uid),
       radius       = 3, stroke = TRUE, weight = 1, opacity = 1, color = "black", fillOpacity = 1,
       fillColor    = "cyan",
-      label        = ~format(selvar, digits = 0,nsmall = 1),
+      label        = ~format(selvar, digits = 1, nsmall = 1),
       group        = i18n$t("_mapgroup_points"),
       labelOptions = labelOptions(style = list("background-color" = "#FFCCCC"))
     )
@@ -32,7 +32,7 @@ observeEvent(input$selpts, ignoreInit = TRUE, {
       layerId   = paste0("pts_", selpts_inputpts[sid3 < Inf & filter == FALSE,]$uid),
       radius    = 5, stroke = TRUE, weight = 1, opacity = 1, color = "black", fillOpacity = 1,
       fillColor = ~selpts_pal(selpts_inputpts[sid3 < Inf & filter == FALSE,][[map_selvariable]]),
-      label     = ~format(selvar, digits = 0, nsmall = 1),
+      label     = ~format(selvar, digits = 1, nsmall = 1),
       group     = i18n$t("_mapgroup_points"),
       labelOptions = labelOptions(style = list("background-color" = "#CCFFCC"))
     )
